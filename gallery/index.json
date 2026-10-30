@@ -1,0 +1,77 @@
+{
+  "format": 1,
+  "examples": [
+    {
+      "id": "water-bill",
+      "title": "Water bill",
+      "description": "A quarterly residential water and wastewater bill. It shows an account summary, usage charts against the regional average, meter readings and charges by service, with a tear-off payment slip at the foot of the last page.",
+      "rfml": "0.1",
+      "file": "water-bill.zip",
+      "size": 13684,
+      "sha256": "591bb221b78709006a151a03236a3caa4fde4b19184b3ba851554d221bc08376"
+    },
+    {
+      "id": "account-statement",
+      "title": "Statement of account",
+      "description": "A business customer's statement of account across several properties. It lists every bill and payment with a running balance that carries across pages, and shows the opening and closing balances and what is owing by age.",
+      "rfml": "0.1",
+      "file": "account-statement.zip",
+      "size": 11958,
+      "sha256": "34ff62082edb2939d72b7fcf76c35c3d89f9d5a1040e743fa62531d25cab2787"
+    },
+    {
+      "id": "works-invoice",
+      "title": "Works invoice",
+      "description": "A one-page A4 tax invoice to a builder for a new water connection and meter. It shows line items with GST per line and a discount, the subtotal, GST and total, payment terms, and a QR code that opens the online payment page.",
+      "rfml": "0.1",
+      "file": "works-invoice.zip",
+      "size": 8446,
+      "sha256": "d86d72bac1d29447786a933aca7748e7147594e80ccf323b63e627c9c34995be"
+    },
+    {
+      "id": "customer-letter",
+      "title": "Letter to customers",
+      "description": "An A4 letter to residents about planned water main works in their street. It shows a letterhead on the first page, the address placed for a window envelope, merged fields in the text, a works schedule table and a signature block, with a short running header if the letter runs over.",
+      "rfml": "0.1",
+      "file": "customer-letter.zip",
+      "size": 7844,
+      "sha256": "9a6150831108e4cd8ee9b49e26bcb721b629c6244bae26d36d36997b4fc5dda7"
+    },
+    {
+      "id": "operations-dashboard",
+      "title": "Operations dashboard",
+      "description": "Larkmere Water's one-page monthly operations dashboard for the board, on A4 landscape. Four KPI tiles that turn red when a target is missed, 12-month supply and response-time charts, complaints by category, and leaks repaired by zone and month.",
+      "rfml": "0.1",
+      "file": "operations-dashboard.zip",
+      "size": 10043,
+      "sha256": "4a65310000062e90f893336bfae87d73f275aa79db36bd19ac35d7e1f574d942"
+    },
+    {
+      "id": "meter-readings",
+      "title": "Meter readings report",
+      "description": "Larkmere Water's quarterly meter readings for the field operations team, on A4 landscape. A contents page of zones, then every reading grouped by zone with subtotals and a grand total, and unusual readings flagged.",
+      "rfml": "0.1",
+      "file": "meter-readings.zip",
+      "size": 9669,
+      "sha256": "deefbb6d14afe8a1029b3bc3ebd701ba2e9af6f0946671a838457535949633fa"
+    },
+    {
+      "id": "backflow-certificate",
+      "title": "Backflow test certificate",
+      "description": "Larkmere Water's certificate that a backflow prevention device was tested, one landscape A4 page per device. Each shows the property, device, result and next test or re-test date, signature lines, and a QR code to verify it.",
+      "rfml": "0.1",
+      "file": "backflow-certificate.zip",
+      "size": 7819,
+      "sha256": "b9b46b15955df53f981a48d039a6d3536dfd9668cf7ff9e892251ca63e6d771e"
+    },
+    {
+      "id": "parts-label",
+      "title": "Parts dispatch label",
+      "description": "A 4 × 6 inch shipping label for meters and parts sent from Larkmere Water's depot to a field crew, one page per parcel. Each shows the from and to addresses, parcel n of N, weight and contents, a Code 128 barcode and a DataMatrix code, and a FRAGILE or HANDLE WITH CARE stamp when the parcel needs it.",
+      "rfml": "0.2",
+      "file": "parts-label.zip",
+      "size": 6138,
+      "sha256": "3bd371049cdc2e963591a6e34883a33f492f8e1db7ca37abc56680440762b7dd"
+    }
+  ]
+}

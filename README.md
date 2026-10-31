@@ -23,7 +23,7 @@ You need Docker with Compose v2.
 
 3. Open `http://localhost:43123/setup` and enter the code from the log. The setup wizard creates the first administrator.
 
-The bundle's own README covers the add-ons, backups and upgrading. Each release lists `SHA256SUMS` for its files and carries an SBOM of the image.
+The bundle's own README covers the add-ons, backups and upgrading, and [the documentation](https://docs.frontforge.com/operations/docker) covers running it in full. Each release lists `SHA256SUMS` for its files and carries an SBOM of the image.
 
 The image is `ghcr.io/frontforge-corporation/report-server`, for amd64 and arm64, tagged with each version, its `x.y`, and `latest`.
 
@@ -38,6 +38,8 @@ On a machine without internet access, copy the `gallery/` folder to it and set `
 Once a day, reportd asks this repository for its latest release, to tell administrators when a newer version is out, and once an hour it reads the gallery. Those requests are all; there is no other telemetry. `REPORTD_UPDATES_CHECK=false` turns the version check off, and `REPORTD_EXAMPLES_GALLERY=off` the gallery.
 
 ## Help
+
+The documentation is at <https://docs.frontforge.com>: installing and running it, designing reports, the report language and the API.
 
 Questions go to Frontforge by email or through the contact form on the Reportforge site, both coming with the first release. Issues and discussions are off in this repository.
 

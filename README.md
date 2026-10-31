@@ -1,19 +1,20 @@
-# Reportforge
+# Frontforge Report Server
 
-Reportforge is a report server you run yourself. You design reports in the browser, and your applications render them as PDF, Word, Excel or HTML from their own data, through an HTTP API.
+Frontforge Report Server is a report server you run yourself. You design reports in the browser, and your applications render them as PDF, Word, Excel or HTML from their own data, through an HTTP API.
 
 This repository holds what's public: the releases, and the example gallery your install reads. The code is developed elsewhere; this repository is written by its release and publishing workflows, not by hand.
 
 ## The Community edition
 
-Reportforge is free to download and run as the Community edition: up to 5 templates, 1 sub-report per template and 3 designer seats. A licence lifts those limits and adds the features of the paid editions.
+Frontforge Report Server is free to download and run as the Community edition: up to 5 templates, 1 sub-report per template and 3 designer seats. Every install needs a licence, and the Community licence is free and never expires: get one at <https://myaccount.frontforge.com> with your email address. A paid licence lifts those limits and adds the features of the paid editions. The licence is checked offline, on your server.
 
 ## Run it
 
 You need Docker with Compose v2.
 
-1. From the [latest release](https://github.com/frontforge-corporation/report-server-releases/releases/latest), download `reportforge-compose-<version>.zip` and unzip it.
-2. In its folder:
+1. Get your free Community licence at <https://myaccount.frontforge.com>. It's emailed to you.
+2. From the [latest release](https://github.com/frontforge-corporation/report-server-releases/releases/latest), download `reportforge-compose-<version>.zip` and unzip it.
+3. In its folder:
 
    ```bash
    cp .env.example .env
@@ -21,7 +22,7 @@ You need Docker with Compose v2.
    docker compose logs reportd | grep setupCode
    ```
 
-3. Open `http://localhost:43123/setup` and enter the code from the log. The setup wizard creates the first administrator.
+4. Open `http://localhost:43123/setup` and enter the code from the log. The setup wizard asks for your licence and creates the first administrator.
 
 The bundle's own README covers the add-ons, backups and upgrading, and [the documentation](https://docs.frontforge.com/operations/docker) covers running it in full. Each release lists `SHA256SUMS` for its files and carries an SBOM of the image.
 
@@ -41,6 +42,6 @@ Once a day, reportd asks this repository for its latest release, to tell adminis
 
 The documentation is at <https://docs.frontforge.com>: installing and running it, designing reports, the report language and the API.
 
-Questions go to Frontforge by email or through the contact form on the Reportforge site, both coming with the first release. Issues and discussions are off in this repository.
+Questions go to Frontforge by email or through the contact form on the Frontforge Report Server site, both coming with the first release. Issues and discussions are off in this repository.
 
-Reportforge is made by Frontforge Pty Ltd.
+Frontforge Report Server is made by Frontforge Pty Ltd.

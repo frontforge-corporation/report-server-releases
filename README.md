@@ -32,7 +32,9 @@ The image is `ghcr.io/frontforge-corporation/report-server`, for amd64 and arm64
 
 ## The example gallery
 
-`gallery/` holds the examples the studio offers under "Start from an example": the documents of Larkmere Water, a fictional water utility. Every install reads this folder, at most once an hour. An example that needs a newer report language than an install has is left out of its list, so new examples never break older installs.
+`gallery/` holds the examples the studio offers under "Start from an example": bills, letters, documentation and internal business documents of three made-up organisations. Every install reads this folder, at most once an hour. An example that needs a newer report language than an install has is left out of its list, so new examples never break older installs.
+
+The examples are dedicated to the public domain under CC0 1.0 Universal (`gallery/LICENSE.md`): copy, change and use them for anything, commercial use included, with no credit needed. CC0 covers the examples only, not Frontforge Report Server.
 
 On a machine without internet access, copy the `gallery/` folder to it and set `REPORTD_EXAMPLES_GALLERY` to that folder. Each example's `.zip` can also be imported into the studio directly.
 

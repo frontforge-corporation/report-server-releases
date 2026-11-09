@@ -1,5 +1,6 @@
 {
   "format": 1,
+  "licence": "CC0-1.0",
   "examples": [
     {
       "id": "water-bill",
@@ -8,7 +9,9 @@
       "rfml": "0.1",
       "file": "water-bill.zip",
       "size": 13684,
-      "sha256": "591bb221b78709006a151a03236a3caa4fde4b19184b3ba851554d221bc08376"
+      "sha256": "591bb221b78709006a151a03236a3caa4fde4b19184b3ba851554d221bc08376",
+      "category": "billing",
+      "level": "advanced"
     },
     {
       "id": "account-statement",
@@ -17,7 +20,9 @@
       "rfml": "0.1",
       "file": "account-statement.zip",
       "size": 11958,
-      "sha256": "34ff62082edb2939d72b7fcf76c35c3d89f9d5a1040e743fa62531d25cab2787"
+      "sha256": "34ff62082edb2939d72b7fcf76c35c3d89f9d5a1040e743fa62531d25cab2787",
+      "category": "billing",
+      "level": "intermediate"
     },
     {
       "id": "works-invoice",
@@ -26,7 +31,9 @@
       "rfml": "0.1",
       "file": "works-invoice.zip",
       "size": 8446,
-      "sha256": "d86d72bac1d29447786a933aca7748e7147594e80ccf323b63e627c9c34995be"
+      "sha256": "d86d72bac1d29447786a933aca7748e7147594e80ccf323b63e627c9c34995be",
+      "category": "billing",
+      "level": "intermediate"
     },
     {
       "id": "customer-letter",
@@ -35,7 +42,9 @@
       "rfml": "0.1",
       "file": "customer-letter.zip",
       "size": 7844,
-      "sha256": "9a6150831108e4cd8ee9b49e26bcb721b629c6244bae26d36d36997b4fc5dda7"
+      "sha256": "9a6150831108e4cd8ee9b49e26bcb721b629c6244bae26d36d36997b4fc5dda7",
+      "category": "letters",
+      "level": "starter"
     },
     {
       "id": "operations-dashboard",
@@ -44,7 +53,9 @@
       "rfml": "0.1",
       "file": "operations-dashboard.zip",
       "size": 10043,
-      "sha256": "4a65310000062e90f893336bfae87d73f275aa79db36bd19ac35d7e1f574d942"
+      "sha256": "4a65310000062e90f893336bfae87d73f275aa79db36bd19ac35d7e1f574d942",
+      "category": "operations",
+      "level": "advanced"
     },
     {
       "id": "meter-readings",
@@ -53,7 +64,9 @@
       "rfml": "0.1",
       "file": "meter-readings.zip",
       "size": 9669,
-      "sha256": "deefbb6d14afe8a1029b3bc3ebd701ba2e9af6f0946671a838457535949633fa"
+      "sha256": "deefbb6d14afe8a1029b3bc3ebd701ba2e9af6f0946671a838457535949633fa",
+      "category": "operations",
+      "level": "intermediate"
     },
     {
       "id": "backflow-certificate",
@@ -62,7 +75,9 @@
       "rfml": "0.1",
       "file": "backflow-certificate.zip",
       "size": 7819,
-      "sha256": "b9b46b15955df53f981a48d039a6d3536dfd9668cf7ff9e892251ca63e6d771e"
+      "sha256": "b9b46b15955df53f981a48d039a6d3536dfd9668cf7ff9e892251ca63e6d771e",
+      "category": "certificates",
+      "level": "intermediate"
     },
     {
       "id": "parts-label",
@@ -71,7 +86,97 @@
       "rfml": "0.2",
       "file": "parts-label.zip",
       "size": 6138,
-      "sha256": "3bd371049cdc2e963591a6e34883a33f492f8e1db7ca37abc56680440762b7dd"
+      "sha256": "3bd371049cdc2e963591a6e34883a33f492f8e1db7ca37abc56680440762b7dd",
+      "category": "labels",
+      "level": "starter"
+    },
+    {
+      "id": "fieldbook-user-guide",
+      "title": "Fieldbook user guide",
+      "description": "Quillmont Software's A4 user guide for Fieldbook, its site-inspection app: a cover with an illustration, a table of contents, numbered chapters with footnotes, note, warning and tip callouts from one component, left and right pages with mirrored margins and the chapter in the running header, and a two-column glossary. Version, limits, troubleshooting and glossary come from the data.",
+      "rfml": "0.1",
+      "file": "fieldbook-user-guide.zip",
+      "size": 15209,
+      "sha256": "44cc164e4322b38b13b5dfbdf19e5beb5c2d6350041689557045cf84da66954b",
+      "category": "documentation",
+      "level": "advanced"
+    },
+    {
+      "id": "fieldbook-release-notes",
+      "title": "Fieldbook release notes",
+      "description": "Quillmont Software's release notes for Fieldbook, newest version first from the data. Each change has a New, Improved, Fixed, Security or Deprecated badge coloured by a conditional style and a link to its issue; a contents list links to each version, and a known issues box appears when there are any.",
+      "rfml": "0.2",
+      "file": "fieldbook-release-notes.zip",
+      "size": 8170,
+      "sha256": "4ae80106887da34ca21a245c0b0f9efe2c06af8e38a978188093628b66f0643e",
+      "category": "documentation",
+      "level": "intermediate"
+    },
+    {
+      "id": "fieldbook-quick-start",
+      "title": "Fieldbook quick-start card",
+      "description": "Quillmont Software's A5 card for new Fieldbook users, in English or German from the same template: five numbered steps, the workspace's plan and support hours, and a QR code to the video guides. Every word comes from the i18n catalogues, and dates, numbers, prices and plurals follow the card's language.",
+      "rfml": "0.2",
+      "file": "fieldbook-quick-start.zip",
+      "size": 10933,
+      "sha256": "549c7150880a00b30bfe98be7460c94b7fcaa42041ac9fcdf88ebb6baf3a264d",
+      "category": "documentation",
+      "level": "intermediate"
+    },
+    {
+      "id": "course-certificate",
+      "title": "Certificate of completion",
+      "description": "Quillmont Academy's certificate for its Fieldbook Administrator course: one landscape A4 page for each participant who completed it, from a repeat that skips the others. Border art in the page background, the name set large, a distinction line for high scores, two signature lines either side of a centred seal, and a QR code to verify it.",
+      "rfml": "0.2",
+      "file": "course-certificate.zip",
+      "size": 8260,
+      "sha256": "51f417f23b730abfeabf69bbc4b1fe16883b605aff34a56511395e0dfa268653",
+      "category": "certificates",
+      "level": "starter"
+    },
+    {
+      "id": "management-pack",
+      "title": "Monthly management pack",
+      "description": "Ostrand & Pell's monthly management pack on A4, for a month and a region you pick. Four KPI tiles that turn red when a target is missed, revenue against budget, utilisation and pipeline charts, fees by region and service line in a matrix, the pipeline and active projects, and each region's commentary. In the HTML viewer, regions open to their projects and projects to their notes.",
+      "rfml": "0.2",
+      "file": "management-pack.zip",
+      "size": 17247,
+      "sha256": "d34f7c275e75b4d2ccee92780f21c16226e48a3fbce10982981591b73185493a",
+      "category": "internal",
+      "level": "advanced"
+    },
+    {
+      "id": "expense-claim",
+      "title": "Expense claim",
+      "description": "A one-page A4 staff expense claim for Ostrand & Pell, an engineering consultancy. It lists each expense with its date, category, GST and amount and a thumbnail of its receipt, totals the claim, and ends with the claimant's declaration and the manager's approval.",
+      "rfml": "0.2",
+      "file": "expense-claim.zip",
+      "size": 9275,
+      "sha256": "4a4437c349e8ea02eda3d0fca97ab7a1f3f05c20650a3b8db0f3d58aae4f41b7",
+      "category": "internal",
+      "level": "starter"
+    },
+    {
+      "id": "purchase-order",
+      "title": "Purchase order",
+      "description": "A two-page A4 purchase order from Ostrand & Pell, an engineering consultancy, to a survey equipment supplier. Parameters choose the copy (supplier, goods receiving or accounts) and whether prices show. It has supplier and delivery blocks, line items with GST and totals, a Code 128 barcode of the PO number, an APPROVED stamp once the order is approved, and the terms and conditions on a last page of their own.",
+      "rfml": "0.2",
+      "file": "purchase-order.zip",
+      "size": 10206,
+      "sha256": "91a4719d8191c01385f830555c56ef5ceb86375fe61fb48d98fbc6aaa26b2b25",
+      "category": "internal",
+      "level": "intermediate"
+    },
+    {
+      "id": "staff-roster",
+      "title": "Staff roster and timesheet",
+      "description": "A fortnight's roster and timesheet for one Ostrand & Pell team on a single A4 landscape page: a matrix of staff by day with the hours in each cell, overtime, annual leave, personal leave and weekends coloured by conditional styles, totals for each person and each day, summary tiles and a legend.",
+      "rfml": "0.2",
+      "file": "staff-roster.zip",
+      "size": 7049,
+      "sha256": "da8aea8cbb28d6d8aea544a418674ab7d50d7bc749a082393a5ac7d8500c4933",
+      "category": "internal",
+      "level": "intermediate"
     }
   ]
 }

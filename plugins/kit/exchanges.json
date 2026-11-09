@@ -1,0 +1,104 @@
+{
+  "about": [
+    "The secret plugin protocol, version 1, as exchanges: what reportd sends, and what a plugin answers.",
+    "reportd's own tests start a fake plugin that answers each request from the exchange of its script whose send matches, and drive reportd's side through it.",
+    "The conformance kit (plugins/kit, which embeds a copy of this file) replays the scripts that aren't hostOnly against a real plugin: it sends each send, in order, and checks the plugin's answer against answer. Gets in a row are sent together, so their answers may come in any order.",
+    "Matching is by subset: every field send.params names must be equal in the request, and every field answer names in the answer; others may be there too.",
+    "The kit sends what reportd would: hello always holds protocol and reportd, and init config and dataDir, the plugin's working folder. init's config is the kit's -config when it has one.",
+    "What is the plugin's own the kit checks for shape only: hello's provider, version, feature and writable; health's answer; an error's message; and the ref and version put answers and the version replace answers. Later sends of put's ref get the plugin's ref instead. A plugin whose hello says writable: false answers put, replace and delete with not-writable.",
+    "Fields the fake plugin acts on, and the kit skips: delayMs (wait before answering), valueBytes (answer a value of that many x), raw (write this line instead of the answer), exit (exit with this code after the answer, or instead of it when there is none), stderr (log this line first)."
+  ],
+  "protocol": 1,
+  "reportd": "0.0.0-test",
+  "scripts": {
+    "store": {
+      "about": "A writable plugin that declares no licence feature: every method, and every error code a plugin answers.",
+      "exchanges": [
+        {"name": "hello", "send": {"method": "hello", "params": {"protocol": [1], "reportd": "0.0.0-test"}},
+          "answer": {"result": {"protocol": 1, "provider": "fake-store", "version": "1.0.0", "writable": true}},
+          "stderr": "fake-store 1.0.0 starting"},
+        {"name": "init with its config resolved", "send": {"method": "init", "params": {"config": {"key": "the-key-from-env", "nested": {"list": ["plain", "the-id-from-a-file"]}}}},
+          "answer": {"result": {}}},
+        {"name": "get, found", "send": {"method": "get", "params": {"ref": "billing#password"}},
+          "answer": {"result": {"value": "hunter2", "version": "3"}}},
+        {"name": "get, with an expiry", "send": {"method": "get", "params": {"ref": "token"}},
+          "answer": {"result": {"value": "t0k3n", "version": "9", "expiresAt": "2030-01-01T00:00:00Z"}}},
+        {"name": "get, not found", "send": {"method": "get", "params": {"ref": "missing"}},
+          "answer": {"error": {"code": "not-found", "message": "no secret missing"}}},
+        {"name": "get, denied", "send": {"method": "get", "params": {"ref": "forbidden"}},
+          "answer": {"error": {"code": "denied", "message": "the policy doesn't allow forbidden"}}},
+        {"name": "get, its own store unavailable", "send": {"method": "get", "params": {"ref": "down"}},
+          "answer": {"error": {"code": "unavailable", "message": "the store can't be reached"}}},
+        {"name": "get, a reference it can't read", "send": {"method": "get", "params": {"ref": "not a ref"}},
+          "answer": {"error": {"code": "invalid-ref", "message": "refs have no spaces"}}},
+        {"name": "get, failing", "send": {"method": "get", "params": {"ref": "broken"}},
+          "answer": {"error": {"code": "internal", "message": "something broke"}}},
+        {"name": "get, slow (answered after a later request)", "send": {"method": "get", "params": {"ref": "slow"}},
+          "answer": {"result": {"value": "slow-value"}}, "delayMs": 400},
+        {"name": "get, fast", "send": {"method": "get", "params": {"ref": "fast"}},
+          "answer": {"result": {"value": "fast-value"}}},
+        {"name": "put", "send": {"method": "put", "params": {"value": "s3cret", "owner": {"connection": "billing", "environment": "dev", "field": "password"}}},
+          "answer": {"result": {"ref": "9f2c41d0a1b2c3d4", "version": "1"}}},
+        {"name": "replace", "send": {"method": "replace", "params": {"ref": "9f2c41d0a1b2c3d4", "value": "s3cret-2"}},
+          "answer": {"result": {"version": "2"}}},
+        {"name": "replace, a secret it doesn't keep", "send": {"method": "replace", "params": {"ref": "billing#password", "value": "x"}},
+          "answer": {"error": {"code": "not-writable", "message": "billing#password is read-only"}}},
+        {"name": "delete", "send": {"method": "delete", "params": {"ref": "9f2c41d0a1b2c3d4"}},
+          "answer": {"result": {}}},
+        {"name": "a method it doesn't have", "send": {"method": "rotate", "params": {}},
+          "answer": {"error": {"code": "unsupported", "message": "no rotate"}}},
+        {"name": "health", "send": {"method": "health", "params": {}},
+          "answer": {"result": {"state": "ok"}}},
+        {"name": "shutdown", "send": {"method": "shutdown", "params": {}},
+          "answer": {"result": {}}, "exit": 0}
+      ]
+    },
+    "vault": {
+      "about": "A read-only plugin that declares the secret-vaults licence feature, as the commercial plugins do.",
+      "exchanges": [
+        {"name": "hello", "send": {"method": "hello", "params": {"protocol": [1]}},
+          "answer": {"result": {"protocol": 1, "provider": "fake-vault", "version": "2.0.0", "feature": "secret-vaults", "writable": false}}},
+        {"name": "init", "send": {"method": "init"}, "answer": {"result": {}}},
+        {"name": "get", "send": {"method": "get", "params": {"ref": "kv/billing#password"}},
+          "answer": {"result": {"value": "vault-value", "version": "7"}}},
+        {"name": "health, degraded with a sign-in that expires", "send": {"method": "health"},
+          "answer": {"result": {"state": "degraded", "message": "token renewal failed; signing in again", "expiresAt": "2026-11-03T11:00:00Z"}}},
+        {"name": "shutdown", "send": {"method": "shutdown"}, "answer": {"result": {}}, "exit": 0}
+      ]
+    },
+    "bad-config": {
+      "about": "A plugin that refuses its config: its start fails.",
+      "exchanges": [
+        {"name": "hello", "send": {"method": "hello"}, "answer": {"result": {"protocol": 1, "provider": "fake", "version": "1.0.0", "writable": false}}},
+        {"name": "init, refused", "send": {"method": "init"}, "answer": {"error": {"code": "invalid-config", "message": "address is required"}}},
+        {"name": "shutdown", "send": {"method": "shutdown"}, "answer": {"result": {}}, "exit": 0}
+      ]
+    },
+    "future": {
+      "hostOnly": true,
+      "about": "A plugin that chooses a protocol version reportd doesn't speak: it is refused, and not started again.",
+      "exchanges": [
+        {"name": "hello, version 2", "send": {"method": "hello"}, "answer": {"result": {"protocol": 2, "provider": "fake", "version": "9.0.0", "writable": false}}},
+        {"name": "shutdown", "send": {"method": "shutdown"}, "answer": {"result": {}}, "exit": 0}
+      ]
+    },
+    "misbehaving": {
+      "hostOnly": true,
+      "about": "A plugin that crashes, writes junk, or doesn't answer in time.",
+      "exchanges": [
+        {"name": "hello", "send": {"method": "hello"}, "answer": {"result": {"protocol": 1, "provider": "fake", "version": "1.0.0", "writable": false}}},
+        {"name": "init", "send": {"method": "init"}, "answer": {"result": {}}},
+        {"name": "get, fine", "send": {"method": "get", "params": {"ref": "fine"}}, "answer": {"result": {"value": "fine-value"}}},
+        {"name": "get, then a crash", "send": {"method": "get", "params": {"ref": "crash"}}, "exit": 3, "stderr": "panic: about to crash"},
+        {"name": "get, answered with junk", "send": {"method": "get", "params": {"ref": "junk"}}, "raw": "this isn't a protocol line"},
+        {"name": "get, answered for a request never sent", "send": {"method": "get", "params": {"ref": "stranger"}}, "raw": "{\"id\": 99999, \"result\": {}}"},
+        {"name": "get, a line over 1 MiB", "send": {"method": "get", "params": {"ref": "huge-line"}}, "answer": {"result": {"value": ""}}, "valueBytes": 1100000},
+        {"name": "get, a value over 64 KiB", "send": {"method": "get", "params": {"ref": "huge-value"}}, "answer": {"result": {"value": ""}}, "valueBytes": 70000},
+        {"name": "get, too slow", "send": {"method": "get", "params": {"ref": "hang"}}, "answer": {"result": {"value": "late"}}, "delayMs": 1500},
+        {"name": "get, a result of the wrong shape", "send": {"method": "get", "params": {"ref": "shape"}}, "answer": {"result": {"value": 42}}},
+        {"name": "health, too slow", "send": {"method": "health"}, "answer": {"result": {"state": "ok"}}, "delayMs": 1500},
+        {"name": "shutdown, ignored", "send": {"method": "shutdown"}}
+      ]
+    }
+  }
+}

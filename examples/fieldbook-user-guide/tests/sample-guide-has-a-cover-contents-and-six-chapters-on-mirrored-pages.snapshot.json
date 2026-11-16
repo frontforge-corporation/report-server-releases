@@ -1,0 +1,37 @@
+{
+  "test": "sample guide has a cover, contents and six chapters on mirrored pages",
+  "pages": [
+    {
+      "page": 1,
+      "sha256": "6e1101f28ac29be18d1060c7f181a3fb16f0d087ba16ca15e27374cc367964da"
+    },
+    {
+      "page": 2,
+      "sha256": "9a851e19d4719f9bed50039d92ca8b2b6b649b8e3368eadefcef16fa4a1985fe"
+    },
+    {
+      "page": 3,
+      "sha256": "98ad076c523c9aa2eb3cf99a911848a4b722936c9ebf17fc3b4f7281c4e6f21f"
+    },
+    {
+      "page": 4,
+      "sha256": "4c636931f9c81fbb687cc1806cafac4d785cd7c207437a5f51105c2f4093f3f4"
+    },
+    {
+      "page": 5,
+      "sha256": "1ef0d5d26de5df0ff6b2703af6d48b9066b8aca158a1e72ebb2ad7394e3f5b7b"
+    },
+    {
+      "page": 6,
+      "sha256": "2910cc899826ea7159cdb3e596f9c31d9ddf241db0d102fa68339e18cf1546f5"
+    },
+    {
+      "page": 7,
+      "sha256": "8a5866fc4ed8d5169fc5aee75cc8e92b0cc267b5e1abf836cd43345328a14770"
+    },
+    {
+      "page": 8,
+      "sha256": "3f61026132a53635547c7a14e0be40cdf51f69b2b920177d3e62ca8b1447d204"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "customer": {"name": "Kingfisher Bend Café", "attention": "Accounts payable", "addressLines": ["Shop 2, 31 Bend Street", "KINGFISHER BEND QLD 4994"]},
+  "account": {"number": "8801 3307 62", "paymentReference": "8801330762", "manager": "Megan Doyle"},
+  "statement": {"number": "ST-2609-0577", "date": "2026-09-30", "periodStart": "2026-09-01", "issueDate": "2026-10-02", "dueDate": "2026-10-30", "openingBalance": 261.41},
+  "sites": [
+    {"name": "Café", "address": "Shop 2, 31 Bend Street, Kingfisher Bend"},
+    {"name": "Bakehouse", "address": "4 Mill Lane, Kingfisher Bend"}
+  ],
+  "transactions": [
+    {"date": "2026-09-02", "kind": "bill", "reference": "B2604021", "site": "Café", "description": "Water and wastewater, August", "amount": 102.57, "outstanding": 102.57},
+    {"date": "2026-09-04", "kind": "bill", "reference": "B2604028", "site": "Bakehouse", "description": "Water and wastewater, August", "amount": 175.28, "outstanding": 175.28},
+    {"date": "2026-09-20", "kind": "payment", "reference": "EFT 4517", "description": "Payment received, thank you", "amount": -261.41}
+  ]
+}

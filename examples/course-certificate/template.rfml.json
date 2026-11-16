@@ -1,0 +1,505 @@
+{
+  "$schema": "https://reportforge.dev/schema/rfml/0.2.json",
+  "rfml": "0.2",
+  "id": "course-certificate",
+  "meta": {
+    "title": "Certificate of completion",
+    "description": "Quillmont Academy's certificate for its Fieldbook Administrator course: one landscape A4 page for each participant who completed it, from a repeat that skips the others. Border art in the page background, the name set large, a distinction line for high scores, two signature lines either side of a centred seal, and a QR code to verify it.",
+    "locale": "en-GB",
+    "tags": [
+      "example",
+      "certificate",
+      "training"
+    ]
+  },
+  "data": {
+    "main": {
+      "schema": {
+        "$ref": "schemas/main.json"
+      },
+      "sample": "samples/main.json",
+      "description": "The course, the cohort, who signs, and the participants; those who completed get a certificate."
+    }
+  },
+  "vars": {
+    "distinction": "Coalesce(data.main.course.distinctionScore, 0.9)"
+  },
+  "styles": {
+    "tokens": {
+      "brand": "#1F6F5C",
+      "brand-dark": "#14473B",
+      "gold": "#A8792A",
+      "ink": "#1E2B2E",
+      "muted": "#5A6668"
+    },
+    "defaults": {
+      "document": {
+        "color": "var(--ink)",
+        "font-family": "Arimo",
+        "font-size": "10pt",
+        "line-height": 1.4
+      },
+      "heading": {
+        "margin": "1mm 0 5mm",
+        "color": "var(--brand-dark)",
+        "font-size": "30pt",
+        "font-weight": 700,
+        "line-height": 1.1,
+        "letter-spacing": "0.5pt"
+      }
+    },
+    "classes": {
+      "academy": {
+        "color": "var(--gold)",
+        "font-size": "10pt",
+        "font-weight": 700,
+        "letter-spacing": "4pt",
+        "text-transform": "uppercase"
+      },
+      "lead": {
+        "color": "var(--muted)",
+        "font-size": "11pt",
+        "letter-spacing": "0.4pt"
+      },
+      "name": {
+        "max-width": "190mm",
+        "margin": "2mm auto 0",
+        "padding-bottom": "2mm",
+        "border-bottom": "0.75pt solid var(--gold)",
+        "color": "var(--brand)",
+        "font-size": "28pt",
+        "font-weight": 700,
+        "white-space": "nowrap",
+        "text-fit": "shrink"
+      },
+      "org": {
+        "margin-top": "1.5mm",
+        "font-size": "9.5pt"
+      },
+      "statement": {
+        "max-width": "185mm",
+        "margin": "5mm auto 0",
+        "font-size": "11pt",
+        "line-height": 1.45
+      },
+      "distinction": {
+        "margin-top": "3mm",
+        "padding": "1.5pt 10pt",
+        "border": "0.75pt solid var(--gold)",
+        "border-radius": "8pt",
+        "color": "var(--gold)",
+        "font-size": "8.5pt",
+        "font-weight": 700,
+        "letter-spacing": "2pt",
+        "text-transform": "uppercase"
+      },
+      "completed": {
+        "margin-top": "3mm",
+        "font-size": "9pt"
+      },
+      "signature": {
+        "padding-top": "1.5mm",
+        "border-top": "0.75pt solid var(--ink)"
+      },
+      "signer": {
+        "font-weight": 700
+      },
+      "strong": {
+        "font-weight": 700
+      },
+      "small": {
+        "font-size": "7.5pt",
+        "line-height": 1.35
+      },
+      "muted": {
+        "color": "var(--muted)"
+      }
+    }
+  },
+  "assets": {
+    "certificate-border": {
+      "kind": "image",
+      "src": "assets/certificate-border.svg"
+    },
+    "academy-seal": {
+      "kind": "image",
+      "src": "assets/academy-seal.svg"
+    }
+  },
+  "pages": [
+    {
+      "id": "certificate-page",
+      "size": "A4",
+      "orientation": "landscape",
+      "margin": "22mm 30mm 20mm",
+      "background": [
+        {
+          "type": "image",
+          "id": "border-art",
+          "style": {
+            "width": "297mm",
+            "height": "210mm",
+            "top": 0,
+            "left": 0
+          },
+          "asset": "certificate-border",
+          "decorative": true,
+          "fit": "fill"
+        }
+      ]
+    }
+  ],
+  "body": [
+    {
+      "type": "repeat",
+      "id": "certificates",
+      "source": "data.main.participants",
+      "as": "p",
+      "filter": "p.status == 'completed'",
+      "detail": [
+        {
+          "type": "box",
+          "id": "certificate",
+          "style": {
+            "min-height": "164mm",
+            "text-align": "center",
+            "display": "flex",
+            "flex-direction": "column"
+          },
+          "children": [
+            {
+              "type": "text",
+              "id": "academy",
+              "class": [
+                "academy"
+              ],
+              "content": "Quillmont Academy"
+            },
+            {
+              "type": "heading",
+              "id": "certificate-title",
+              "level": 1,
+              "content": "Certificate of completion"
+            },
+            {
+              "type": "text",
+              "id": "certifies",
+              "class": [
+                "lead"
+              ],
+              "content": "This certifies that"
+            },
+            {
+              "type": "text",
+              "id": "participant-name",
+              "class": [
+                "name"
+              ],
+              "content": "{{ p.name }}"
+            },
+            {
+              "type": "text",
+              "id": "participant-org",
+              "if": "has(p.organisation)",
+              "class": [
+                "muted",
+                "org"
+              ],
+              "content": "{{ p.organisation }}"
+            },
+            {
+              "type": "text",
+              "id": "statement",
+              "class": [
+                "statement"
+              ],
+              "content": [
+                "has completed the ",
+                {
+                  "type": "span",
+                  "content": "{{ data.main.course.title }}",
+                  "class": [
+                    "strong"
+                  ]
+                },
+                " course, {{ data.main.course.hours }} hours over {{ data.main.course.modules }} modules, and passed the final assessment with a score of ",
+                {
+                  "type": "span",
+                  "content": "{{ Format(p.score, 'percent:0') }}",
+                  "class": [
+                    "strong"
+                  ]
+                },
+                "."
+              ]
+            },
+            {
+              "type": "box",
+              "id": "distinction-row",
+              "if": "p.score >= vars.distinction",
+              "style": {
+                "display": "flex",
+                "justify-content": "center"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "id": "distinction",
+                  "class": [
+                    "distinction"
+                  ],
+                  "content": "With distinction"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "completed",
+              "class": [
+                "muted",
+                "completed"
+              ],
+              "content": "Completed on {{ Format(p.completed, 'd MMMM y') }} · {{ data.main.cohort.name }} cohort, {{ data.main.cohort.delivery }}"
+            },
+            {
+              "type": "box",
+              "id": "signatures",
+              "style": {
+                "margin-top": "auto",
+                "padding-top": "6mm",
+                "column-gap": "8mm",
+                "display": "grid",
+                "align-items": "end",
+                "grid-template-columns": "1fr 40mm 1fr"
+              },
+              "children": [
+                {
+                  "type": "box",
+                  "id": "sign-left",
+                  "class": [
+                    "signature"
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "signer-left-name",
+                      "class": [
+                        "signer"
+                      ],
+                      "content": "{{ data.main.signatories[0].name }}"
+                    },
+                    {
+                      "type": "text",
+                      "id": "signer-left-role",
+                      "class": [
+                        "muted",
+                        "small"
+                      ],
+                      "content": "{{ data.main.signatories[0].role }}"
+                    }
+                  ]
+                },
+                {
+                  "type": "box",
+                  "id": "seal-cell",
+                  "children": [
+                    {
+                      "type": "image",
+                      "id": "seal",
+                      "style": {
+                        "width": "27mm",
+                        "height": "29.7mm",
+                        "margin": "0 auto"
+                      },
+                      "asset": "academy-seal",
+                      "alt": "The seal of Quillmont Academy"
+                    }
+                  ]
+                },
+                {
+                  "type": "box",
+                  "id": "sign-right",
+                  "class": [
+                    "signature"
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "signer-right-name",
+                      "class": [
+                        "signer"
+                      ],
+                      "content": "{{ data.main.signatories[1].name }}"
+                    },
+                    {
+                      "type": "text",
+                      "id": "signer-right-role",
+                      "class": [
+                        "muted",
+                        "small"
+                      ],
+                      "content": "{{ data.main.signatories[1].role }}"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "id": "verify",
+              "style": {
+                "margin-top": "5mm",
+                "display": "flex",
+                "align-items": "flex-end",
+                "gap": "3mm"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "id": "certificate-number",
+                  "class": [
+                    "small",
+                    "muted"
+                  ],
+                  "style": {
+                    "text-align": "left",
+                    "flex": 1
+                  },
+                  "content": [
+                    "Certificate ",
+                    {
+                      "type": "span",
+                      "content": "{{ p.certificate }}",
+                      "class": [
+                        "strong"
+                      ]
+                    },
+                    " · Course {{ data.main.course.code }}"
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "verify-text",
+                  "class": [
+                    "small",
+                    "muted"
+                  ],
+                  "style": {
+                    "text-align": "right"
+                  },
+                  "content": [
+                    "Scan to check this certificate,",
+                    {
+                      "type": "br"
+                    },
+                    "or visit quillmont.example/verify"
+                  ]
+                },
+                {
+                  "type": "barcode",
+                  "id": "verify-code",
+                  "style": {
+                    "width": "16mm",
+                    "height": "16mm"
+                  },
+                  "symbology": "qr",
+                  "value": "'https://quillmont.example/verify/' + p.certificate",
+                  "errorCorrection": "M",
+                  "alt": "QR code to verify certificate {{ p.certificate }}"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "separator": [
+        {
+          "type": "pagebreak",
+          "id": "next-certificate"
+        }
+      ],
+      "empty": [
+        {
+          "type": "text",
+          "id": "no-certificates",
+          "class": [
+            "lead"
+          ],
+          "content": "No participant in this cohort has completed the course yet."
+        }
+      ]
+    }
+  ],
+  "tests": [
+    {
+      "name": "sample gives a certificate to each of the three who completed",
+      "data": {
+        "main": "samples/main.json"
+      },
+      "expect": [
+        "pages.size() == 3",
+        "diagnostics.all(d, d.severity != 'error' && d.severity != 'warning')",
+        "nodes('participant-name').map(b, b.text) == ['Orla Vantreight', 'Benedikt Saarlund', 'Mateus Brenneck']",
+        "nodes('certificate').map(b, b.page) == [1, 2, 3]",
+        "nodes('distinction').map(b, b.page) == [1]",
+        "nodes('participant-org').size() == 2",
+        "text('statement') == 'has completed the Fieldbook Administrator course, 14 hours over 6 modules, and passed the final assessment with a score of 94%.'",
+        "nodes('verify-code').size() == 3",
+        "nodes('seal').all(s, Abs(s.x + s.w / 2 - pages[0].width / 2) < 0.5)",
+        "nodes('certificate-title').all(t, Abs(t.x + t.w / 2 - pages[0].width / 2) < 0.5)"
+      ],
+      "snapshot": true
+    },
+    {
+      "name": "a long name shrinks to fit and still gets one page",
+      "data": {
+        "main": "tests/long-name.json"
+      },
+      "expect": [
+        "pages.size() == 1",
+        "diagnostics.all(d, d.severity != 'error' && d.severity != 'warning')",
+        "text('participant-name') == 'Anneliese Marguerite Vantreight-Saarlund'",
+        "visible('distinction')",
+        "node('verify-code').page == 1"
+      ]
+    },
+    {
+      "name": "a cohort with no one finished says so",
+      "data": {
+        "main": {
+          "course": {
+            "code": "FB-ADM-201",
+            "title": "Fieldbook Administrator",
+            "hours": 14,
+            "modules": 6
+          },
+          "cohort": {
+            "name": "December 2026",
+            "delivery": "online, instructor-led"
+          },
+          "signatories": [
+            {
+              "name": "Callum Westerby",
+              "role": "Course lead"
+            },
+            {
+              "name": "Dr Imogen Rathbourne",
+              "role": "Head of Quillmont Academy"
+            }
+          ],
+          "participants": [
+            {
+              "name": "Yusra Calloway-Finch",
+              "status": "in-progress"
+            }
+          ]
+        }
+      },
+      "expect": [
+        "pages.size() == 1",
+        "!visible('certificate')",
+        "visible('no-certificates')"
+      ]
+    }
+  ]
+}

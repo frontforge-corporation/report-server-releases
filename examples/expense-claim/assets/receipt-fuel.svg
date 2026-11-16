@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 84" width="60" height="84">
+  <!-- Made by Frontforge Pty Ltd for the Report Server example gallery, 2026. Licence: CC0 1.0 (public domain dedication), so anyone who copies the example may use it. -->
+  <title>Fuel receipt</title>
+  <path d="M2 2h56v76l-4 4-4-4-4 4-4-4-4 4-4-4-4 4-4-4-4 4-4-4-4 4-4-4-4 4-4-4z" fill="#FBFAF6" stroke="#B9C3C7" stroke-width="1"/>
+  <rect x="18" y="9" width="16" height="22" rx="2" fill="#C8553D"/>
+  <rect x="21" y="12" width="10" height="6" rx="1" fill="#FBFAF6"/>
+  <rect x="16" y="30" width="20" height="3" rx="1" fill="#1F4E5F"/>
+  <path d="M34 14h4l3 4v10a2 2 0 0 1-4 0v-6h-3" fill="none" stroke="#1F4E5F" stroke-width="2" stroke-linejoin="round"/>
+  <g fill="#9AA6AB">
+    <rect x="10" y="40" width="40" height="2.4" rx="1"/>
+    <rect x="10" y="46" width="30" height="2.4" rx="1"/>
+    <rect x="10" y="52" width="36" height="2.4" rx="1"/>
+    <rect x="10" y="58" width="18" height="2.4" rx="1"/>
+  </g>
+  <rect x="10" y="65" width="40" height="5" rx="1" fill="#1F4E5F"/>
+</svg>

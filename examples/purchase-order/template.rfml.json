@@ -1,0 +1,1439 @@
+{
+  "$schema": "https://reportforge.dev/schema/rfml/0.2.json",
+  "rfml": "0.2",
+  "id": "purchase-order",
+  "meta": {
+    "title": "Purchase order",
+    "description": "A two-page A4 purchase order from Ostrand & Pell, an engineering consultancy, to a survey equipment supplier. Parameters choose the copy (supplier, goods receiving or accounts) and whether prices show. It has supplier and delivery blocks, line items with GST and totals, a Code 128 barcode of the PO number, an APPROVED stamp once the order is approved, and the terms and conditions on a last page of their own.",
+    "locale": "en-AU",
+    "currency": "AUD",
+    "tags": [
+      "example",
+      "purchase-order",
+      "internal",
+      "parameters",
+      "barcode"
+    ]
+  },
+  "params": [
+    {
+      "name": "copy",
+      "type": "string",
+      "label": "Copy",
+      "description": "Which copy of the order to print",
+      "default": "'supplier'",
+      "required": true,
+      "options": [
+        {
+          "value": "supplier",
+          "label": "Supplier copy"
+        },
+        {
+          "value": "receiving",
+          "label": "Goods receiving copy"
+        },
+        {
+          "value": "accounts",
+          "label": "Accounts copy"
+        }
+      ]
+    },
+    {
+      "name": "showPrices",
+      "type": "boolean",
+      "label": "Show prices",
+      "description": "Prices and totals; off by default on the goods receiving copy",
+      "default": "params.copy != 'receiving'"
+    }
+  ],
+  "data": {
+    "main": {
+      "schema": {
+        "$ref": "schemas/main.json"
+      },
+      "sample": "samples/main.json",
+      "description": "One purchase order: the supplier, where to deliver, the lines and whether it has been approved."
+    }
+  },
+  "vars": {
+    "gstRate": "0.1",
+    "subtotal": "Sum(data.main.lines.map(l, Round(l.quantity * l.unitPrice, 2)))",
+    "gst": "Round(vars.subtotal * vars.gstRate, 2)",
+    "total": "vars.subtotal + vars.gst",
+    "approved": "data.main.order.status == 'approved'",
+    "copyLabel": "Switch(params.copy, 'receiving', 'Goods receiving copy', 'accounts', 'Accounts copy', 'Supplier copy')"
+  },
+  "styles": {
+    "tokens": {
+      "brand": "#1F4E5F",
+      "accent": "#C8553D",
+      "ink": "#1E2326",
+      "muted": "#5B6B72",
+      "line": "#D9E1E4",
+      "panel": "#EEF3F4",
+      "positive": "#1F7A4D",
+      "warning": "#9A5B00",
+      "warning-bg": "#FDF1DC",
+      "space-1": "3pt",
+      "space-2": "6pt",
+      "space-3": "12pt"
+    },
+    "defaults": {
+      "document": {
+        "color": "var(--ink)",
+        "font-family": "Arimo",
+        "font-size": "9pt",
+        "line-height": 1.35
+      },
+      "heading": {
+        "margin": "var(--space-3) 0 var(--space-2)",
+        "color": "var(--brand)",
+        "font-size": "11pt",
+        "font-weight": 700
+      },
+      "table": {
+        "width": "100%",
+        "border-collapse": "collapse",
+        "parts": {
+          "cell": {
+            "padding": "4pt",
+            "border-bottom": "0.5pt solid var(--line)"
+          },
+          "header-cell": {
+            "padding-top": "5pt",
+            "padding-bottom": "5pt",
+            "border-bottom": "1pt solid var(--brand)",
+            "color": "var(--muted)",
+            "font-size": "7.5pt",
+            "font-weight": 700,
+            "letter-spacing": "0.3pt",
+            "text-transform": "uppercase"
+          }
+        }
+      }
+    },
+    "classes": {
+      "wordmark": {
+        "color": "var(--brand)",
+        "font-size": "18pt",
+        "font-weight": 700,
+        "line-height": 1.1
+      },
+      "muted": {
+        "color": "var(--muted)"
+      },
+      "small": {
+        "font-size": "7.5pt"
+      },
+      "strong": {
+        "font-weight": 700
+      },
+      "num": {
+        "font-variant-numeric": "tabular-nums",
+        "text-align": "right"
+      },
+      "kicker": {
+        "margin": "0 0 var(--space-1)",
+        "color": "var(--brand)",
+        "font-size": "7.5pt",
+        "font-weight": 700,
+        "letter-spacing": "0.3pt",
+        "text-transform": "uppercase"
+      },
+      "facts": {
+        "column-gap": "var(--space-3)",
+        "display": "grid",
+        "row-gap": "2pt",
+        "grid-template-columns": "auto 1fr"
+      },
+      "panel": {
+        "padding": "var(--space-2) var(--space-3)",
+        "border-radius": "3pt",
+        "background-color": "var(--panel)"
+      },
+      "party": {
+        "padding-top": "var(--space-2)",
+        "border-top": "1pt solid var(--brand)"
+      },
+      "line-item": {
+        "display": "flex",
+        "justify-content": "space-between",
+        "gap": "var(--space-2)"
+      },
+      "sign-line": {
+        "margin-top": "22pt",
+        "padding-top": "2pt",
+        "border-top": "0.75pt solid var(--ink)",
+        "color": "var(--muted)",
+        "font-size": "7.5pt"
+      },
+      "stamp": {
+        "width": "43mm",
+        "padding": "1.2mm 0 1mm",
+        "border": "2.5pt solid var(--positive)",
+        "border-radius": "2mm",
+        "color": "var(--positive)",
+        "font-size": "16pt",
+        "font-weight": 700,
+        "line-height": 1.1,
+        "letter-spacing": "1.2pt",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "rotate": "-8deg",
+        "opacity": 0.85
+      }
+    }
+  },
+  "pages": [
+    {
+      "id": "a4",
+      "size": "A4",
+      "margin": "16mm 16mm 18mm",
+      "footer": [
+        {
+          "type": "box",
+          "id": "page-footer",
+          "style": {
+            "padding-top": "var(--space-1)",
+            "border-top": "0.5pt solid var(--line)",
+            "display": "flex",
+            "justify-content": "space-between"
+          },
+          "children": [
+            {
+              "type": "text",
+              "id": "footer-company",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "Ostrand & Pell Pty Ltd  ·  ABN 64 357 902 118  ·  Level 4, 210 Quarrell Street, Brindlemoor VIC 3999"
+            },
+            {
+              "type": "text",
+              "id": "footer-page",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "{{ data.main.order.number }}  ·  page {{ page.number }} of {{ page.count }}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "terms-page",
+      "size": "A4",
+      "margin": "22mm 16mm 18mm",
+      "header": [
+        {
+          "type": "box",
+          "id": "terms-header",
+          "style": {
+            "margin-bottom": "var(--space-3)",
+            "padding-bottom": "var(--space-1)",
+            "border-bottom": "0.75pt solid var(--line)",
+            "display": "flex",
+            "justify-content": "space-between",
+            "align-items": "baseline"
+          },
+          "children": [
+            {
+              "type": "text",
+              "id": "terms-header-brand",
+              "class": [
+                "strong"
+              ],
+              "style": {
+                "color": "var(--brand)"
+              },
+              "content": "Ostrand & Pell"
+            },
+            {
+              "type": "text",
+              "id": "terms-header-order",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "Purchase order {{ data.main.order.number }}  ·  {{ vars.copyLabel }}"
+            }
+          ]
+        }
+      ],
+      "footer": [
+        {
+          "type": "box",
+          "id": "terms-footer",
+          "style": {
+            "padding-top": "var(--space-1)",
+            "border-top": "0.5pt solid var(--line)",
+            "display": "flex",
+            "justify-content": "space-between"
+          },
+          "children": [
+            {
+              "type": "text",
+              "id": "terms-footer-company",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "Ostrand & Pell Pty Ltd  ·  ABN 64 357 902 118  ·  Level 4, 210 Quarrell Street, Brindlemoor VIC 3999"
+            },
+            {
+              "type": "text",
+              "id": "terms-footer-page",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "{{ data.main.order.number }}  ·  page {{ page.number }} of {{ page.count }}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "body": [
+    {
+      "type": "pagestamp",
+      "id": "approved-stamp",
+      "if": "vars.approved",
+      "children": [
+        {
+          "type": "text",
+          "id": "approved-mark",
+          "class": [
+            "stamp"
+          ],
+          "style": {
+            "top": "13mm",
+            "left": "95mm"
+          },
+          "content": [
+            "Approved",
+            {
+              "type": "br"
+            },
+            {
+              "type": "span",
+              "content": "{{ data.main.order.approvedBy }}  ·  {{ Format(data.main.order.approvedOn, 'd MMM y') }}",
+              "style": {
+                "font-size": "6.5pt",
+                "letter-spacing": "0.2pt"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "box",
+      "id": "masthead",
+      "style": {
+        "padding-bottom": "var(--space-2)",
+        "border-bottom": "2pt solid var(--brand)",
+        "display": "flex",
+        "justify-content": "space-between",
+        "align-items": "flex-start"
+      },
+      "children": [
+        {
+          "type": "box",
+          "id": "brand",
+          "children": [
+            {
+              "type": "text",
+              "id": "wordmark",
+              "class": [
+                "wordmark"
+              ],
+              "content": "Ostrand & Pell"
+            },
+            {
+              "type": "text",
+              "id": "buyer-details",
+              "class": [
+                "muted"
+              ],
+              "style": {
+                "margin-top": "var(--space-1)"
+              },
+              "content": [
+                "Level 4, 210 Quarrell Street, Brindlemoor VIC 3999",
+                {
+                  "type": "br"
+                },
+                "purchasing@ostrandpell.example  ·  (03) 5550 0214",
+                {
+                  "type": "br"
+                },
+                "ABN 64 357 902 118"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "order-head",
+          "style": {
+            "text-align": "right"
+          },
+          "children": [
+            {
+              "type": "heading",
+              "id": "title",
+              "style": {
+                "margin": 0,
+                "font-size": "20pt",
+                "line-height": 1.1
+              },
+              "level": 1,
+              "content": "Purchase order"
+            },
+            {
+              "type": "text",
+              "id": "copy-label",
+              "class": [
+                "kicker"
+              ],
+              "style": {
+                "margin": "2pt 0 var(--space-2)",
+                "color": "var(--accent)"
+              },
+              "content": "{{ vars.copyLabel }}"
+            },
+            {
+              "type": "barcode",
+              "id": "po-barcode",
+              "style": {
+                "width": "52mm",
+                "height": "15mm",
+                "margin-left": "auto"
+              },
+              "symbology": "code128",
+              "value": "data.main.order.number",
+              "showText": true,
+              "alt": "Purchase order number {{ data.main.order.number }}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "awaiting-banner",
+      "if": "!vars.approved",
+      "class": [
+        "strong"
+      ],
+      "style": {
+        "margin-top": "var(--space-3)",
+        "padding": "var(--space-2) var(--space-3)",
+        "border-radius": "3pt",
+        "background-color": "var(--warning-bg)",
+        "color": "var(--warning)"
+      },
+      "content": "Awaiting approval. Don't supply against this order until it is approved; we'll send you the approved copy."
+    },
+    {
+      "type": "box",
+      "id": "order-facts",
+      "style": {
+        "margin-top": "var(--space-3)",
+        "column-gap": "var(--space-3)",
+        "display": "grid",
+        "grid-template-columns": "1fr 1fr"
+      },
+      "children": [
+        {
+          "type": "box",
+          "id": "facts-left",
+          "class": [
+            "facts"
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "po-label",
+              "class": [
+                "muted"
+              ],
+              "content": "PO number"
+            },
+            {
+              "type": "text",
+              "id": "po-value",
+              "content": "{{ data.main.order.number }}"
+            },
+            {
+              "type": "text",
+              "id": "order-date-label",
+              "class": [
+                "muted"
+              ],
+              "content": "Order date"
+            },
+            {
+              "type": "text",
+              "id": "order-date-value",
+              "content": "{{ Format(data.main.order.date, 'd MMMM y') }}"
+            },
+            {
+              "type": "text",
+              "id": "required-label",
+              "class": [
+                "muted"
+              ],
+              "content": "Required by"
+            },
+            {
+              "type": "text",
+              "id": "required-value",
+              "content": "{{ Format(data.main.order.requiredBy, 'EEEE d MMMM y') }}"
+            },
+            {
+              "type": "text",
+              "id": "quote-label",
+              "if": "!IsBlank(data.main.order.supplierQuote)",
+              "class": [
+                "muted"
+              ],
+              "content": "Your quote"
+            },
+            {
+              "type": "text",
+              "id": "quote-value",
+              "if": "!IsBlank(data.main.order.supplierQuote)",
+              "content": "{{ data.main.order.supplierQuote }}"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "facts-right",
+          "class": [
+            "facts"
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "requested-label",
+              "class": [
+                "muted"
+              ],
+              "content": "Requested by"
+            },
+            {
+              "type": "text",
+              "id": "requested-value",
+              "content": "{{ data.main.order.requestedBy }}"
+            },
+            {
+              "type": "text",
+              "id": "project-label",
+              "class": [
+                "muted"
+              ],
+              "content": "Project"
+            },
+            {
+              "type": "text",
+              "id": "project-value",
+              "content": "{{ data.main.order.project }}"
+            },
+            {
+              "type": "text",
+              "id": "cost-centre-label",
+              "class": [
+                "muted"
+              ],
+              "content": "Cost centre"
+            },
+            {
+              "type": "text",
+              "id": "cost-centre-value",
+              "content": "{{ data.main.order.costCentre }}"
+            },
+            {
+              "type": "text",
+              "id": "terms-short-label",
+              "class": [
+                "muted"
+              ],
+              "content": "Payment terms"
+            },
+            {
+              "type": "text",
+              "id": "terms-short-value",
+              "content": "{{ data.main.order.paymentTerms }}"
+            }
+          ]
+        }
+      ],
+      "meta": {
+        "label": "Order details"
+      }
+    },
+    {
+      "type": "box",
+      "id": "parties",
+      "style": {
+        "margin-top": "var(--space-3)",
+        "column-gap": "var(--space-3)",
+        "display": "grid",
+        "grid-template-columns": "1fr 1fr"
+      },
+      "children": [
+        {
+          "type": "box",
+          "id": "supplier",
+          "class": [
+            "party"
+          ],
+          "children": [
+            {
+              "type": "heading",
+              "id": "supplier-title",
+              "class": [
+                "kicker"
+              ],
+              "level": 2,
+              "content": "Supplier"
+            },
+            {
+              "type": "text",
+              "id": "supplier-name",
+              "class": [
+                "strong"
+              ],
+              "content": "{{ data.main.supplier.name }}"
+            },
+            {
+              "type": "repeat",
+              "id": "supplier-address",
+              "source": "data.main.supplier.addressLines",
+              "as": "a",
+              "detail": [
+                {
+                  "type": "text",
+                  "id": "supplier-address-line",
+                  "content": "{{ a }}"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "supplier-contact",
+              "style": {
+                "margin-top": "var(--space-1)"
+              },
+              "content": [
+                "Attention: {{ data.main.supplier.contact }}",
+                {
+                  "type": "br"
+                },
+                "{{ data.main.supplier.email }}  ·  {{ data.main.supplier.phone }}"
+              ]
+            },
+            {
+              "type": "text",
+              "id": "supplier-ids",
+              "class": [
+                "muted"
+              ],
+              "content": "ABN {{ data.main.supplier.abn }}  ·  supplier number {{ data.main.supplier.account }}"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "delivery",
+          "class": [
+            "party"
+          ],
+          "children": [
+            {
+              "type": "heading",
+              "id": "delivery-title",
+              "class": [
+                "kicker"
+              ],
+              "level": 2,
+              "content": "Deliver to"
+            },
+            {
+              "type": "text",
+              "id": "delivery-site",
+              "class": [
+                "strong"
+              ],
+              "content": "{{ data.main.delivery.site }}"
+            },
+            {
+              "type": "repeat",
+              "id": "delivery-address",
+              "source": "data.main.delivery.addressLines",
+              "as": "a",
+              "detail": [
+                {
+                  "type": "text",
+                  "id": "delivery-address-line",
+                  "content": "{{ a }}"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "delivery-contact",
+              "style": {
+                "margin-top": "var(--space-1)"
+              },
+              "content": "Site contact: {{ data.main.delivery.contact }}, {{ data.main.delivery.phone }}"
+            },
+            {
+              "type": "text",
+              "id": "delivery-instructions",
+              "if": "!IsBlank(data.main.delivery.instructions)",
+              "class": [
+                "muted"
+              ],
+              "content": "{{ data.main.delivery.instructions }}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "id": "lines-heading",
+      "level": 2,
+      "content": "Please supply"
+    },
+    {
+      "type": "table",
+      "id": "table-lines",
+      "source": "data.main.lines",
+      "as": "l",
+      "vars": {
+        "amount": "Round(l.quantity * l.unitPrice, 2)"
+      },
+      "columns": [
+        {
+          "id": "col-line",
+          "width": "5fr",
+          "header": "#",
+          "class": [
+            "muted"
+          ],
+          "cell": "{{ item.number }}"
+        },
+        {
+          "id": "col-code",
+          "width": "15fr",
+          "header": "Item",
+          "class": [
+            "muted"
+          ],
+          "cell": "{{ l.code }}"
+        },
+        {
+          "id": "col-description",
+          "width": "44fr",
+          "header": "Description",
+          "cell": "{{ l.description }}"
+        },
+        {
+          "id": "col-quantity",
+          "width": "7fr",
+          "header": "Qty",
+          "class": [
+            "num"
+          ],
+          "cell": "{{ l.quantity }}"
+        },
+        {
+          "id": "col-unit",
+          "width": "9fr",
+          "header": "Unit",
+          "cell": "{{ l.unit }}"
+        },
+        {
+          "id": "col-price",
+          "if": "params.showPrices",
+          "width": "13fr",
+          "header": "Unit price",
+          "class": [
+            "num"
+          ],
+          "cell": "{{ Format(l.unitPrice, 'currency') }}"
+        },
+        {
+          "id": "col-amount",
+          "if": "params.showPrices",
+          "width": "14fr",
+          "header": "Amount",
+          "class": [
+            "num",
+            "strong"
+          ],
+          "cell": "{{ Format(vars.amount, 'currency') }}"
+        },
+        {
+          "id": "col-received",
+          "if": "params.copy == 'receiving'",
+          "width": "14fr",
+          "header": "Received",
+          "style": {
+            "border-bottom": "0.75pt solid var(--ink)"
+          },
+          "cell": " "
+        },
+        {
+          "id": "col-check",
+          "if": "params.copy == 'receiving'",
+          "width": "8fr",
+          "header": "OK",
+          "style": {
+            "text-align": "center"
+          },
+          "cell": "☐"
+        }
+      ],
+      "empty": [
+        {
+          "type": "text",
+          "id": "no-lines",
+          "class": [
+            "muted"
+          ],
+          "content": "No lines on this order."
+        }
+      ],
+      "meta": {
+        "description": "Unit prices and amounts exclude GST."
+      }
+    },
+    {
+      "type": "box",
+      "id": "summary",
+      "style": {
+        "margin-top": "var(--space-3)",
+        "column-gap": "18pt",
+        "display": "grid",
+        "grid-template-columns": "1fr 72mm",
+        "break-before": "avoid",
+        "break-inside": "avoid"
+      },
+      "children": [
+        {
+          "type": "box",
+          "id": "notes",
+          "children": [
+            {
+              "type": "text",
+              "id": "quote-note",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "Quote PO number {{ data.main.order.number }} on your delivery docket and tax invoice. Send invoices to accounts@ostrandpell.example."
+            },
+            {
+              "type": "text",
+              "id": "terms-pointer",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "style": {
+                "margin-top": "var(--space-1)"
+              },
+              "content": "This order is subject to our terms and conditions of purchase on the last page."
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "totals",
+          "if": "params.showPrices",
+          "children": [
+            {
+              "type": "box",
+              "id": "totals-subtotal",
+              "class": [
+                "line-item"
+              ],
+              "style": {
+                "padding": "2pt 0"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "id": "totals-subtotal-label",
+                  "content": "Subtotal (excl. GST)"
+                },
+                {
+                  "type": "text",
+                  "id": "totals-subtotal-value",
+                  "class": [
+                    "num"
+                  ],
+                  "content": "{{ Format(vars.subtotal, 'currency') }}"
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "id": "totals-gst",
+              "class": [
+                "line-item"
+              ],
+              "style": {
+                "padding": "2pt 0"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "id": "totals-gst-label",
+                  "content": "GST"
+                },
+                {
+                  "type": "text",
+                  "id": "totals-gst-value",
+                  "class": [
+                    "num"
+                  ],
+                  "content": "{{ Format(vars.gst, 'currency') }}"
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "id": "totals-total",
+              "class": [
+                "line-item"
+              ],
+              "style": {
+                "margin-top": "var(--space-1)",
+                "padding-top": "var(--space-1)",
+                "border-top": "1pt solid var(--brand)",
+                "color": "var(--brand)",
+                "font-size": "12pt",
+                "font-weight": 700,
+                "align-items": "baseline"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "id": "totals-total-label",
+                  "content": "Total (incl. GST)"
+                },
+                {
+                  "type": "text",
+                  "id": "totals-total-value",
+                  "class": [
+                    "num"
+                  ],
+                  "content": "{{ Format(vars.total, 'currency') }}"
+                }
+              ]
+            }
+          ],
+          "meta": {
+            "label": "Totals"
+          }
+        }
+      ]
+    },
+    {
+      "type": "box",
+      "id": "sign-off",
+      "style": {
+        "margin-top": "18pt",
+        "column-gap": "var(--space-3)",
+        "display": "grid",
+        "grid-template-columns": "1fr 1fr",
+        "break-inside": "avoid"
+      },
+      "children": [
+        {
+          "type": "box",
+          "id": "authorised",
+          "class": [
+            "panel"
+          ],
+          "children": [
+            {
+              "type": "heading",
+              "id": "authorised-title",
+              "class": [
+                "kicker"
+              ],
+              "level": 2,
+              "content": "Authorised for Ostrand & Pell"
+            },
+            {
+              "type": "box",
+              "id": "authorised-sign",
+              "class": [
+                "line-item"
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "authorised-name",
+                  "class": [
+                    "sign-line"
+                  ],
+                  "style": {
+                    "flex": 2
+                  },
+                  "content": "{{ If(vars.approved, data.main.order.approvedBy, 'Name and signature') }}"
+                },
+                {
+                  "type": "text",
+                  "id": "authorised-date",
+                  "class": [
+                    "sign-line"
+                  ],
+                  "style": {
+                    "flex": 1
+                  },
+                  "content": "{{ If(vars.approved, Format(data.main.order.approvedOn, 'd/MM/y'), 'Date') }}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "received",
+          "if": "params.copy == 'receiving'",
+          "class": [
+            "panel"
+          ],
+          "children": [
+            {
+              "type": "heading",
+              "id": "received-title",
+              "class": [
+                "kicker"
+              ],
+              "level": 2,
+              "content": "Goods received"
+            },
+            {
+              "type": "box",
+              "id": "received-sign",
+              "class": [
+                "line-item"
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "received-name",
+                  "class": [
+                    "sign-line"
+                  ],
+                  "style": {
+                    "flex": 2
+                  },
+                  "content": "Name and signature"
+                },
+                {
+                  "type": "text",
+                  "id": "received-date",
+                  "class": [
+                    "sign-line"
+                  ],
+                  "style": {
+                    "flex": 1
+                  },
+                  "content": "Date"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "box",
+      "id": "terms",
+      "style": {
+        "font-size": "9pt",
+        "page": "terms-page"
+      },
+      "children": [
+        {
+          "type": "heading",
+          "id": "terms-title",
+          "style": {
+            "margin-top": 0,
+            "font-size": "14pt"
+          },
+          "level": 2,
+          "content": "Terms and conditions of purchase"
+        },
+        {
+          "type": "text",
+          "id": "terms-intro",
+          "class": [
+            "muted"
+          ],
+          "style": {
+            "margin-bottom": "var(--space-3)"
+          },
+          "content": "These terms apply to every purchase order Ostrand & Pell Pty Ltd issues. In them, “we” and “us” mean Ostrand & Pell Pty Ltd, and “you” means the supplier named on the order."
+        },
+        {
+          "type": "list",
+          "id": "terms-list",
+          "style": {
+            "padding-left": "14pt",
+            "column-count": 2,
+            "column-gap": "30pt",
+            "parts": {
+              "item": {
+                "margin-bottom": "var(--space-2)"
+              },
+              "marker": {
+                "color": "var(--brand)",
+                "font-weight": 700
+              }
+            }
+          },
+          "marker": "decimal",
+          "children": [
+            {
+              "type": "item",
+              "id": "term-1",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "term-1-text",
+                  "content": [
+                    {
+                      "type": "span",
+                      "content": "Acceptance. ",
+                      "class": [
+                        "strong"
+                      ]
+                    },
+                    "Delivering any of the goods, or starting the work, accepts this order on these terms. They replace any terms in your quote, delivery docket or invoice."
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "item",
+              "id": "term-2",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "term-2-text",
+                  "content": [
+                    {
+                      "type": "span",
+                      "content": "Price. ",
+                      "class": [
+                        "strong"
+                      ]
+                    },
+                    "Prices are fixed, in Australian dollars and exclude GST. Nothing extra is payable unless we agree to it in writing before it is incurred."
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "item",
+              "id": "term-3",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "term-3-text",
+                  "content": [
+                    {
+                      "type": "span",
+                      "content": "Delivery. ",
+                      "class": [
+                        "strong"
+                      ]
+                    },
+                    "Deliver to the address on the order by the date required, with a delivery docket that quotes the PO number. Tell us at once if you can't meet that date."
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "item",
+              "id": "term-4",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "term-4-text",
+                  "content": [
+                    {
+                      "type": "span",
+                      "content": "Risk and title. ",
+                      "class": [
+                        "strong"
+                      ]
+                    },
+                    "The goods stay at your risk until they are delivered and signed for. They become ours on delivery or on payment, whichever comes first."
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "item",
+              "id": "term-5",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "term-5-text",
+                  "content": [
+                    {
+                      "type": "span",
+                      "content": "Quality. ",
+                      "class": [
+                        "strong"
+                      ]
+                    },
+                    "The goods must match their description, be new and of acceptable quality, be fit for the purpose we have told you of, and meet every applicable Australian Standard."
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "item",
+              "id": "term-6",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "term-6-text",
+                  "content": [
+                    {
+                      "type": "span",
+                      "content": "Inspection and rejection. ",
+                      "class": [
+                        "strong"
+                      ]
+                    },
+                    "We may reject goods that are damaged, short or not to specification within 14 days of delivery. You collect rejected goods at your cost and replace them or refund us."
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "item",
+              "id": "term-7",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "term-7-text",
+                  "content": [
+                    {
+                      "type": "span",
+                      "content": "Invoices. ",
+                      "class": [
+                        "strong"
+                      ]
+                    },
+                    "Send one tax invoice per order to accounts@ostrandpell.example, quoting the PO number. We pay correct invoices on the payment terms on the front of this order."
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "item",
+              "id": "term-8",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "term-8-text",
+                  "content": [
+                    {
+                      "type": "span",
+                      "content": "Safety on site. ",
+                      "class": [
+                        "strong"
+                      ]
+                    },
+                    "Anyone delivering to one of our sites must sign in with the site contact, follow the site induction and wear the protective equipment the site requires."
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "item",
+              "id": "term-9",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "term-9-text",
+                  "content": [
+                    {
+                      "type": "span",
+                      "content": "Changes and cancellation. ",
+                      "class": [
+                        "strong"
+                      ]
+                    },
+                    "We may change or cancel any part of the order not yet dispatched by telling you in writing. We pay for goods already dispatched and costs you show you have reasonably incurred."
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "item",
+              "id": "term-10",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "term-10-text",
+                  "content": [
+                    {
+                      "type": "span",
+                      "content": "Warranty. ",
+                      "class": [
+                        "strong"
+                      ]
+                    },
+                    "You warrant the goods for 12 months from delivery, or for the manufacturer's warranty if that is longer, and pass the benefit of the manufacturer's warranty on to us."
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "item",
+              "id": "term-11",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "term-11-text",
+                  "content": [
+                    {
+                      "type": "span",
+                      "content": "Confidentiality. ",
+                      "class": [
+                        "strong"
+                      ]
+                    },
+                    "Drawings, specifications and project information we give you are confidential and may be used only to fill this order."
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "item",
+              "id": "term-12",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "term-12-text",
+                  "content": [
+                    {
+                      "type": "span",
+                      "content": "Law. ",
+                      "class": [
+                        "strong"
+                      ]
+                    },
+                    "The laws of Victoria govern this order, and its courts may hear any dispute about it."
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "outputs": {
+    "pdf": {
+      "standard": "PDF/UA-1"
+    },
+    "xlsx": {
+      "sheets": [
+        {
+          "name": "Lines",
+          "from": "table-lines",
+          "freeze": "A2"
+        }
+      ]
+    }
+  },
+  "tests": [
+    {
+      "name": "approved supplier copy has the stamp, prices and a terms page",
+      "data": {
+        "main": "samples/main.json"
+      },
+      "expect": [
+        "pages.size() == 2",
+        "diagnostics.all(d, d.severity != 'error')",
+        "text('copy-label') == 'SUPPLIER COPY'",
+        "nodes('approved-mark').size() == 1 && node('approved-mark').page == 1",
+        "!visible('awaiting-banner')",
+        "text('totals-subtotal-value') == '$2,072.60'",
+        "text('totals-gst-value') == '$207.26'",
+        "text('totals-total-value') == '$2,279.86'",
+        "node('po-barcode').page == 1",
+        "node('terms').page == 2 && nodes('term-12').map(b, b.page) == [2]",
+        "visible('col-amount') && !visible('col-received')"
+      ],
+      "snapshot": true
+    },
+    {
+      "name": "the goods receiving copy hides prices and adds a received column",
+      "data": {
+        "main": "samples/main.json"
+      },
+      "params": {
+        "copy": "receiving"
+      },
+      "expect": [
+        "pages.size() == 2",
+        "diagnostics.all(d, d.severity != 'error')",
+        "text('copy-label') == 'GOODS RECEIVING COPY'",
+        "!visible('col-price') && !visible('col-amount') && !visible('totals')",
+        "visible('col-received') && visible('received')",
+        "visible('approved-mark')"
+      ],
+      "snapshot": true
+    },
+    {
+      "name": "the accounts copy can hide prices too",
+      "data": {
+        "main": "samples/main.json"
+      },
+      "params": {
+        "copy": "accounts",
+        "showPrices": false
+      },
+      "expect": [
+        "text('copy-label') == 'ACCOUNTS COPY'",
+        "!visible('totals') && !visible('col-received')"
+      ]
+    },
+    {
+      "name": "an order awaiting approval has no stamp and says not to supply",
+      "data": {
+        "main": "tests/awaiting-approval.json"
+      },
+      "expect": [
+        "pages.size() == 2",
+        "diagnostics.all(d, d.severity != 'error')",
+        "!visible('approved-mark')",
+        "visible('awaiting-banner')",
+        "text('authorised-name') == 'Name and signature'",
+        "!visible('quote-value')",
+        "text('totals-total-value') == '$1,155.00'"
+      ]
+    }
+  ]
+}

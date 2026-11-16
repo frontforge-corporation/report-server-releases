@@ -1,0 +1,45 @@
+# The split profile: renderd as its own service, which reportd finds
+# through compose's DNS name and spreads renders over (renderer.discover:
+# dns). Each renderd requires a token made once in ./secrets.
+#
+#   docker compose -f docker-compose.yml -f split.yml up -d --scale renderd=3
+services:
+  secrets:
+    image: ${REPORTD_IMAGE:-ghcr.io/frontforge-corporation/report-server:0.10.0-rc.1}
+    user: "0:0"
+    command: ["reportd", "compose-secrets", "--dir", "/secrets"]
+    volumes:
+      - ./secrets:/secrets
+    restart: "no"
+    healthcheck:
+      disable: true
+
+  renderd:
+    image: ${REPORTD_IMAGE:-ghcr.io/frontforge-corporation/report-server:0.10.0-rc.1}
+    restart: unless-stopped
+    command: ["renderd", "--token-file", "/run/secrets/renderd-token"]
+    environment:
+      RENDERD_LISTEN: 0.0.0.0:43124
+    volumes:
+      - ./secrets:/run/secrets:ro
+    healthcheck:
+      test: ["CMD", "renderd", "--healthcheck"]
+      interval: 10s
+      timeout: 5s
+      start_period: 20s
+    depends_on:
+      secrets:
+        condition: service_completed_successfully
+
+  reportd:
+    environment:
+      # No renderd inside: the instances behind the name renderd.
+      REPORTD_RENDERER_COMMAND: ""
+      REPORTD_RENDERER_DISCOVER: dns
+      REPORTD_RENDERER_DISCOVERNAME: renderd:43124
+      REPORTD_RENDERER_TOKEN: secret:file:renderd-token
+    volumes:
+      - ./secrets:/run/secrets:ro
+    depends_on:
+      renderd:
+        condition: service_healthy

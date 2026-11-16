@@ -1,0 +1,51 @@
+# The postgres profile: users, keys, roles and sessions in Postgres 17
+# (state.driver postgres, docs/operations/state.md), with a password made
+# once in ./secrets, which git ignores.
+#
+#   docker compose -f docker-compose.yml -f postgres.yml up -d
+services:
+  secrets:
+    image: ${REPORTD_IMAGE:-ghcr.io/frontforge-corporation/report-server:0.10.0-rc.1}
+    # Root, to write to ./secrets whoever owns it.
+    user: "0:0"
+    command: ["reportd", "compose-secrets", "--dir", "/secrets"]
+    volumes:
+      - ./secrets:/secrets
+    restart: "no"
+    healthcheck:
+      disable: true
+
+  postgres:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: reportd
+      POSTGRES_DB: reportd
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
+    volumes:
+      - postgres:/var/lib/postgresql/data
+      - ./secrets:/run/secrets:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U reportd -d reportd"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    depends_on:
+      secrets:
+        condition: service_completed_successfully
+
+  reportd:
+    environment:
+      REPORTD_STATE_DRIVER: postgres
+      REPORTD_STATE_POSTGRES_URL: secret:file:postgres-url
+      # The keys every node must share on postgres (docs/operations/state.md).
+      REPORTD_AUTH_MFAKEY: secret:file:mfa-key
+      REPORTD_VIEWER_LINKSECRET: secret:file:link-key
+    volumes:
+      - ./secrets:/run/secrets:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres:

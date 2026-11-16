@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Course cohort",
+  "description": "A Quillmont Academy course cohort and its participants. Each participant who completed the course gets a certificate.",
+  "type": "object",
+  "required": ["course", "cohort", "signatories", "participants"],
+  "additionalProperties": false,
+  "properties": {
+    "course": {
+      "type": "object",
+      "title": "Course",
+      "required": ["code", "title", "hours", "modules"],
+      "additionalProperties": false,
+      "properties": {
+        "code": { "type": "string", "title": "Course code" },
+        "title": { "type": "string", "title": "Course title" },
+        "hours": { "type": "number", "minimum": 0, "title": "Learning hours" },
+        "modules": { "type": "integer", "minimum": 1, "title": "Modules" },
+        "distinctionScore": { "type": "number", "minimum": 0, "maximum": 1, "default": 0.9, "title": "Score for a distinction", "description": "As a fraction: 0.9 is 90%." }
+      }
+    },
+    "cohort": {
+      "type": "object",
+      "title": "Cohort",
+      "required": ["name", "delivery"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string", "title": "Cohort" },
+        "delivery": { "type": "string", "title": "How it was taught", "description": "Such as \"online, instructor-led\"." }
+      }
+    },
+    "signatories": {
+      "type": "array",
+      "title": "Signatories",
+      "description": "The two people who sign each certificate, left then right.",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["name", "role"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string", "title": "Name" },
+          "role": { "type": "string", "title": "Role" }
+        }
+      }
+    },
+    "participants": {
+      "type": "array",
+      "title": "Participants",
+      "items": {
+        "type": "object",
+        "required": ["name", "status"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string", "title": "Name as it goes on the certificate" },
+          "organisation": { "type": "string", "title": "Organisation" },
+          "status": { "type": "string", "enum": ["completed", "in-progress", "withdrawn"], "title": "Status" },
+          "score": { "type": "number", "minimum": 0, "maximum": 1, "title": "Final assessment score", "description": "As a fraction: 0.92 is 92%." },
+          "completed": { "type": "string", "format": "date", "title": "Completed on" },
+          "certificate": { "type": "string", "pattern": "^QA-[0-9]{2}-[0-9]{4}$", "title": "Certificate number", "description": "Issued when the participant completes; the QR code verifies it." }
+        }
+      }
+    }
+  }
+}

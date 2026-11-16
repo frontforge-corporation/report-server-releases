@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "One team's roster and timesheet for a fortnight",
+  "type": "object",
+  "required": [
+    "roster",
+    "staff",
+    "entries"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "roster": {
+      "type": "object",
+      "title": "Roster",
+      "required": [
+        "team",
+        "periodStart",
+        "periodEnd",
+        "ordinaryHours",
+        "issued"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "team": {
+          "type": "string",
+          "title": "Team"
+        },
+        "periodStart": {
+          "type": "string",
+          "format": "date",
+          "title": "First day",
+          "description": "A Monday"
+        },
+        "periodEnd": {
+          "type": "string",
+          "format": "date",
+          "title": "Last day"
+        },
+        "ordinaryHours": {
+          "type": "number",
+          "title": "Ordinary hours a day",
+          "description": "Hours beyond this on a weekday are overtime"
+        },
+        "issued": {
+          "type": "string",
+          "format": "date",
+          "title": "Issued"
+        },
+        "approvedBy": {
+          "type": "string",
+          "title": "Approved by"
+        },
+        "approvedOn": {
+          "type": "string",
+          "format": "date",
+          "title": "Approved on"
+        }
+      }
+    },
+    "staff": {
+      "type": "array",
+      "title": "Staff",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "role",
+          "employment"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Staff number"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "role": {
+            "type": "string",
+            "title": "Role"
+          },
+          "employment": {
+            "type": "string",
+            "title": "Employment",
+            "enum": [
+              "Full time",
+              "Part time"
+            ]
+          }
+        }
+      }
+    },
+    "entries": {
+      "type": "array",
+      "title": "Roster entries",
+      "description": "One entry per person per day of the period, days off included",
+      "items": {
+        "type": "object",
+        "required": [
+          "staff",
+          "date",
+          "kind",
+          "hours"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "staff": {
+            "type": "string",
+            "title": "Staff number",
+            "description": "The `id` of a person in `staff`"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "title": "Date"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind of day",
+            "enum": [
+              "work",
+              "leave",
+              "personal",
+              "off"
+            ]
+          },
+          "hours": {
+            "type": "number",
+            "title": "Hours",
+            "description": "Hours worked, or hours of leave taken; 0 on a day off"
+          }
+        }
+      }
+    }
+  }
+}

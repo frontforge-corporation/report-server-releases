@@ -1,0 +1,45 @@
+{
+  "release": {
+    "version": "4.3",
+    "build": "4.3.0 (1240)",
+    "released": "2026-12-08",
+    "edition": 4
+  },
+  "support": {
+    "phone": "1800 975 708",
+    "email": "help@quillmont.example",
+    "web": "help.quillmont.example",
+    "hours": "7 am to 7 pm AEST, every day"
+  },
+  "limits": {
+    "photosPerFinding": 20,
+    "photoMegapixels": 12,
+    "offlineDays": 21,
+    "reopenHours": 48
+  },
+  "requirements": [
+    {
+      "platform": "Phone or tablet",
+      "needs": "The Fieldbook app, with a camera and location turned on."
+    }
+  ],
+  "troubleshooting": [],
+  "glossary": [
+    {
+      "term": "Workspace",
+      "definition": "An organisation's own space in Fieldbook."
+    },
+    {
+      "term": "Assignment",
+      "definition": "An inspection someone has been asked to do."
+    },
+    {
+      "term": "Finding",
+      "definition": "Something that needs action."
+    },
+    {
+      "term": "Hold point",
+      "definition": "A question that waits for a supervisor's approval."
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "invoice": {
+    "number": "INV-204517",
+    "issueDate": "2026-10-20",
+    "dueDate": "2026-11-19",
+    "purchaseOrder": "PO-KB-0412",
+    "paymentReference": "20451703",
+    "termsDays": 30
+  },
+  "customer": {
+    "name": "Kingfisher Bend Builders Pty Ltd",
+    "abn": "98 765 432 109",
+    "account": "BLD-30815",
+    "attention": "Sam Okafor, Site Manager",
+    "addressLines": ["Unit 4, 18 Reedvale Road", "REEDVALE QLD 4993"]
+  },
+  "works": {
+    "site": "Lot 27, 9 Heron Court, Kingfisher Bend QLD 4996",
+    "description": "New 25 mm water connection and meter installation",
+    "application": "CON-2026-0815",
+    "meter": "LW25-0048213",
+    "completed": "2026-10-14"
+  },
+  "lines": [
+    { "code": "WC-25", "description": "Water service connection, 25 mm, tapping to main", "quantity": 1, "unit": "each", "unitPrice": 1850.00, "taxable": true },
+    { "code": "MT-25", "description": "Water meter, 25 mm, supplied and installed", "quantity": 1, "unit": "each", "unitPrice": 486.00, "taxable": true },
+    { "code": "BF-25", "description": "Testable backflow prevention device, 25 mm", "quantity": 1, "unit": "each", "unitPrice": 612.50, "taxable": true },
+    { "code": "PL-32", "description": "Service pipe, 32 mm PE, main to meter", "quantity": 14, "unit": "m", "unitPrice": 42.80, "taxable": true },
+    { "code": "RS-FP", "description": "Footpath reinstatement, broom-finished concrete", "quantity": 3.5, "unit": "m²", "unitPrice": 165.00, "taxable": true },
+    { "code": "TM-02", "description": "Traffic management, two controllers", "quantity": 4, "unit": "hr", "unitPrice": 138.00, "taxable": true },
+    { "code": "IC-01", "description": "Water network infrastructure charge", "quantity": 1, "unit": "lot", "unitPrice": 2950.00, "taxable": false },
+    { "code": "DS-05", "description": "Builder discount, 5% of connection and meter", "quantity": 1, "unit": "each", "unitPrice": -116.80, "taxable": true }
+  ]
+}

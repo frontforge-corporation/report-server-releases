@@ -1,0 +1,9 @@
+{
+  "test": "sample claim fits on one page with every receipt",
+  "pages": [
+    {
+      "page": 1,
+      "sha256": "fe2b59127ca106ea1490db3e6913d09a890e6666dc60a47cceb6c2bedf71f209"
+    }
+  ]
+}

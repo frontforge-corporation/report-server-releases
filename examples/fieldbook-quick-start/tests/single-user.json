@@ -1,0 +1,9 @@
+{
+  "printed": "2026-11-02",
+  "app": { "version": "4.2", "downloadMb": 86.4, "webAddress": "app.quillmont.example", "helpUrl": "https://quillmont.example/fieldbook/start" },
+  "workspace": { "name": "Orrin Lift Inspections", "code": "ORRIN-0007" },
+  "plan": { "name": "Solo", "pricePerUser": 19, "users": 1, "devicesPerUser": 1, "storageGb": 20, "usedGb": 0.4, "offlinePhotos": 2500, "renews": "2027-03-31" },
+  "support": [
+    { "channel": "email", "days": "everyday", "replyHours": 1, "contact": "solo@quillmont.example" }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "letter": {
+    "date": "2026-10-27",
+    "reference": "NW-2027-004",
+    "salutation": "Resident"
+  },
+  "recipient": {
+    "name": "The Resident",
+    "addressLines": [
+      "Unit 6",
+      "27 Sandpiper Parade",
+      "KINGFISHER BEND QLD 4996"
+    ]
+  },
+  "works": {
+    "street": "Sandpiper Parade",
+    "suburb": "Kingfisher Bend",
+    "start": "2027-02-01",
+    "end": "2027-05-14",
+    "days": "Monday to Friday",
+    "hours": "7am to 5pm",
+    "length": 1350,
+    "outageHours": 6
+  },
+  "schedule": [
+    {
+      "stage": "Site set-up and survey",
+      "from": "2027-02-01",
+      "to": "2027-02-05",
+      "detail": "Marking services, fencing and signs. No effect on your supply."
+    },
+    {
+      "stage": "Laying the new main, north end",
+      "from": "2027-02-08",
+      "to": "2027-03-05",
+      "detail": "Trenching from Weir Street to Heron Court. Short waits at driveways."
+    },
+    {
+      "stage": "Road crossing at Heron Court",
+      "from": "2027-03-08",
+      "to": "2027-03-12",
+      "detail": "Night work under traffic control. One lane open at all times."
+    },
+    {
+      "stage": "Laying the new main, south end",
+      "from": "2027-03-15",
+      "to": "2027-04-09",
+      "detail": "Trenching from Heron Court to the reserve. Short waits at driveways."
+    },
+    {
+      "stage": "Testing and disinfection",
+      "from": "2027-04-12",
+      "to": "2027-04-16",
+      "detail": "Flushing and water quality tests. No effect on your supply."
+    },
+    {
+      "stage": "Connecting properties, north end",
+      "from": "2027-04-19",
+      "to": "2027-04-23",
+      "detail": "Water off for up to 6 hours; we card your letterbox first."
+    },
+    {
+      "stage": "Connecting properties, south end",
+      "from": "2027-04-26",
+      "to": "2027-04-30",
+      "detail": "Water off for up to 6 hours; we card your letterbox first."
+    },
+    {
+      "stage": "Removing the old main",
+      "from": "2027-05-03",
+      "to": "2027-05-07",
+      "detail": "Capping the old pipe at each end. No effect on your supply."
+    },
+    {
+      "stage": "Reinstatement",
+      "from": "2027-05-10",
+      "to": "2027-05-14",
+      "detail": "Restoring footpaths, kerbs, verges and the road surface."
+    }
+  ],
+  "contact": {
+    "name": "Priya Raman",
+    "title": "Project Officer",
+    "phone": "(07) 5550 0123",
+    "mobile": "0491 570 156",
+    "email": "customercare@larkmere.example"
+  },
+  "signatory": {
+    "name": "Daniel Whitlock",
+    "title": "Manager, Network Delivery"
+  }
+}

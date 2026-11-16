@@ -1,0 +1,43 @@
+{
+  "claim": {
+    "number": "EC-26-0394",
+    "submitted": "2026-10-30",
+    "periodStart": "2026-10-27",
+    "periodEnd": "2026-10-28",
+    "purpose": "Overnight site visit to set out the survey control for the Tannerby Creek footbridge",
+    "project": "P-2291 Tannerby Creek footbridge",
+    "costCentre": "420 Bridges and Structures"
+  },
+  "claimant": {
+    "name": "Hugo Dellacourt",
+    "staffNumber": "OP-1203",
+    "position": "Survey technician",
+    "email": "hugo.dellacourt@ostrandpell.example"
+  },
+  "lines": [
+    {
+      "date": "2026-10-28",
+      "category": "Accommodation",
+      "description": "Hotel, one night, Kelvenhurst",
+      "amount": 162.00,
+      "gst": 14.73,
+      "receipt": "till"
+    },
+    {
+      "date": "2026-10-27",
+      "category": "Travel",
+      "description": "Taxi, Brindlemoor station to the Tannerby Creek site",
+      "amount": 34.10,
+      "gst": 3.10,
+      "receipt": "taxi"
+    },
+    {
+      "date": "2026-10-28",
+      "category": "Parking",
+      "description": "Parking, Kelvenhurst station, two days",
+      "amount": 18.60,
+      "gst": 1.69,
+      "receipt": "till"
+    }
+  ]
+}

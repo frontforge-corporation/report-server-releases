@@ -1,0 +1,2067 @@
+{
+  "$schema": "https://reportforge.dev/schema/rfml/0.1.json",
+  "rfml": "0.1",
+  "id": "fieldbook-user-guide",
+  "meta": {
+    "title": "Fieldbook user guide",
+    "description": "Quillmont Software's A4 user guide for Fieldbook, its site-inspection app: a cover with an illustration, a table of contents, numbered chapters with footnotes, note, warning and tip callouts from one component, left and right pages with mirrored margins and the chapter in the running header, and a two-column glossary. Version, limits, troubleshooting and glossary come from the data.",
+    "locale": "en-AU",
+    "tags": [
+      "example",
+      "documentation",
+      "user-guide",
+      "toc",
+      "footnotes",
+      "columns"
+    ]
+  },
+  "data": {
+    "main": {
+      "schema": {
+        "$ref": "schemas/main.json"
+      },
+      "sample": "samples/main.json",
+      "description": "What changes in the guide from release to release: the version, support contacts, product limits, requirements, troubleshooting entries and glossary terms."
+    }
+  },
+  "vars": {
+    "version": "data.main.release.version",
+    "released": "Format(data.main.release.released, 'd MMMM y')",
+    "glossary": "data.main.glossary"
+  },
+  "styles": {
+    "tokens": {
+      "brand": "#1D6F6A",
+      "brand-dark": "#14504C",
+      "accent": "#C77E14",
+      "ink": "#1E2328",
+      "muted": "#5B6770",
+      "line": "#D9E2E1",
+      "panel": "#EEF5F4",
+      "note": "#1D6F6A",
+      "note-tint": "#EEF5F4",
+      "warning": "#B54708",
+      "warning-tint": "#FDF1E3",
+      "tip": "#2E7D32",
+      "tip-tint": "#EDF6EE",
+      "space-1": "3pt",
+      "space-2": "6pt",
+      "space-3": "12pt"
+    },
+    "defaults": {
+      "document": {
+        "color": "var(--ink)",
+        "font-family": "Arimo",
+        "font-size": "10pt",
+        "line-height": 1.45
+      },
+      "heading": {
+        "color": "var(--brand-dark)",
+        "font-weight": 700,
+        "line-height": 1.2
+      },
+      "text": {
+        "margin": "0 0 var(--space-2)"
+      },
+      "list": {
+        "margin": "0 0 var(--space-2)",
+        "padding-left": "16pt",
+        "parts": {
+          "item": {
+            "margin-bottom": "var(--space-1)"
+          },
+          "marker": {
+            "color": "var(--brand)",
+            "font-weight": 700
+          }
+        }
+      },
+      "table": {
+        "width": "100%",
+        "margin": "var(--space-1) 0 var(--space-3)",
+        "font-size": "9pt",
+        "line-height": 1.35,
+        "border-collapse": "collapse",
+        "parts": {
+          "cell": {
+            "padding": "4pt 8pt 4pt 0",
+            "border-bottom": "0.5pt solid var(--line)"
+          },
+          "header-cell": {
+            "border-bottom": "1pt solid var(--brand)",
+            "color": "var(--muted)",
+            "font-size": "8pt",
+            "font-weight": 700
+          }
+        }
+      },
+      "footnote": {
+        "parts": {
+          "footnote-marker": {
+            "color": "var(--brand)",
+            "font-weight": 700
+          },
+          "footnote-area": {
+            "color": "var(--muted)",
+            "font-size": "8pt",
+            "line-height": 1.35
+          },
+          "footnote-separator": {
+            "border-top": "0.5pt solid var(--line)"
+          }
+        }
+      }
+    },
+    "classes": {
+      "h1": {
+        "margin": "0 0 10pt",
+        "padding-bottom": "6pt",
+        "border-bottom": "1.5pt solid var(--line)",
+        "font-size": "24pt"
+      },
+      "h2": {
+        "margin": "14pt 0 5pt",
+        "font-size": "13pt"
+      },
+      "num": {
+        "color": "var(--accent)"
+      },
+      "lead": {
+        "margin": "0 0 10pt",
+        "color": "var(--muted)",
+        "font-size": "11.5pt",
+        "line-height": 1.4
+      },
+      "ui": {
+        "font-weight": 700
+      },
+      "muted": {
+        "color": "var(--muted)"
+      },
+      "small": {
+        "font-size": "8pt"
+      },
+      "kicker": {
+        "color": "var(--accent)",
+        "font-size": "8pt",
+        "font-weight": 700,
+        "letter-spacing": "0.6pt",
+        "text-transform": "uppercase"
+      },
+      "step": {
+        "margin": 0
+      },
+      "callout": {
+        "margin": "8pt 0 10pt",
+        "padding": "7pt 10pt 7pt 10pt",
+        "border-left": "3pt solid var(--note)",
+        "border-radius": "2pt",
+        "background-color": "var(--note-tint)",
+        "break-inside": "avoid"
+      },
+      "callout-warning": {
+        "border-left-color": "var(--warning)",
+        "background-color": "var(--warning-tint)"
+      },
+      "callout-tip": {
+        "border-left-color": "var(--tip)",
+        "background-color": "var(--tip-tint)"
+      },
+      "callout-label": {
+        "margin": "0 0 2pt",
+        "color": "var(--note)",
+        "font-size": "8pt",
+        "font-weight": 700,
+        "letter-spacing": "0.5pt",
+        "text-transform": "uppercase"
+      },
+      "callout-text": {
+        "margin": 0,
+        "font-size": "9.5pt"
+      },
+      "band": {
+        "margin-bottom": "10pt",
+        "padding-bottom": "var(--space-1)",
+        "border-bottom": "0.5pt solid var(--line)",
+        "color": "var(--muted)",
+        "font-size": "8pt",
+        "display": "flex",
+        "justify-content": "space-between"
+      },
+      "band-foot": {
+        "padding-top": "var(--space-1)",
+        "border-top": "0.5pt solid var(--line)",
+        "color": "var(--muted)",
+        "font-size": "8pt",
+        "display": "flex",
+        "justify-content": "space-between"
+      },
+      "band-chapter": {
+        "color": "var(--brand-dark)",
+        "font-weight": 700
+      },
+      "band-page": {
+        "color": "var(--ink)",
+        "font-weight": 700
+      }
+    }
+  },
+  "assets": {
+    "cover": {
+      "kind": "image",
+      "src": "assets/cover.svg"
+    }
+  },
+  "components": {
+    "callout": {
+      "description": "A boxed note, warning or tip beside the text: a coloured bar and label for its kind, an optional title, then the caller's paragraphs.",
+      "props": {
+        "type": "object",
+        "required": [
+          "kind"
+        ],
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "note",
+              "warning",
+              "tip"
+            ],
+            "default": "note",
+            "description": "Note, warning or tip: sets the colour and the label"
+          },
+          "title": {
+            "type": "string",
+            "description": "Short title after the label"
+          }
+        }
+      },
+      "slots": [
+        "body"
+      ],
+      "template": [
+        {
+          "type": "box",
+          "id": "callout",
+          "class": [
+            "callout"
+          ],
+          "rules": [
+            {
+              "if": "props.kind == 'warning'",
+              "class": [
+                "callout-warning"
+              ]
+            },
+            {
+              "if": "props.kind == 'tip'",
+              "class": [
+                "callout-tip"
+              ]
+            }
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "callout-label",
+              "class": [
+                "callout-label"
+              ],
+              "rules": [
+                {
+                  "if": "props.kind == 'warning'",
+                  "style": {
+                    "color": "var(--warning)"
+                  }
+                },
+                {
+                  "if": "props.kind == 'tip'",
+                  "style": {
+                    "color": "var(--tip)"
+                  }
+                }
+              ],
+              "content": [
+                "{{ Switch(props.kind, 'warning', 'Warning', 'tip', 'Tip', 'Note') }}",
+                {
+                  "type": "span",
+                  "content": " · {{ props.title }}",
+                  "if": "has(props.title)"
+                }
+              ]
+            },
+            {
+              "type": "slot",
+              "name": "body"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "pages": [
+    {
+      "id": "guide",
+      "size": "A4",
+      "margin": "22mm 18mm 20mm 25mm",
+      "variants": {
+        "first": {
+          "margin": "20mm 18mm 18mm 25mm",
+          "header": [],
+          "footer": [],
+          "background": [
+            {
+              "type": "box",
+              "id": "cover-spine",
+              "style": {
+                "width": "9mm",
+                "height": "297mm",
+                "background-color": "var(--brand)",
+                "top": 0,
+                "left": 0
+              },
+              "children": []
+            },
+            {
+              "type": "box",
+              "id": "cover-spine-accent",
+              "style": {
+                "width": "9mm",
+                "height": "28mm",
+                "background-color": "var(--accent)",
+                "top": "62mm",
+                "left": 0
+              },
+              "children": []
+            }
+          ]
+        },
+        "left": {
+          "margin": "22mm 25mm 20mm 18mm",
+          "header": [
+            {
+              "type": "box",
+              "id": "header-left",
+              "class": [
+                "band"
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "header-left-chapter",
+                  "class": [
+                    "band-chapter"
+                  ],
+                  "content": "{{ page.running('chapter') }}"
+                },
+                {
+                  "type": "text",
+                  "id": "header-left-title",
+                  "content": "Fieldbook {{ vars.version }} user guide"
+                }
+              ]
+            }
+          ],
+          "footer": [
+            {
+              "type": "box",
+              "id": "footer-left",
+              "class": [
+                "band-foot"
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "footer-left-page",
+                  "class": [
+                    "band-page"
+                  ],
+                  "content": "{{ page.number }}"
+                },
+                {
+                  "type": "text",
+                  "id": "footer-left-company",
+                  "content": "Quillmont Software · quillmont.example"
+                }
+              ]
+            }
+          ]
+        },
+        "right": {
+          "margin": "22mm 18mm 20mm 25mm",
+          "header": [
+            {
+              "type": "box",
+              "id": "header-right",
+              "class": [
+                "band"
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "header-right-title",
+                  "content": "Fieldbook {{ vars.version }} user guide"
+                },
+                {
+                  "type": "text",
+                  "id": "header-right-chapter",
+                  "class": [
+                    "band-chapter"
+                  ],
+                  "content": "{{ page.running('chapter') }}"
+                }
+              ]
+            }
+          ],
+          "footer": [
+            {
+              "type": "box",
+              "id": "footer-right",
+              "class": [
+                "band-foot"
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "footer-right-company",
+                  "content": "Quillmont Software · quillmont.example"
+                },
+                {
+                  "type": "text",
+                  "id": "footer-right-page",
+                  "class": [
+                    "band-page"
+                  ],
+                  "content": "{{ page.number }}"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "footnotes": {},
+  "body": [
+    {
+      "type": "box",
+      "id": "cover",
+      "style": {
+        "min-height": "255mm",
+        "display": "flex",
+        "flex-direction": "column",
+        "justify-content": "space-between"
+      },
+      "children": [
+        {
+          "type": "box",
+          "id": "cover-top",
+          "children": [
+            {
+              "type": "text",
+              "id": "cover-publisher",
+              "style": {
+                "margin": "0 0 34mm",
+                "color": "var(--brand)",
+                "font-size": "13pt",
+                "font-weight": 700
+              },
+              "content": "Quillmont Software"
+            },
+            {
+              "type": "text",
+              "id": "cover-kicker",
+              "class": [
+                "kicker"
+              ],
+              "style": {
+                "margin": "0 0 4pt",
+                "font-size": "10pt"
+              },
+              "content": "User guide"
+            },
+            {
+              "type": "text",
+              "id": "cover-title",
+              "style": {
+                "margin": "0 0 6pt",
+                "color": "var(--ink)",
+                "font-size": "46pt",
+                "font-weight": 700,
+                "line-height": 1
+              },
+              "content": "Fieldbook"
+            },
+            {
+              "type": "text",
+              "id": "cover-subtitle",
+              "style": {
+                "max-width": "140mm",
+                "margin": 0,
+                "color": "var(--muted)",
+                "font-size": "16pt",
+                "line-height": 1.3
+              },
+              "content": "Recording site inspections, photos and sign-offs on phone and web"
+            },
+            {
+              "type": "image",
+              "id": "cover-image",
+              "style": {
+                "width": "150mm",
+                "height": "100mm",
+                "margin": "14mm 0 0"
+              },
+              "asset": "cover",
+              "alt": "A phone showing a Fieldbook checklist with two items passed and one flagged, a photo and a sign-off button, beside a clipboard, a map pin and sync arrows."
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "cover-bottom",
+          "style": {
+            "padding-top": "var(--space-3)",
+            "border-top": "1.5pt solid var(--brand)",
+            "display": "flex",
+            "justify-content": "space-between",
+            "align-items": "flex-end"
+          },
+          "children": [
+            {
+              "type": "box",
+              "id": "cover-release-block",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "cover-release",
+                  "style": {
+                    "margin": "0 0 2pt",
+                    "font-size": "11pt",
+                    "font-weight": 700
+                  },
+                  "content": "Version {{ vars.version }} · Edition {{ data.main.release.edition }} · {{ vars.released }}"
+                },
+                {
+                  "type": "text",
+                  "id": "cover-audience",
+                  "class": [
+                    "muted"
+                  ],
+                  "style": {
+                    "margin": 0
+                  },
+                  "content": "For inspectors, supervisors and workspace administrators"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "cover-contact",
+              "class": [
+                "muted"
+              ],
+              "style": {
+                "margin": 0,
+                "text-align": "right"
+              },
+              "content": [
+                "quillmont.example",
+                {
+                  "type": "br"
+                },
+                "Support {{ data.main.support.phone }}"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pagebreak",
+      "id": "after-cover"
+    },
+    {
+      "type": "text",
+      "id": "contents-title",
+      "class": [
+        "h1"
+      ],
+      "style": {
+        "color": "var(--brand-dark)",
+        "font-weight": 700,
+        "line-height": 1.2
+      },
+      "content": "Contents",
+      "running": {
+        "chapter": "'Contents'"
+      }
+    },
+    {
+      "type": "toc",
+      "id": "toc",
+      "style": {
+        "margin": "0 0 18pt",
+        "parts": {
+          "entry": {
+            "padding": "2.5pt 0"
+          },
+          "entry-1": {
+            "padding-top": "8pt",
+            "color": "var(--brand-dark)",
+            "font-size": "11pt",
+            "font-weight": 700
+          },
+          "entry-2": {
+            "padding-left": "18pt",
+            "font-size": "9.5pt"
+          },
+          "leader": {
+            "color": "var(--line)"
+          },
+          "page-number": {
+            "color": "var(--brand)",
+            "font-weight": 700
+          }
+        }
+      },
+      "levels": 2,
+      "meta": {
+        "description": "The chapters and their sections, with the page each starts on."
+      }
+    },
+    {
+      "type": "text",
+      "id": "about-title",
+      "class": [
+        "kicker"
+      ],
+      "style": {
+        "margin": "0 0 4pt"
+      },
+      "content": "About this guide"
+    },
+    {
+      "type": "text",
+      "id": "about",
+      "content": "This guide covers Fieldbook {{ vars.version }}, build {{ data.main.release.build }}, released on {{ vars.released }}. It is for inspectors who record inspections on a phone or tablet, and for supervisors who review them on the web. Workspace administrators set up sites, people and checklist templates; that is in the separate administration guide."
+    },
+    {
+      "type": "use",
+      "id": "callout-conventions",
+      "component": "callout",
+      "props": {
+        "kind": "'note'",
+        "title": "'How this guide writes things'"
+      },
+      "slots": {
+        "body": [
+          {
+            "type": "text",
+            "id": "conventions-text",
+            "class": [
+              "callout-text"
+            ],
+            "content": [
+              "Buttons and menu items are in bold, such as ",
+              {
+                "type": "span",
+                "content": "Sign off",
+                "class": [
+                  "ui"
+                ]
+              },
+              ". A › between them is a path through the menus: ",
+              {
+                "type": "span",
+                "content": "Settings › Sync",
+                "class": [
+                  "ui"
+                ]
+              },
+              " means open Settings, then tap Sync. Phone and web work the same way unless a section says otherwise."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "text",
+      "id": "colophon",
+      "class": [
+        "muted",
+        "small"
+      ],
+      "style": {
+        "margin": "14pt 0 0"
+      },
+      "content": "Edition {{ data.main.release.edition }}, {{ Format(data.main.release.released, 'MMMM y') }}. © 2026 Quillmont Software. Quillmont Academy runs free online courses for new inspectors at academy.quillmont.example."
+    },
+    {
+      "type": "heading",
+      "id": "ch-getting-started",
+      "class": [
+        "h1"
+      ],
+      "style": {
+        "break-before": "page"
+      },
+      "level": 1,
+      "content": [
+        {
+          "type": "span",
+          "content": "1",
+          "class": [
+            "num"
+          ]
+        },
+        " Getting started"
+      ],
+      "running": {
+        "chapter": "'1 Getting started'"
+      }
+    },
+    {
+      "type": "text",
+      "id": "getting-started-lead",
+      "class": [
+        "lead"
+      ],
+      "content": "Fieldbook replaces paper checklists for site inspections. You record answers, findings and photos on a phone or tablet, sign off on site, and the report reaches your supervisor as soon as the device syncs."
+    },
+    {
+      "type": "heading",
+      "id": "sec-what-you-need",
+      "class": [
+        "h2"
+      ],
+      "level": 2,
+      "content": [
+        {
+          "type": "span",
+          "content": "1.1",
+          "class": [
+            "num"
+          ]
+        },
+        " What you need"
+      ]
+    },
+    {
+      "type": "table",
+      "id": "table-requirements",
+      "source": "data.main.requirements",
+      "as": "req",
+      "columns": [
+        {
+          "id": "req-platform",
+          "width": "1fr",
+          "header": "Where",
+          "style": {
+            "font-weight": 700
+          },
+          "cell": "{{ req.platform }}"
+        },
+        {
+          "id": "req-needs",
+          "width": "3.2fr",
+          "header": "What it needs",
+          "cell": "{{ req.needs }}"
+        }
+      ],
+      "meta": {
+        "description": "What a device, a browser and an account need to run Fieldbook."
+      }
+    },
+    {
+      "type": "text",
+      "id": "offline-intro",
+      "content": [
+        "You don't need a connection on site. Fieldbook keeps working offline for up to {{ data.main.limits.offlineDays }} days",
+        {
+          "type": "footnote",
+          "id": "fn-offline",
+          "content": "After {{ data.main.limits.offlineDays }} days without a sync, Fieldbook asks you to connect before you start another inspection, so that your assignments and checklist templates stay current."
+        },
+        " and syncs when it next finds one (chapter 4)."
+      ]
+    },
+    {
+      "type": "heading",
+      "id": "sec-install",
+      "class": [
+        "h2"
+      ],
+      "level": 2,
+      "content": [
+        {
+          "type": "span",
+          "content": "1.2",
+          "class": [
+            "num"
+          ]
+        },
+        " Install and sign in"
+      ]
+    },
+    {
+      "type": "list",
+      "id": "steps-install",
+      "marker": "decimal",
+      "children": [
+        {
+          "type": "item",
+          "id": "step-install-1",
+          "children": [
+            {
+              "type": "text",
+              "id": "step-install-1-text",
+              "class": [
+                "step"
+              ],
+              "content": [
+                "Open the invitation email on your phone and tap ",
+                {
+                  "type": "span",
+                  "content": "Join workspace",
+                  "class": [
+                    "ui"
+                  ]
+                },
+                "."
+              ]
+            }
+          ]
+        },
+        {
+          "type": "item",
+          "id": "step-install-2",
+          "children": [
+            {
+              "type": "text",
+              "id": "step-install-2-text",
+              "class": [
+                "step"
+              ],
+              "content": "Install Fieldbook from your device's app store when it asks."
+            }
+          ]
+        },
+        {
+          "type": "item",
+          "id": "step-install-3",
+          "children": [
+            {
+              "type": "text",
+              "id": "step-install-3-text",
+              "class": [
+                "step"
+              ],
+              "content": "Choose a password, or use your organisation's single sign-on if your administrator has set it up."
+            }
+          ]
+        },
+        {
+          "type": "item",
+          "id": "step-install-4",
+          "children": [
+            {
+              "type": "text",
+              "id": "step-install-4-text",
+              "class": [
+                "step"
+              ],
+              "content": "Allow camera and location access. Fieldbook reads your location only while an inspection is open."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "use",
+      "id": "callout-web",
+      "component": "callout",
+      "props": {
+        "kind": "'tip'",
+        "title": "'Use the web for reviews'"
+      },
+      "slots": {
+        "body": [
+          {
+            "type": "text",
+            "id": "web-tip-text",
+            "class": [
+              "callout-text"
+            ],
+            "content": "Sign in at app.quillmont.example with the same account to review and approve inspections on a bigger screen. Anything you start on the web appears on your phone after the next sync."
+          }
+        ]
+      }
+    },
+    {
+      "type": "heading",
+      "id": "sec-around",
+      "class": [
+        "h2"
+      ],
+      "level": 2,
+      "content": [
+        {
+          "type": "span",
+          "content": "1.3",
+          "class": [
+            "num"
+          ]
+        },
+        " Find your way around"
+      ]
+    },
+    {
+      "type": "text",
+      "id": "around-intro",
+      "content": "The app has four tabs along the bottom of the screen; on the web they are down the left."
+    },
+    {
+      "type": "table",
+      "id": "table-tabs",
+      "columns": [
+        {
+          "id": "tab-name",
+          "width": "1fr",
+          "style": {
+            "font-weight": 700
+          }
+        },
+        {
+          "id": "tab-what",
+          "width": "3.2fr"
+        }
+      ],
+      "header": [
+        {
+          "id": "tabs-head",
+          "cells": [
+            {
+              "content": "Tab"
+            },
+            {
+              "content": "What it shows"
+            }
+          ]
+        }
+      ],
+      "rows": [
+        {
+          "id": "tab-today",
+          "cells": [
+            {
+              "content": "Today"
+            },
+            {
+              "content": "Assignments due today and overdue ones, nearest site first."
+            }
+          ]
+        },
+        {
+          "id": "tab-upcoming",
+          "cells": [
+            {
+              "content": "Upcoming"
+            },
+            {
+              "content": "Assignments for the next 30 days, by due date."
+            }
+          ]
+        },
+        {
+          "id": "tab-sites",
+          "cells": [
+            {
+              "content": "Sites"
+            },
+            {
+              "content": "Every site you can inspect, on a list or a map, with its past inspections."
+            }
+          ]
+        },
+        {
+          "id": "tab-sync",
+          "cells": [
+            {
+              "content": "Sync"
+            },
+            {
+              "content": "The offline queue and the last time the device synced."
+            }
+          ]
+        }
+      ],
+      "meta": {
+        "description": "The four tabs of the app and what each shows."
+      }
+    },
+    {
+      "type": "heading",
+      "id": "ch-recording",
+      "class": [
+        "h1"
+      ],
+      "style": {
+        "break-before": "page"
+      },
+      "level": 1,
+      "content": [
+        {
+          "type": "span",
+          "content": "2",
+          "class": [
+            "num"
+          ]
+        },
+        " Recording an inspection"
+      ],
+      "running": {
+        "chapter": "'2 Recording an inspection'"
+      }
+    },
+    {
+      "type": "text",
+      "id": "recording-lead",
+      "class": [
+        "lead"
+      ],
+      "content": "An inspection is one visit to one site. It starts from an assignment, works through the checklist one section at a time, and ends with your sign-off."
+    },
+    {
+      "type": "heading",
+      "id": "sec-start",
+      "class": [
+        "h2"
+      ],
+      "level": 2,
+      "content": [
+        {
+          "type": "span",
+          "content": "2.1",
+          "class": [
+            "num"
+          ]
+        },
+        " Start an inspection"
+      ]
+    },
+    {
+      "type": "list",
+      "id": "steps-start",
+      "marker": "decimal",
+      "children": [
+        {
+          "type": "item",
+          "id": "step-start-1",
+          "children": [
+            {
+              "type": "text",
+              "id": "step-start-1-text",
+              "class": [
+                "step"
+              ],
+              "content": [
+                "In ",
+                {
+                  "type": "span",
+                  "content": "Today",
+                  "class": [
+                    "ui"
+                  ]
+                },
+                ", tap the assignment. Check the site's name and address at the top."
+              ]
+            }
+          ]
+        },
+        {
+          "type": "item",
+          "id": "step-start-2",
+          "children": [
+            {
+              "type": "text",
+              "id": "step-start-2-text",
+              "class": [
+                "step"
+              ],
+              "content": "Check the checklist and its version under the site. A newer version arrives with the next sync; one already started keeps its questions."
+            }
+          ]
+        },
+        {
+          "type": "item",
+          "id": "step-start-3",
+          "children": [
+            {
+              "type": "text",
+              "id": "step-start-3-text",
+              "class": [
+                "step"
+              ],
+              "content": [
+                "Tap ",
+                {
+                  "type": "span",
+                  "content": "Start",
+                  "class": [
+                    "ui"
+                  ]
+                },
+                ". Fieldbook records the time and where you are, and opens the first section."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "id": "sec-answer",
+      "class": [
+        "h2"
+      ],
+      "level": 2,
+      "content": [
+        {
+          "type": "span",
+          "content": "2.2",
+          "class": [
+            "num"
+          ]
+        },
+        " Answer the checklist"
+      ]
+    },
+    {
+      "type": "text",
+      "id": "answer-intro",
+      "content": [
+        "Most questions take ",
+        {
+          "type": "span",
+          "content": "Pass",
+          "class": [
+            "ui"
+          ]
+        },
+        ", ",
+        {
+          "type": "span",
+          "content": "Fail",
+          "class": [
+            "ui"
+          ]
+        },
+        " or ",
+        {
+          "type": "span",
+          "content": "Not applicable",
+          "class": [
+            "ui"
+          ]
+        },
+        {
+          "type": "footnote",
+          "id": "fn-not-applicable",
+          "content": "Administrators can take Not applicable away from a question in the template editor, for checks that always apply."
+        },
+        "; others ask for a reading, a date or a few words. Every Fail opens a finding, so nothing that failed goes unrecorded. Swipe left for the next section, or tap the section list at the top to jump."
+      ]
+    },
+    {
+      "type": "text",
+      "id": "answer-hold",
+      "content": "A question marked as a hold point stops the inspection until a supervisor approves it. They get a notification and approve it on their own device; you carry on when the badge turns green."
+    },
+    {
+      "type": "heading",
+      "id": "sec-finding",
+      "class": [
+        "h2"
+      ],
+      "level": 2,
+      "content": [
+        {
+          "type": "span",
+          "content": "2.3",
+          "class": [
+            "num"
+          ]
+        },
+        " Record a finding"
+      ]
+    },
+    {
+      "type": "text",
+      "id": "finding-intro",
+      "content": "A finding says what is wrong, how serious it is and what should happen next. Give it a rating, a short note and at least one photo. The rating sets how soon the fix is due:"
+    },
+    {
+      "type": "table",
+      "id": "table-ratings",
+      "columns": [
+        {
+          "id": "rating-name",
+          "width": "1fr",
+          "style": {
+            "font-weight": 700
+          }
+        },
+        {
+          "id": "rating-due",
+          "width": "3.2fr"
+        }
+      ],
+      "header": [
+        {
+          "id": "ratings-head",
+          "cells": [
+            {
+              "content": "Rating"
+            },
+            {
+              "content": "Fix due"
+            }
+          ]
+        }
+      ],
+      "rows": [
+        {
+          "id": "rating-low",
+          "cells": [
+            {
+              "content": "Low"
+            },
+            {
+              "content": "At the next scheduled maintenance."
+            }
+          ]
+        },
+        {
+          "id": "rating-medium",
+          "cells": [
+            {
+              "content": "Medium"
+            },
+            {
+              "content": "Within 30 days."
+            }
+          ]
+        },
+        {
+          "id": "rating-high",
+          "cells": [
+            {
+              "content": "High"
+            },
+            {
+              "content": "Within 7 days, and the site's contact is told."
+            }
+          ]
+        },
+        {
+          "id": "rating-critical",
+          "cells": [
+            {
+              "style": {
+                "color": "var(--warning)"
+              },
+              "content": "Critical"
+            },
+            {
+              "content": "Before you leave the site: make it safe or fence it off."
+            }
+          ]
+        }
+      ],
+      "meta": {
+        "description": "The four finding ratings and when each fix is due."
+      }
+    },
+    {
+      "type": "use",
+      "id": "callout-critical",
+      "component": "callout",
+      "props": {
+        "kind": "'warning'",
+        "title": "'Critical findings'"
+      },
+      "slots": {
+        "body": [
+          {
+            "type": "text",
+            "id": "critical-text",
+            "class": [
+              "callout-text"
+            ],
+            "content": "A critical finding alerts your supervisor as soon as the device next syncs, but Fieldbook can't make the site safe for you. If you are offline, phone your supervisor before you leave."
+          }
+        ]
+      }
+    },
+    {
+      "type": "heading",
+      "id": "ch-photos",
+      "class": [
+        "h1"
+      ],
+      "style": {
+        "break-before": "page"
+      },
+      "level": 1,
+      "content": [
+        {
+          "type": "span",
+          "content": "3",
+          "class": [
+            "num"
+          ]
+        },
+        " Photos and sign-off"
+      ],
+      "running": {
+        "chapter": "'3 Photos and sign-off'"
+      }
+    },
+    {
+      "type": "text",
+      "id": "photos-lead",
+      "class": [
+        "lead"
+      ],
+      "content": "Photos are the evidence behind each finding, and the sign-off is your word that the inspection is complete. Both travel with the report."
+    },
+    {
+      "type": "heading",
+      "id": "sec-take-photos",
+      "class": [
+        "h2"
+      ],
+      "level": 2,
+      "content": [
+        {
+          "type": "span",
+          "content": "3.1",
+          "class": [
+            "num"
+          ]
+        },
+        " Take photos"
+      ]
+    },
+    {
+      "type": "text",
+      "id": "photos-take",
+      "content": [
+        "In a finding, tap ",
+        {
+          "type": "span",
+          "content": "Add photo",
+          "class": [
+            "ui"
+          ]
+        },
+        " and take the picture, or choose one you took earlier. A finding holds up to {{ data.main.limits.photosPerFinding }} photos. Fieldbook keeps each at up to {{ data.main.limits.photoMegapixels }} megapixels and stamps it with the time and place",
+        {
+          "type": "footnote",
+          "id": "fn-location",
+          "content": "The place comes from the device's location. Indoors or under heavy cover it can be 50 metres out or more; a photo's details say how accurate it was."
+        },
+        "."
+      ]
+    },
+    {
+      "type": "text",
+      "id": "photos-framing",
+      "content": "Take one photo from far enough back to show where the problem is, then one close up. Put something of known size in the close-up, such as a pen or a tape measure, when the size matters."
+    },
+    {
+      "type": "heading",
+      "id": "sec-markup",
+      "class": [
+        "h2"
+      ],
+      "level": 2,
+      "content": [
+        {
+          "type": "span",
+          "content": "3.2",
+          "class": [
+            "num"
+          ]
+        },
+        " Mark up a photo"
+      ]
+    },
+    {
+      "type": "text",
+      "id": "markup-text",
+      "content": [
+        "Tap a photo, then ",
+        {
+          "type": "span",
+          "content": "Mark up",
+          "class": [
+            "ui"
+          ]
+        },
+        ". Draw arrows and circles with a finger, and tap ",
+        {
+          "type": "span",
+          "content": "Aa",
+          "class": [
+            "ui"
+          ]
+        },
+        " to add a short label. Pinch to zoom in on detail."
+      ]
+    },
+    {
+      "type": "use",
+      "id": "callout-markup",
+      "component": "callout",
+      "props": {
+        "kind": "'tip'"
+      },
+      "slots": {
+        "body": [
+          {
+            "type": "text",
+            "id": "markup-tip-text",
+            "class": [
+              "callout-text"
+            ],
+            "content": "Mark-up is drawn on a copy. Fieldbook always keeps the original photo, and the report shows both side by side."
+          }
+        ]
+      }
+    },
+    {
+      "type": "heading",
+      "id": "sec-sign-off",
+      "class": [
+        "h2"
+      ],
+      "level": 2,
+      "content": [
+        {
+          "type": "span",
+          "content": "3.3",
+          "class": [
+            "num"
+          ]
+        },
+        " Sign off"
+      ]
+    },
+    {
+      "type": "list",
+      "id": "steps-sign-off",
+      "marker": "decimal",
+      "children": [
+        {
+          "type": "item",
+          "id": "step-sign-1",
+          "children": [
+            {
+              "type": "text",
+              "id": "step-sign-1-text",
+              "class": [
+                "step"
+              ],
+              "content": [
+                "Tap ",
+                {
+                  "type": "span",
+                  "content": "Review",
+                  "class": [
+                    "ui"
+                  ]
+                },
+                " at the end of the last section. Fieldbook lists anything unanswered."
+              ]
+            }
+          ]
+        },
+        {
+          "type": "item",
+          "id": "step-sign-2",
+          "children": [
+            {
+              "type": "text",
+              "id": "step-sign-2-text",
+              "class": [
+                "step"
+              ],
+              "content": "Read the summary of findings with the site's contact, if they are there."
+            }
+          ]
+        },
+        {
+          "type": "item",
+          "id": "step-sign-3",
+          "children": [
+            {
+              "type": "text",
+              "id": "step-sign-3-text",
+              "class": [
+                "step"
+              ],
+              "content": [
+                "Tap ",
+                {
+                  "type": "span",
+                  "content": "Sign off",
+                  "class": [
+                    "ui"
+                  ]
+                },
+                ", sign with a finger, and confirm. The site's contact can sign below you."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "use",
+      "id": "callout-locked",
+      "component": "callout",
+      "props": {
+        "kind": "'warning'",
+        "title": "'Signing off locks the inspection'"
+      },
+      "slots": {
+        "body": [
+          {
+            "type": "text",
+            "id": "locked-text",
+            "class": [
+              "callout-text"
+            ],
+            "content": "After sign-off nobody can change an answer. A supervisor can reopen the inspection within {{ data.main.limits.reopenHours }} hours to correct it, and the history keeps both versions; after that, start a follow-up inspection instead."
+          }
+        ]
+      }
+    },
+    {
+      "type": "heading",
+      "id": "ch-syncing",
+      "class": [
+        "h1"
+      ],
+      "style": {
+        "break-before": "page"
+      },
+      "level": 1,
+      "content": [
+        {
+          "type": "span",
+          "content": "4",
+          "class": [
+            "num"
+          ]
+        },
+        " Syncing"
+      ],
+      "running": {
+        "chapter": "'4 Syncing'"
+      }
+    },
+    {
+      "type": "text",
+      "id": "syncing-lead",
+      "class": [
+        "lead"
+      ],
+      "content": "Syncing sends what you recorded to Fieldbook's servers and brings back new assignments, sites and templates. It happens on its own whenever the device has a connection."
+    },
+    {
+      "type": "heading",
+      "id": "sec-how-sync",
+      "class": [
+        "h2"
+      ],
+      "level": 2,
+      "content": [
+        {
+          "type": "span",
+          "content": "4.1",
+          "class": [
+            "num"
+          ]
+        },
+        " How syncing works"
+      ]
+    },
+    {
+      "type": "text",
+      "id": "how-sync-text",
+      "content": "Every answer, finding and photo is saved on the device first, in the offline queue. When there is a connection, Fieldbook sends the queue in the order it was recorded, answers before photos, so a report can reach your supervisor before its last photo has finished uploading."
+    },
+    {
+      "type": "heading",
+      "id": "sec-offline",
+      "class": [
+        "h2"
+      ],
+      "level": 2,
+      "content": [
+        {
+          "type": "span",
+          "content": "4.2",
+          "class": [
+            "num"
+          ]
+        },
+        " Working offline"
+      ]
+    },
+    {
+      "type": "text",
+      "id": "offline-text",
+      "content": [
+        "Nothing changes on site when there is no signal: start, answer and sign off as usual. Photos are the largest part of the queue",
+        {
+          "type": "footnote",
+          "id": "fn-data",
+          "content": "An inspection with ten photos sends about 25 MB. With Settings › Sync › Photos on Wi-Fi only, photos wait for Wi-Fi while answers still go over mobile data."
+        },
+        ", so sync over Wi-Fi at the end of the day when you can."
+      ]
+    },
+    {
+      "type": "heading",
+      "id": "sec-status",
+      "class": [
+        "h2"
+      ],
+      "level": 2,
+      "content": [
+        {
+          "type": "span",
+          "content": "4.3",
+          "class": [
+            "num"
+          ]
+        },
+        " Sync status"
+      ]
+    },
+    {
+      "type": "text",
+      "id": "status-intro",
+      "content": "The badge on the Sync tab, and on each inspection, says where things are:"
+    },
+    {
+      "type": "table",
+      "id": "table-status",
+      "columns": [
+        {
+          "id": "status-badge",
+          "width": "1fr",
+          "style": {
+            "font-weight": 700
+          }
+        },
+        {
+          "id": "status-means",
+          "width": "3.2fr"
+        }
+      ],
+      "header": [
+        {
+          "id": "status-head",
+          "cells": [
+            {
+              "content": "Badge"
+            },
+            {
+              "content": "What it means"
+            }
+          ]
+        }
+      ],
+      "rows": [
+        {
+          "id": "status-synced",
+          "cells": [
+            {
+              "style": {
+                "color": "var(--tip)"
+              },
+              "content": "Synced"
+            },
+            {
+              "content": "Everything on this device is on the server."
+            }
+          ]
+        },
+        {
+          "id": "status-waiting",
+          "cells": [
+            {
+              "content": "Waiting"
+            },
+            {
+              "content": "Changes are queued for the next connection. The number says how many."
+            }
+          ]
+        },
+        {
+          "id": "status-uploading",
+          "cells": [
+            {
+              "style": {
+                "color": "var(--brand)"
+              },
+              "content": "Uploading"
+            },
+            {
+              "content": "The queue is being sent. You can keep working."
+            }
+          ]
+        },
+        {
+          "id": "status-conflict",
+          "cells": [
+            {
+              "style": {
+                "color": "var(--warning)"
+              },
+              "content": "Conflict"
+            },
+            {
+              "content": "Someone changed the same answer elsewhere. Open the inspection to choose which to keep."
+            }
+          ]
+        }
+      ],
+      "meta": {
+        "description": "The sync badges and what each means."
+      }
+    },
+    {
+      "type": "use",
+      "id": "callout-uninstall",
+      "component": "callout",
+      "props": {
+        "kind": "'note'",
+        "title": "'Before you change phones'"
+      },
+      "slots": {
+        "body": [
+          {
+            "type": "text",
+            "id": "uninstall-text",
+            "class": [
+              "callout-text"
+            ],
+            "content": "Wait for the Synced badge before you sign out, uninstall Fieldbook or hand the device back. Anything still in the offline queue is lost when the app is removed."
+          }
+        ]
+      }
+    },
+    {
+      "type": "heading",
+      "id": "ch-troubleshooting",
+      "class": [
+        "h1"
+      ],
+      "style": {
+        "break-before": "page"
+      },
+      "level": 1,
+      "content": [
+        {
+          "type": "span",
+          "content": "5",
+          "class": [
+            "num"
+          ]
+        },
+        " Troubleshooting"
+      ],
+      "running": {
+        "chapter": "'5 Troubleshooting'"
+      }
+    },
+    {
+      "type": "text",
+      "id": "troubleshooting-lead",
+      "class": [
+        "lead"
+      ],
+      "content": "Most problems have a quick fix on the device. Find what you see in the first column."
+    },
+    {
+      "type": "table",
+      "id": "table-troubleshooting",
+      "source": "data.main.troubleshooting",
+      "as": "t",
+      "columns": [
+        {
+          "id": "ts-problem",
+          "width": "1.4fr",
+          "header": "What you see",
+          "style": {
+            "font-weight": 700
+          },
+          "cell": "{{ t.problem }}"
+        },
+        {
+          "id": "ts-cause",
+          "width": "1.4fr",
+          "header": "Why",
+          "cell": "{{ t.cause }}"
+        },
+        {
+          "id": "ts-fix",
+          "width": "1.8fr",
+          "header": "What to do",
+          "cell": "{{ t.fix }}"
+        }
+      ],
+      "empty": [
+        {
+          "type": "text",
+          "id": "no-known-problems",
+          "class": [
+            "muted"
+          ],
+          "content": "There are no known problems in Fieldbook {{ vars.version }}."
+        }
+      ],
+      "meta": {
+        "description": "Common problems, why they happen and what to do."
+      }
+    },
+    {
+      "type": "heading",
+      "id": "sec-support",
+      "class": [
+        "h2"
+      ],
+      "level": 2,
+      "content": [
+        {
+          "type": "span",
+          "content": "5.1",
+          "class": [
+            "num"
+          ]
+        },
+        " Contact support"
+      ]
+    },
+    {
+      "type": "text",
+      "id": "support-text",
+      "content": [
+        "Search the help centre at {{ data.main.support.web }}, or call support on ",
+        {
+          "type": "span",
+          "content": "{{ data.main.support.phone }}",
+          "class": [
+            "ui"
+          ]
+        },
+        " ({{ data.main.support.hours }}) or email {{ data.main.support.email }}."
+      ]
+    },
+    {
+      "type": "use",
+      "id": "callout-diagnostics",
+      "component": "callout",
+      "props": {
+        "kind": "'tip'",
+        "title": "'Send your diagnostics'"
+      },
+      "slots": {
+        "body": [
+          {
+            "type": "text",
+            "id": "diagnostics-text",
+            "class": [
+              "callout-text"
+            ],
+            "content": [
+              {
+                "type": "span",
+                "content": "Settings › About › Copy diagnostics",
+                "class": [
+                  "ui"
+                ]
+              },
+              " copies your build number and the last day's sync log. Paste it into your email so that support can see what happened."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "heading",
+      "id": "ch-glossary",
+      "class": [
+        "h1"
+      ],
+      "style": {
+        "break-before": "page"
+      },
+      "level": 1,
+      "content": [
+        {
+          "type": "span",
+          "content": "6",
+          "class": [
+            "num"
+          ]
+        },
+        " Glossary"
+      ],
+      "running": {
+        "chapter": "'6 Glossary'"
+      }
+    },
+    {
+      "type": "text",
+      "id": "glossary-lead",
+      "class": [
+        "lead"
+      ],
+      "content": "The words Fieldbook uses, and what they mean in this guide."
+    },
+    {
+      "type": "box",
+      "id": "glossary",
+      "style": {
+        "column-count": 2,
+        "column-gap": "10mm",
+        "column-rule": "0.5pt solid var(--line)"
+      },
+      "children": [
+        {
+          "type": "repeat",
+          "id": "glossary-entries",
+          "source": "vars.glossary",
+          "as": "g",
+          "sort": [
+            {
+              "by": "g.term"
+            }
+          ],
+          "detail": [
+            {
+              "type": "box",
+              "id": "glossary-entry",
+              "style": {
+                "margin-bottom": "8pt",
+                "break-inside": "avoid"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "id": "glossary-term",
+                  "style": {
+                    "margin": "0 0 1pt",
+                    "color": "var(--brand-dark)",
+                    "font-weight": 700
+                  },
+                  "content": "{{ g.term }}"
+                },
+                {
+                  "type": "text",
+                  "id": "glossary-definition",
+                  "style": {
+                    "margin": 0,
+                    "font-size": "9.5pt"
+                  },
+                  "content": "{{ g.definition }}"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "meta": {
+        "description": "Every term, sorted, flowing down two columns."
+      }
+    }
+  ],
+  "outputs": {
+    "xlsx": {
+      "sheets": [
+        {
+          "name": "Requirements",
+          "from": "table-requirements",
+          "freeze": "A2"
+        },
+        {
+          "name": "Troubleshooting",
+          "from": "table-troubleshooting",
+          "freeze": "A2",
+          "autoFilter": true
+        },
+        {
+          "name": "Glossary",
+          "from": "glossary-entries"
+        }
+      ],
+      "otherContent": "skip"
+    }
+  },
+  "tests": [
+    {
+      "name": "sample guide has a cover, contents and six chapters on mirrored pages",
+      "data": {
+        "main": "samples/main.json"
+      },
+      "expect": [
+        "pages.size() == 8",
+        "diagnostics.all(d, d.severity != 'error')",
+        "pages.map(p, p.variant) == ['first', 'left', 'right', 'left', 'right', 'left', 'right', 'left']",
+        "node('cover-image').page == 1 && node('toc').page == 2",
+        "text('cover-release') == 'Version 4.2 · Edition 3 · 20 October 2026'",
+        "nodes('toc').size() == 1",
+        "nodes('header-left')[0].page == 2 && nodes('header-right')[0].page == 3",
+        "nodes('header-left').all(n, n.x > 51.0 && n.x < 51.1)",
+        "nodes('header-right').all(n, n.x > 70.8 && n.x < 70.9)",
+        "node('header-left').w == node('header-right').w",
+        "node('contents-title').x == node('header-left').x && node('ch-getting-started').x == node('header-right').x",
+        "nodes('header-left-chapter').map(n, n.text) == ['Contents', '2 Recording an inspection', '4 Syncing', '6 Glossary']",
+        "nodes('header-right-chapter').map(n, n.text) == ['1 Getting started', '3 Photos and sign-off', '5 Troubleshooting']",
+        "['ch-getting-started', 'ch-recording', 'ch-photos', 'ch-syncing', 'ch-troubleshooting', 'ch-glossary'].map(id, node(id).page) == [3, 4, 5, 6, 7, 8]",
+        "['offline-intro', 'answer-intro', 'photos-take', 'offline-text'].map(id, nodes(id).filter(n, n.kind == 'footnote')[0].text.Left(2)) == ['1 ', '2 ', '3 ', '4 ']",
+        "['offline-intro', 'answer-intro', 'photos-take', 'offline-text'].map(id, nodes(id).filter(n, n.kind == 'footnote')[0].page) == [3, 4, 5, 6]",
+        "nodes('glossary-term').size() == 16 && nodes('glossary-term').all(n, n.page == 8)",
+        "nodes('glossary-term').map(n, n.x).Distinct().size() == 2",
+        "nodes('glossary-term').filter(n, n.x > node('glossary').x + 100).size() == 8",
+        "text('callout-conventions/callout-label') == 'NOTE · HOW THIS GUIDE WRITES THINGS'",
+        "text('callout-critical/callout-label') == 'WARNING · CRITICAL FINDINGS'",
+        "text('callout-markup/callout-label') == 'TIP'",
+        "!visible('no-known-problems')"
+      ],
+      "snapshot": true
+    },
+    {
+      "name": "next release with no known problems and a short glossary",
+      "data": {
+        "main": "tests/next-release.json"
+      },
+      "expect": [
+        "text('cover-release') == 'Version 4.3 · Edition 4 · 8 December 2026'",
+        "text('header-right-title') == 'Fieldbook 4.3 user guide'",
+        "text('no-known-problems') == 'There are no known problems in Fieldbook 4.3.'",
+        "StartsWith(nodes('offline-intro').filter(n, n.kind == 'footnote')[0].text, '1 After 21 days without a sync')",
+        "nodes('glossary-term').map(n, n.text) == ['Assignment', 'Finding', 'Hold point', 'Workspace']",
+        "nodes('glossary-term').map(n, n.x).Distinct().size() == 2"
+      ]
+    }
+  ]
+}

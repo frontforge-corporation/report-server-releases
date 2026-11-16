@@ -1,0 +1,17 @@
+{
+  "test": "sample gives a certificate to each of the three who completed",
+  "pages": [
+    {
+      "page": 1,
+      "sha256": "b827bd1b2df7471428138ba56ca3288dec2cd609d56a214df301517667492a8b"
+    },
+    {
+      "page": 2,
+      "sha256": "3c2311429b5d8fa62d6c99b50b98e6880e0599767f34648ebd79014aa65c77cc"
+    },
+    {
+      "page": 3,
+      "sha256": "79b043566769faff3c27beb324c57eff1866d0fecf53767c86cfb6f1c6bff6e7"
+    }
+  ]
+}

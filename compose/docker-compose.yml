@@ -1,0 +1,32 @@
+# Frontforge Report Server on one machine (docs/operations/docker.md).
+#
+#   cp .env.example .env                 and edit it
+#   docker compose up -d                 reportd, with renderd inside it
+#   docker compose -f docker-compose.yml -f postgres.yml up -d
+#                                        users and sessions in Postgres
+#   docker compose -f docker-compose.yml -f split.yml up -d --scale renderd=3
+#                                        renders spread over three renderds
+#
+# The two can go together. On the first start, reportd is in setup mode:
+# open http://localhost:43123/setup with the setup code from
+# `docker compose logs reportd`.
+name: report-forge
+
+services:
+  reportd:
+    image: ${REPORTD_IMAGE:-ghcr.io/frontforge-corporation/report-server:0.10.0-rc.1}
+    restart: unless-stopped
+    ports:
+      - "${REPORTD_PORT:-43123}:43123"
+    # Passed on only when set (in .env or the shell): the setup wizard asks
+    # for what isn't.
+    environment:
+      - REPORTD_PUBLICURL
+      - REPORTD_LOGGING_FORMAT
+      - REPORTD_LOGGING_LEVEL
+    volumes:
+      - data:/data
+    # The image's own health check: reportd healthcheck (GET /livez).
+
+volumes:
+  data:

@@ -1,0 +1,332 @@
+{
+  "invoice": {
+    "number": "INV-204588",
+    "issueDate": "2026-10-27",
+    "dueDate": "2026-11-26",
+    "purchaseOrder": "PO-KB-0431",
+    "paymentReference": "20458804",
+    "termsDays": 30
+  },
+  "customer": {
+    "name": "Kingfisher Bend Builders Pty Ltd",
+    "abn": "98 765 432 109",
+    "account": "BLD-30815",
+    "attention": "Sam Okafor, Site Manager",
+    "addressLines": [
+      "Unit 4, 18 Reedvale Road",
+      "REEDVALE QLD 4993"
+    ]
+  },
+  "works": {
+    "site": "Lots 30 to 38, Heron Court, Kingfisher Bend QLD 4996",
+    "description": "Water connections and meters for a nine-lot subdivision",
+    "application": "CON-2026-0861",
+    "completed": "2026-10-14"
+  },
+  "lines": [
+    {
+      "code": "PL-32",
+      "description": "Service pipe, 32 mm PE, lot 30 main to meter",
+      "quantity": 9,
+      "unit": "m",
+      "unitPrice": 42.80,
+      "taxable": true
+    },
+    {
+      "code": "WC-25",
+      "description": "Water service connection, 25 mm, lot 30",
+      "quantity": 1,
+      "unit": "each",
+      "unitPrice": 1850.00,
+      "taxable": true
+    },
+    {
+      "code": "MT-25",
+      "description": "Water meter, 25 mm, lot 30, supplied and installed",
+      "quantity": 1,
+      "unit": "each",
+      "unitPrice": 486.00,
+      "taxable": true
+    },
+    {
+      "code": "IC-01",
+      "description": "Water network infrastructure charge, lot 30",
+      "quantity": 1,
+      "unit": "lot",
+      "unitPrice": 2950.00,
+      "taxable": false
+    },
+    {
+      "code": "PL-32",
+      "description": "Service pipe, 32 mm PE, lot 31 main to meter",
+      "quantity": 9,
+      "unit": "m",
+      "unitPrice": 42.80,
+      "taxable": true
+    },
+    {
+      "code": "WC-25",
+      "description": "Water service connection, 25 mm, lot 31",
+      "quantity": 1,
+      "unit": "each",
+      "unitPrice": 1850.00,
+      "taxable": true
+    },
+    {
+      "code": "MT-25",
+      "description": "Water meter, 25 mm, lot 31, supplied and installed",
+      "quantity": 1,
+      "unit": "each",
+      "unitPrice": 486.00,
+      "taxable": true
+    },
+    {
+      "code": "IC-01",
+      "description": "Water network infrastructure charge, lot 31",
+      "quantity": 1,
+      "unit": "lot",
+      "unitPrice": 2950.00,
+      "taxable": false
+    },
+    {
+      "code": "PL-32",
+      "description": "Service pipe, 32 mm PE, lot 32 main to meter",
+      "quantity": 9,
+      "unit": "m",
+      "unitPrice": 42.80,
+      "taxable": true
+    },
+    {
+      "code": "WC-25",
+      "description": "Water service connection, 25 mm, lot 32",
+      "quantity": 1,
+      "unit": "each",
+      "unitPrice": 1850.00,
+      "taxable": true
+    },
+    {
+      "code": "MT-25",
+      "description": "Water meter, 25 mm, lot 32, supplied and installed",
+      "quantity": 1,
+      "unit": "each",
+      "unitPrice": 486.00,
+      "taxable": true
+    },
+    {
+      "code": "IC-01",
+      "description": "Water network infrastructure charge, lot 32",
+      "quantity": 1,
+      "unit": "lot",
+      "unitPrice": 2950.00,
+      "taxable": false
+    },
+    {
+      "code": "PL-32",
+      "description": "Service pipe, 32 mm PE, lot 33 main to meter",
+      "quantity": 9,
+      "unit": "m",
+      "unitPrice": 42.80,
+      "taxable": true
+    },
+    {
+      "code": "WC-25",
+      "description": "Water service connection, 25 mm, lot 33",
+      "quantity": 1,
+      "unit": "each",
+      "unitPrice": 1850.00,
+      "taxable": true
+    },
+    {
+      "code": "MT-25",
+      "description": "Water meter, 25 mm, lot 33, supplied and installed",
+      "quantity": 1,
+      "unit": "each",
+      "unitPrice": 486.00,
+      "taxable": true
+    },
+    {
+      "code": "IC-01",
+      "description": "Water network infrastructure charge, lot 33",
+      "quantity": 1,
+      "unit": "lot",
+      "unitPrice": 2950.00,
+      "taxable": false
+    },
+    {
+      "code": "PL-32",
+      "description": "Service pipe, 32 mm PE, lot 34 main to meter",
+      "quantity": 9,
+      "unit": "m",
+      "unitPrice": 42.80,
+      "taxable": true
+    },
+    {
+      "code": "WC-25",
+      "description": "Water service connection, 25 mm, lot 34",
+      "quantity": 1,
+      "unit": "each",
+      "unitPrice": 1850.00,
+      "taxable": true
+    },
+    {
+      "code": "MT-25",
+      "description": "Water meter, 25 mm, lot 34, supplied and installed",
+      "quantity": 1,
+      "unit": "each",
+      "unitPrice": 486.00,
+      "taxable": true
+    },
+    {
+      "code": "IC-01",
+      "description": "Water network infrastructure charge, lot 34",
+      "quantity": 1,
+      "unit": "lot",
+      "unitPrice": 2950.00,
+      "taxable": false
+    },
+    {
+      "code": "PL-32",
+      "description": "Service pipe, 32 mm PE, lot 35 main to meter",
+      "quantity": 9,
+      "unit": "m",
+      "unitPrice": 42.80,
+      "taxable": true
+    },
+    {
+      "code": "WC-25",
+      "description": "Water service connection, 25 mm, lot 35",
+      "quantity": 1,
+      "unit": "each",
+      "unitPrice": 1850.00,
+      "taxable": true
+    },
+    {
+      "code": "MT-25",
+      "description": "Water meter, 25 mm, lot 35, supplied and installed",
+      "quantity": 1,
+      "unit": "each",
+      "unitPrice": 486.00,
+      "taxable": true
+    },
+    {
+      "code": "IC-01",
+      "description": "Water network infrastructure charge, lot 35",
+      "quantity": 1,
+      "unit": "lot",
+      "unitPrice": 2950.00,
+      "taxable": false
+    },
+    {
+      "code": "PL-32",
+      "description": "Service pipe, 32 mm PE, lot 36 main to meter",
+      "quantity": 9,
+      "unit": "m",
+      "unitPrice": 42.80,
+      "taxable": true
+    },
+    {
+      "code": "WC-25",
+      "description": "Water service connection, 25 mm, lot 36",
+      "quantity": 1,
+      "unit": "each",
+      "unitPrice": 1850.00,
+      "taxable": true
+    },
+    {
+      "code": "MT-25",
+      "description": "Water meter, 25 mm, lot 36, supplied and installed",
+      "quantity": 1,
+      "unit": "each",
+      "unitPrice": 486.00,
+      "taxable": true
+    },
+    {
+      "code": "IC-01",
+      "description": "Water network infrastructure charge, lot 36",
+      "quantity": 1,
+      "unit": "lot",
+      "unitPrice": 2950.00,
+      "taxable": false
+    },
+    {
+      "code": "PL-32",
+      "description": "Service pipe, 32 mm PE, lot 37 main to meter",
+      "quantity": 9,
+      "unit": "m",
+      "unitPrice": 42.80,
+      "taxable": true
+    },
+    {
+      "code": "WC-25",
+      "description": "Water service connection, 25 mm, lot 37",
+      "quantity": 1,
+      "unit": "each",
+      "unitPrice": 1850.00,
+      "taxable": true
+    },
+    {
+      "code": "MT-25",
+      "description": "Water meter, 25 mm, lot 37, supplied and installed",
+      "quantity": 1,
+      "unit": "each",
+      "unitPrice": 486.00,
+      "taxable": true
+    },
+    {
+      "code": "IC-01",
+      "description": "Water network infrastructure charge, lot 37",
+      "quantity": 1,
+      "unit": "lot",
+      "unitPrice": 2950.00,
+      "taxable": false
+    },
+    {
+      "code": "PL-32",
+      "description": "Service pipe, 32 mm PE, lot 38 main to meter",
+      "quantity": 9,
+      "unit": "m",
+      "unitPrice": 42.80,
+      "taxable": true
+    },
+    {
+      "code": "WC-25",
+      "description": "Water service connection, 25 mm, lot 38",
+      "quantity": 1,
+      "unit": "each",
+      "unitPrice": 1850.00,
+      "taxable": true
+    },
+    {
+      "code": "MT-25",
+      "description": "Water meter, 25 mm, lot 38, supplied and installed",
+      "quantity": 1,
+      "unit": "each",
+      "unitPrice": 486.00,
+      "taxable": true
+    },
+    {
+      "code": "IC-01",
+      "description": "Water network infrastructure charge, lot 38",
+      "quantity": 1,
+      "unit": "lot",
+      "unitPrice": 2950.00,
+      "taxable": false
+    },
+    {
+      "code": "TM-02",
+      "description": "Traffic management, two controllers",
+      "quantity": 22,
+      "unit": "hr",
+      "unitPrice": 138.00,
+      "taxable": true
+    },
+    {
+      "code": "DS-05",
+      "description": "Builder discount, 5% of connection and meter",
+      "quantity": 1,
+      "unit": "each",
+      "unitPrice": -1051.20,
+      "taxable": true
+    }
+  ]
+}

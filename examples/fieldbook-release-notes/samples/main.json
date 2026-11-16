@@ -1,0 +1,64 @@
+{
+  "published": "2026-10-28",
+  "audience": "For Fieldbook administrators and inspectors",
+  "releases": [
+    {
+      "version": "4.1.0",
+      "date": "2026-09-02",
+      "platforms": "iOS, Android and web",
+      "summary": "Fieldbook 4.1 brings repeating sections to checklists, so one checklist covers every floor or unit of a site, and makes the web app's inspection list much faster.",
+      "changes": [
+        { "tag": "new", "area": "Checklists", "title": "Repeating sections", "detail": "Mark a section as repeating and inspectors add a copy for each floor, unit or room they inspect. Reports number the copies.", "issue": "FB-2104" },
+        { "tag": "new", "area": "Web app", "title": "Saved filters on the inspection list", "detail": "Save a filter, such as overdue inspections at one site, and open it again from the sidebar.", "issue": "FB-2131" },
+        { "tag": "improved", "area": "Web app", "title": "The inspection list opens four times faster", "detail": "Workspaces with more than 20,000 inspections see the biggest change.", "issue": "FB-2088" },
+        { "tag": "improved", "area": "Reports", "title": "Photos keep their original orientation", "issue": "FB-2117" },
+        { "tag": "fixed", "area": "Android", "title": "The camera no longer opens twice on some tablets", "issue": "FB-2140" },
+        { "tag": "deprecated", "area": "Integrations", "title": "Version 1 of the export API", "detail": "Version 1 keeps working until 30 June 2027. Move integrations to version 2, which returns the same data with repeating sections.", "issue": "FB-2152" }
+      ]
+    },
+    {
+      "version": "4.2.0",
+      "date": "2026-10-28",
+      "platforms": "iOS, Android and web",
+      "summary": "Fieldbook 4.2 adds sign-off on behalf of a site contact, scheduled inspections and a darker map style for working outdoors, and fixes two sync problems reported after 4.1.2.",
+      "upgradeNote": "Phones must run Fieldbook 4.1 or later to sync with a workspace on 4.2. Ask inspectors to update before 30 November 2026.",
+      "changes": [
+        { "tag": "new", "area": "Sign-off", "title": "Sign off on behalf of a site contact", "detail": "When the site contact can't sign on screen, an inspector can record a verbal sign-off with the contact's name and the time. Reports show it as a verbal sign-off.", "issue": "FB-2291" },
+        { "tag": "new", "area": "Scheduling", "title": "Scheduled inspections", "detail": "Plan an inspection for a date and inspector; it appears in their app the day before, with its checklist ready offline.", "issue": "FB-2236" },
+        { "tag": "new", "area": "Maps", "title": "High-contrast map style", "detail": "A darker map that stays readable in bright sunlight. Turn it on under Settings, Display.", "issue": "FB-2310" },
+        { "tag": "improved", "area": "Sync", "title": "Photos upload in the background", "detail": "Inspectors can start the next inspection while photos from the last one finish uploading.", "issue": "FB-2265" },
+        { "tag": "improved", "area": "Reports", "title": "Shorter PDF reports", "detail": "Checks with no findings collapse to one line each, so a typical report is a third shorter.", "issue": "FB-2279" },
+        { "tag": "fixed", "area": "Sync", "title": "Edits made offline on two devices no longer overwrite each other", "detail": "Fieldbook now keeps both answers and asks which one to keep.", "issue": "FB-2297" },
+        { "tag": "fixed", "area": "iOS", "title": "Sync no longer stops when the app is in the background for more than ten minutes", "issue": "FB-2302" },
+        { "tag": "security", "area": "Web app", "title": "Sessions end after 12 hours without activity", "detail": "Administrators can shorten this under Workspace settings, Security.", "issue": "FB-2284" },
+        { "tag": "deprecated", "area": "Reports", "title": "The classic report layout", "detail": "The classic layout will be removed in Fieldbook 5.0. Reports that use it show a notice with a link to switch.", "issue": "FB-2315" }
+      ]
+    },
+    {
+      "version": "4.1.2",
+      "date": "2026-09-30",
+      "platforms": "iOS and Android",
+      "summary": "A maintenance release for the phone apps.",
+      "changes": [
+        { "tag": "fixed", "area": "Checklists", "title": "Repeating sections keep their photos after a copy is deleted", "issue": "FB-2198" },
+        { "tag": "fixed", "area": "iOS", "title": "Signatures are no longer cut off on smaller phones", "issue": "FB-2203" },
+        { "tag": "security", "area": "Phone apps", "title": "Updated the image library to fix a flaw in reading crafted photo files", "issue": "FB-2211" }
+      ]
+    }
+  ],
+  "knownIssues": [
+    {
+      "title": "Scheduled inspections show in UTC on the web calendar",
+      "detail": "The web app's calendar shows the scheduled time in UTC instead of the workspace's time zone. The phone apps show the right time.",
+      "workaround": "Check the time in the phone app, or on the inspection's own page in the web app.",
+      "issue": "FB-2331",
+      "fixExpected": "4.2.1"
+    },
+    {
+      "title": "Verbal sign-offs are missing from CSV exports",
+      "detail": "Reports show verbal sign-offs, but the CSV export leaves the sign-off columns empty for them.",
+      "workaround": "Use the PDF report, or the export API version 2, which includes them.",
+      "issue": "FB-2336"
+    }
+  ]
+}

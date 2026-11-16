@@ -1,0 +1,56 @@
+{
+  "order": {
+    "number": "PO-26-04452",
+    "date": "2026-11-02",
+    "requiredBy": "2026-11-13",
+    "status": "awaiting-approval",
+    "requestedBy": "Nadia Koverly",
+    "project": "P-2291 Tannerby Creek footbridge",
+    "costCentre": "420 Bridges and Structures",
+    "paymentTerms": "30 days from the end of the month of invoice"
+  },
+  "supplier": {
+    "name": "Kestrin Survey Supplies Pty Ltd",
+    "abn": "38 615 204 977",
+    "addressLines": [
+      "Unit 7, 44 Tamberlin Road",
+      "Fennick Park VIC 3998"
+    ],
+    "contact": "Rhys Tolland",
+    "email": "orders@kestrinsurvey.example",
+    "phone": "(03) 5550 0247",
+    "account": "S-0318"
+  },
+  "delivery": {
+    "site": "Tannerby Creek footbridge site compound",
+    "addressLines": [
+      "Gate 2, Corvanna Road",
+      "Kelvenhurst VIC 3997"
+    ],
+    "contact": "Hugo Dellacourt",
+    "phone": "0491 570 157"
+  },
+  "lines": [
+    {
+      "code": "KSS-LV300",
+      "description": "Automatic level with tripod and 5 m staff",
+      "quantity": 2,
+      "unit": "each",
+      "unitPrice": 420.00
+    },
+    {
+      "code": "KSS-WH30",
+      "description": "Measuring wheel, 1 m circumference, with counter",
+      "quantity": 1,
+      "unit": "each",
+      "unitPrice": 125.00
+    },
+    {
+      "code": "FREIGHT",
+      "description": "Delivery to the site compound",
+      "quantity": 1,
+      "unit": "each",
+      "unitPrice": 85.00
+    }
+  ]
+}

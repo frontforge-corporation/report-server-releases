@@ -1,0 +1,9 @@
+{
+  "test": "sample fortnight fits on one landscape page",
+  "pages": [
+    {
+      "page": 1,
+      "sha256": "e0a7818b36c66ac4bf32e4646c658a3018aec175afc0d374ad24cca5a477b1e7"
+    }
+  ]
+}

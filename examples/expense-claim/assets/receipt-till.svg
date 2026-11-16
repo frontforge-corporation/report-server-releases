@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 84" width="60" height="84">
+  <!-- Made by Frontforge Pty Ltd for the Report Server example gallery, 2026. Licence: CC0 1.0 (public domain dedication), so anyone who copies the example may use it. -->
+  <title>Till receipt</title>
+  <path d="M2 2h56v76l-4 4-4-4-4 4-4-4-4 4-4-4-4 4-4-4-4 4-4-4-4 4-4-4-4 4-4-4z" fill="#FBFAF6" stroke="#B9C3C7" stroke-width="1"/>
+  <rect x="16" y="9" width="28" height="5" rx="1" fill="#1F4E5F"/>
+  <rect x="22" y="17" width="16" height="2.4" rx="1" fill="#9AA6AB"/>
+  <g fill="#9AA6AB">
+    <rect x="10" y="26" width="26" height="2.4" rx="1"/>
+    <rect x="42" y="26" width="8" height="2.4" rx="1"/>
+    <rect x="10" y="32" width="20" height="2.4" rx="1"/>
+    <rect x="42" y="32" width="8" height="2.4" rx="1"/>
+    <rect x="10" y="38" width="30" height="2.4" rx="1"/>
+    <rect x="42" y="38" width="8" height="2.4" rx="1"/>
+    <rect x="10" y="44" width="16" height="2.4" rx="1"/>
+    <rect x="42" y="44" width="8" height="2.4" rx="1"/>
+  </g>
+  <path d="M10 51h40" stroke="#B9C3C7" stroke-width="1" stroke-dasharray="2 2"/>
+  <rect x="10" y="56" width="40" height="5" rx="1" fill="#1F4E5F"/>
+  <g fill="#231F20">
+    <rect x="14" y="66" width="1.5" height="7"/><rect x="17" y="66" width="0.8" height="7"/><rect x="19.5" y="66" width="2" height="7"/>
+    <rect x="23" y="66" width="0.8" height="7"/><rect x="25.5" y="66" width="1.5" height="7"/><rect x="29" y="66" width="0.8" height="7"/>
+    <rect x="31.5" y="66" width="2" height="7"/><rect x="35" y="66" width="0.8" height="7"/><rect x="37.5" y="66" width="1.5" height="7"/>
+    <rect x="41" y="66" width="0.8" height="7"/><rect x="43.5" y="66" width="2" height="7"/>
+  </g>
+</svg>

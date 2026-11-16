@@ -1,0 +1,383 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Monthly management pack",
+  "type": "object",
+  "required": [
+    "issued",
+    "preparedBy",
+    "targets",
+    "regions",
+    "regionMonths",
+    "fees",
+    "projects",
+    "pipeline",
+    "commentary"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "issued": {
+      "type": "string",
+      "format": "date",
+      "title": "Issued",
+      "description": "Date the pack was issued to the management team"
+    },
+    "preparedBy": {
+      "type": "string",
+      "title": "Prepared by",
+      "description": "Who prepared the pack, with their role"
+    },
+    "targets": {
+      "type": "object",
+      "title": "Targets",
+      "required": [
+        "utilisation",
+        "pipelineCoverMonths",
+        "onTrackShare"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "utilisation": {
+          "type": "number",
+          "title": "Utilisation target",
+          "description": "Share of available hours that should be billable, as a fraction"
+        },
+        "pipelineCoverMonths": {
+          "type": "number",
+          "title": "Pipeline cover target",
+          "description": "Months of fee budget the weighted pipeline should cover"
+        },
+        "onTrackShare": {
+          "type": "number",
+          "title": "Projects on track target",
+          "description": "Share of active projects that should be on track, as a fraction"
+        }
+      }
+    },
+    "regions": {
+      "type": "array",
+      "title": "Regions",
+      "description": "The firm's regions, in the order the pack lists them",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "lead",
+          "office"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Region",
+            "enum": [
+              "Metro",
+              "Coastal",
+              "Northern",
+              "Inland"
+            ]
+          },
+          "lead": {
+            "type": "string",
+            "title": "Regional lead"
+          },
+          "office": {
+            "type": "string",
+            "title": "Main office"
+          }
+        }
+      }
+    },
+    "regionMonths": {
+      "type": "array",
+      "title": "Region months",
+      "description": "Budget and hours, one row per region and month",
+      "items": {
+        "type": "object",
+        "required": [
+          "month",
+          "region",
+          "budget",
+          "headcount",
+          "availableHours",
+          "billableHours"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "month": {
+            "type": "string",
+            "format": "date",
+            "title": "Month",
+            "description": "First day of the month"
+          },
+          "region": {
+            "type": "string",
+            "title": "Region",
+            "enum": [
+              "Metro",
+              "Coastal",
+              "Northern",
+              "Inland"
+            ]
+          },
+          "budget": {
+            "type": "number",
+            "title": "Fee budget ($)"
+          },
+          "headcount": {
+            "type": "integer",
+            "title": "Fee-earning staff"
+          },
+          "availableHours": {
+            "type": "integer",
+            "title": "Available hours"
+          },
+          "billableHours": {
+            "type": "integer",
+            "title": "Billable hours"
+          }
+        }
+      }
+    },
+    "fees": {
+      "type": "array",
+      "title": "Fees",
+      "description": "Fee revenue earned, one row per month, region and service line",
+      "items": {
+        "type": "object",
+        "required": [
+          "month",
+          "region",
+          "serviceLine",
+          "amount"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "month": {
+            "type": "string",
+            "format": "date",
+            "title": "Month",
+            "description": "First day of the month"
+          },
+          "region": {
+            "type": "string",
+            "title": "Region",
+            "enum": [
+              "Metro",
+              "Coastal",
+              "Northern",
+              "Inland"
+            ]
+          },
+          "serviceLine": {
+            "type": "string",
+            "title": "Service line",
+            "enum": [
+              "Structural",
+              "Civil",
+              "Geotechnical",
+              "Environmental"
+            ]
+          },
+          "amount": {
+            "type": "number",
+            "title": "Fees earned ($)"
+          }
+        }
+      }
+    },
+    "projects": {
+      "type": "array",
+      "title": "Active projects",
+      "description": "Active projects as at the issue date",
+      "items": {
+        "type": "object",
+        "required": [
+          "code",
+          "name",
+          "client",
+          "region",
+          "serviceLine",
+          "manager",
+          "contractValue",
+          "invoicedToDate",
+          "percentComplete",
+          "status",
+          "note"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Project code"
+          },
+          "name": {
+            "type": "string",
+            "title": "Project"
+          },
+          "client": {
+            "type": "string",
+            "title": "Client"
+          },
+          "region": {
+            "type": "string",
+            "title": "Region",
+            "enum": [
+              "Metro",
+              "Coastal",
+              "Northern",
+              "Inland"
+            ]
+          },
+          "serviceLine": {
+            "type": "string",
+            "title": "Service line",
+            "enum": [
+              "Structural",
+              "Civil",
+              "Geotechnical",
+              "Environmental"
+            ]
+          },
+          "manager": {
+            "type": "string",
+            "title": "Project manager"
+          },
+          "contractValue": {
+            "type": "number",
+            "title": "Contract value ($)"
+          },
+          "invoicedToDate": {
+            "type": "number",
+            "title": "Invoiced to date ($)"
+          },
+          "percentComplete": {
+            "type": "integer",
+            "title": "Complete (%)"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "enum": [
+              "On track",
+              "At risk",
+              "Late"
+            ]
+          },
+          "note": {
+            "type": "string",
+            "title": "Project manager's note"
+          }
+        }
+      }
+    },
+    "pipeline": {
+      "type": "array",
+      "title": "Pipeline",
+      "description": "Open opportunities as at the issue date",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "client",
+          "region",
+          "serviceLine",
+          "stage",
+          "value",
+          "probability",
+          "decision"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Opportunity"
+          },
+          "client": {
+            "type": "string",
+            "title": "Client"
+          },
+          "region": {
+            "type": "string",
+            "title": "Region",
+            "enum": [
+              "Metro",
+              "Coastal",
+              "Northern",
+              "Inland"
+            ]
+          },
+          "serviceLine": {
+            "type": "string",
+            "title": "Service line",
+            "enum": [
+              "Structural",
+              "Civil",
+              "Geotechnical",
+              "Environmental"
+            ]
+          },
+          "stage": {
+            "type": "string",
+            "title": "Stage",
+            "enum": [
+              "Qualifying",
+              "Proposal",
+              "Shortlisted",
+              "Verbal win"
+            ]
+          },
+          "value": {
+            "type": "number",
+            "title": "Fee value ($)"
+          },
+          "probability": {
+            "type": "number",
+            "title": "Probability",
+            "description": "Chance of winning, as a fraction"
+          },
+          "decision": {
+            "type": "string",
+            "format": "date",
+            "title": "Decision expected"
+          }
+        }
+      }
+    },
+    "commentary": {
+      "type": "array",
+      "title": "Commentary",
+      "description": "Each regional lead's commentary on the month",
+      "items": {
+        "type": "object",
+        "required": [
+          "month",
+          "region",
+          "text"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "month": {
+            "type": "string",
+            "format": "date",
+            "title": "Month",
+            "description": "First day of the month"
+          },
+          "region": {
+            "type": "string",
+            "title": "Region",
+            "enum": [
+              "Metro",
+              "Coastal",
+              "Northern",
+              "Inland"
+            ]
+          },
+          "text": {
+            "type": "string",
+            "title": "Commentary"
+          }
+        }
+      }
+    }
+  }
+}

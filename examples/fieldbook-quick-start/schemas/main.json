@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Fieldbook quick-start card",
+  "description": "What a new Fieldbook workspace needs on its quick-start card: the app, the workspace's code, its plan and when support is open.",
+  "type": "object",
+  "required": ["printed", "app", "workspace", "plan", "support"],
+  "additionalProperties": false,
+  "properties": {
+    "printed": { "type": "string", "format": "date", "title": "Card date", "description": "When this card was made; shown as the card's date." },
+    "app": {
+      "type": "object",
+      "title": "App",
+      "required": ["version", "downloadMb", "webAddress", "helpUrl"],
+      "additionalProperties": false,
+      "properties": {
+        "version": { "type": "string", "title": "Version" },
+        "downloadMb": { "type": "number", "title": "Download size (MB)" },
+        "webAddress": { "type": "string", "title": "Web app address" },
+        "helpUrl": { "type": "string", "title": "Help and video guides", "description": "The QR code on the card opens it, with the card's language added." }
+      }
+    },
+    "workspace": {
+      "type": "object",
+      "title": "Workspace",
+      "required": ["name", "code"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string", "title": "Workspace name" },
+        "code": { "type": "string", "title": "Workspace code", "description": "What new users enter after they sign in." },
+        "admin": { "type": "string", "title": "Workspace administrator" }
+      }
+    },
+    "plan": {
+      "type": "object",
+      "title": "Plan",
+      "required": ["name", "pricePerUser", "users", "devicesPerUser", "storageGb", "usedGb", "offlinePhotos", "renews"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string", "title": "Plan name" },
+        "pricePerUser": { "type": "number", "title": "Price per user per month (EUR)" },
+        "users": { "type": "integer", "minimum": 1, "title": "Users" },
+        "devicesPerUser": { "type": "integer", "minimum": 1, "title": "Devices per user" },
+        "storageGb": { "type": "number", "title": "Cloud storage (GB)" },
+        "usedGb": { "type": "number", "title": "Storage used (GB)" },
+        "offlinePhotos": { "type": "integer", "title": "Photos each device keeps offline" },
+        "renews": { "type": "string", "format": "date", "title": "Renews on" }
+      }
+    },
+    "support": {
+      "type": "array",
+      "title": "Support hours",
+      "description": "One row per way to reach support, in the order the card lists them.",
+      "items": {
+        "type": "object",
+        "required": ["channel", "days"],
+        "additionalProperties": false,
+        "properties": {
+          "channel": { "type": "string", "enum": ["phone", "chat", "email"], "title": "Channel" },
+          "days": { "type": "string", "enum": ["weekdays", "saturday", "everyday"], "title": "Days" },
+          "opens": { "type": "string", "pattern": "^[0-2][0-9]:[0-5][0-9]$", "title": "Opens", "description": "24-hour time, Central European Time. Leave out with closes for a channel that is always open." },
+          "closes": { "type": "string", "pattern": "^[0-2][0-9]:[0-5][0-9]$", "title": "Closes" },
+          "replyHours": { "type": "integer", "minimum": 1, "title": "Replies within (hours)", "description": "For email: how soon support answers." },
+          "contact": { "type": "string", "title": "Number or address" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,188 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Fieldbook user guide content",
+  "description": "The parts of the Fieldbook user guide that change from release to release: the version, support contacts, product limits, system requirements, troubleshooting entries and the glossary.",
+  "type": "object",
+  "required": [
+    "release",
+    "support",
+    "limits",
+    "requirements",
+    "troubleshooting",
+    "glossary"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "release": {
+      "type": "object",
+      "title": "Release",
+      "description": "The Fieldbook release this edition of the guide covers",
+      "required": [
+        "version",
+        "build",
+        "released",
+        "edition"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "type": "string",
+          "title": "Version",
+          "description": "Version as people see it, e.g. 4.2"
+        },
+        "build": {
+          "type": "string",
+          "title": "Build",
+          "description": "Full build number shown under Settings › About"
+        },
+        "released": {
+          "type": "string",
+          "format": "date",
+          "title": "Release date"
+        },
+        "edition": {
+          "type": "integer",
+          "minimum": 1,
+          "title": "Edition of the guide"
+        }
+      }
+    },
+    "support": {
+      "type": "object",
+      "title": "Support",
+      "required": [
+        "phone",
+        "email",
+        "web",
+        "hours"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "phone": {
+          "type": "string",
+          "title": "Phone"
+        },
+        "email": {
+          "type": "string",
+          "title": "Email"
+        },
+        "web": {
+          "type": "string",
+          "title": "Help centre",
+          "description": "Help centre host name, without https://"
+        },
+        "hours": {
+          "type": "string",
+          "title": "Opening hours"
+        }
+      }
+    },
+    "limits": {
+      "type": "object",
+      "title": "Limits",
+      "description": "Product limits quoted in the text",
+      "required": [
+        "photosPerFinding",
+        "photoMegapixels",
+        "offlineDays",
+        "reopenHours"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "photosPerFinding": {
+          "type": "integer",
+          "minimum": 1,
+          "title": "Photos per finding"
+        },
+        "photoMegapixels": {
+          "type": "integer",
+          "minimum": 1,
+          "title": "Largest photo kept, in megapixels"
+        },
+        "offlineDays": {
+          "type": "integer",
+          "minimum": 1,
+          "title": "Days of offline work before sync is required"
+        },
+        "reopenHours": {
+          "type": "integer",
+          "minimum": 1,
+          "title": "Hours a supervisor has to reopen a signed-off inspection"
+        }
+      }
+    },
+    "requirements": {
+      "type": "array",
+      "title": "What you need",
+      "items": {
+        "type": "object",
+        "required": [
+          "platform",
+          "needs"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "platform": {
+            "type": "string",
+            "title": "Where"
+          },
+          "needs": {
+            "type": "string",
+            "title": "What it needs"
+          }
+        }
+      }
+    },
+    "troubleshooting": {
+      "type": "array",
+      "title": "Troubleshooting",
+      "description": "Common problems, in the order the chapter lists them",
+      "items": {
+        "type": "object",
+        "required": [
+          "problem",
+          "cause",
+          "fix"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "problem": {
+            "type": "string",
+            "title": "What you see"
+          },
+          "cause": {
+            "type": "string",
+            "title": "Why"
+          },
+          "fix": {
+            "type": "string",
+            "title": "What to do"
+          }
+        }
+      }
+    },
+    "glossary": {
+      "type": "array",
+      "title": "Glossary",
+      "description": "Terms and their definitions; the guide sorts them",
+      "items": {
+        "type": "object",
+        "required": [
+          "term",
+          "definition"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "term": {
+            "type": "string",
+            "title": "Term"
+          },
+          "definition": {
+            "type": "string",
+            "title": "Definition"
+          }
+        }
+      }
+    }
+  }
+}

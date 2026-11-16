@@ -1,0 +1,825 @@
+{
+  "roster": {
+    "team": "Bridges and Structures field team",
+    "periodStart": "2026-10-19",
+    "periodEnd": "2026-11-01",
+    "ordinaryHours": 7.6,
+    "issued": "2026-11-02",
+    "approvedBy": "Owen Strathby",
+    "approvedOn": "2026-11-02"
+  },
+  "staff": [
+    {
+      "id": "OP-1142",
+      "name": "Ada Quellan",
+      "role": "Site engineer",
+      "employment": "Full time"
+    },
+    {
+      "id": "OP-1156",
+      "name": "Bram Tessarick",
+      "role": "Graduate engineer",
+      "employment": "Full time"
+    },
+    {
+      "id": "OP-1163",
+      "name": "Cleo Varnum",
+      "role": "Drafter",
+      "employment": "Part time"
+    },
+    {
+      "id": "OP-1171",
+      "name": "Dev Ranasathe",
+      "role": "Geotechnical engineer",
+      "employment": "Full time"
+    },
+    {
+      "id": "OP-1179",
+      "name": "Esme Corwith",
+      "role": "Field technician",
+      "employment": "Full time"
+    },
+    {
+      "id": "OP-1187",
+      "name": "Nadia Koverly",
+      "role": "Senior civil engineer",
+      "employment": "Full time"
+    },
+    {
+      "id": "OP-1192",
+      "name": "Felix Brannagh",
+      "role": "Field technician",
+      "employment": "Full time"
+    },
+    {
+      "id": "OP-1203",
+      "name": "Hugo Dellacourt",
+      "role": "Survey technician",
+      "employment": "Full time"
+    },
+    {
+      "id": "OP-1215",
+      "name": "Gita Mehrwal",
+      "role": "Project engineer",
+      "employment": "Full time"
+    }
+  ],
+  "entries": [
+    {
+      "staff": "OP-1142",
+      "date": "2026-10-19",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1142",
+      "date": "2026-10-20",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1142",
+      "date": "2026-10-21",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1142",
+      "date": "2026-10-22",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1142",
+      "date": "2026-10-23",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1142",
+      "date": "2026-10-24",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1142",
+      "date": "2026-10-25",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1142",
+      "date": "2026-10-26",
+      "kind": "leave",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1142",
+      "date": "2026-10-27",
+      "kind": "leave",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1142",
+      "date": "2026-10-28",
+      "kind": "leave",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1142",
+      "date": "2026-10-29",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1142",
+      "date": "2026-10-30",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1142",
+      "date": "2026-10-31",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1142",
+      "date": "2026-11-01",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1156",
+      "date": "2026-10-19",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1156",
+      "date": "2026-10-20",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1156",
+      "date": "2026-10-21",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1156",
+      "date": "2026-10-22",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1156",
+      "date": "2026-10-23",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1156",
+      "date": "2026-10-24",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1156",
+      "date": "2026-10-25",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1156",
+      "date": "2026-10-26",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1156",
+      "date": "2026-10-27",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1156",
+      "date": "2026-10-28",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1156",
+      "date": "2026-10-29",
+      "kind": "personal",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1156",
+      "date": "2026-10-30",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1156",
+      "date": "2026-10-31",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1156",
+      "date": "2026-11-01",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1163",
+      "date": "2026-10-19",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1163",
+      "date": "2026-10-20",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1163",
+      "date": "2026-10-21",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1163",
+      "date": "2026-10-22",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1163",
+      "date": "2026-10-23",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1163",
+      "date": "2026-10-24",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1163",
+      "date": "2026-10-25",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1163",
+      "date": "2026-10-26",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1163",
+      "date": "2026-10-27",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1163",
+      "date": "2026-10-28",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1163",
+      "date": "2026-10-29",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1163",
+      "date": "2026-10-30",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1163",
+      "date": "2026-10-31",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1163",
+      "date": "2026-11-01",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1171",
+      "date": "2026-10-19",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1171",
+      "date": "2026-10-20",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1171",
+      "date": "2026-10-21",
+      "kind": "work",
+      "hours": 9.0
+    },
+    {
+      "staff": "OP-1171",
+      "date": "2026-10-22",
+      "kind": "work",
+      "hours": 8.5
+    },
+    {
+      "staff": "OP-1171",
+      "date": "2026-10-23",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1171",
+      "date": "2026-10-24",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1171",
+      "date": "2026-10-25",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1171",
+      "date": "2026-10-26",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1171",
+      "date": "2026-10-27",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1171",
+      "date": "2026-10-28",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1171",
+      "date": "2026-10-29",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1171",
+      "date": "2026-10-30",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1171",
+      "date": "2026-10-31",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1171",
+      "date": "2026-11-01",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1179",
+      "date": "2026-10-19",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1179",
+      "date": "2026-10-20",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1179",
+      "date": "2026-10-21",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1179",
+      "date": "2026-10-22",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1179",
+      "date": "2026-10-23",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1179",
+      "date": "2026-10-24",
+      "kind": "work",
+      "hours": 8.0
+    },
+    {
+      "staff": "OP-1179",
+      "date": "2026-10-25",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1179",
+      "date": "2026-10-26",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1179",
+      "date": "2026-10-27",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1179",
+      "date": "2026-10-28",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1179",
+      "date": "2026-10-29",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1179",
+      "date": "2026-10-30",
+      "kind": "work",
+      "hours": 9.0
+    },
+    {
+      "staff": "OP-1179",
+      "date": "2026-10-31",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1179",
+      "date": "2026-11-01",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1187",
+      "date": "2026-10-19",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1187",
+      "date": "2026-10-20",
+      "kind": "work",
+      "hours": 9.5
+    },
+    {
+      "staff": "OP-1187",
+      "date": "2026-10-21",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1187",
+      "date": "2026-10-22",
+      "kind": "work",
+      "hours": 10.0
+    },
+    {
+      "staff": "OP-1187",
+      "date": "2026-10-23",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1187",
+      "date": "2026-10-24",
+      "kind": "work",
+      "hours": 5.0
+    },
+    {
+      "staff": "OP-1187",
+      "date": "2026-10-25",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1187",
+      "date": "2026-10-26",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1187",
+      "date": "2026-10-27",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1187",
+      "date": "2026-10-28",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1187",
+      "date": "2026-10-29",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1187",
+      "date": "2026-10-30",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1187",
+      "date": "2026-10-31",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1187",
+      "date": "2026-11-01",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1192",
+      "date": "2026-10-19",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1192",
+      "date": "2026-10-20",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1192",
+      "date": "2026-10-21",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1192",
+      "date": "2026-10-22",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1192",
+      "date": "2026-10-23",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1192",
+      "date": "2026-10-24",
+      "kind": "work",
+      "hours": 8.0
+    },
+    {
+      "staff": "OP-1192",
+      "date": "2026-10-25",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1192",
+      "date": "2026-10-26",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1192",
+      "date": "2026-10-27",
+      "kind": "personal",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1192",
+      "date": "2026-10-28",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1192",
+      "date": "2026-10-29",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1192",
+      "date": "2026-10-30",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1192",
+      "date": "2026-10-31",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1192",
+      "date": "2026-11-01",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1203",
+      "date": "2026-10-19",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1203",
+      "date": "2026-10-20",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1203",
+      "date": "2026-10-21",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1203",
+      "date": "2026-10-22",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1203",
+      "date": "2026-10-23",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1203",
+      "date": "2026-10-24",
+      "kind": "work",
+      "hours": 8.0
+    },
+    {
+      "staff": "OP-1203",
+      "date": "2026-10-25",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1203",
+      "date": "2026-10-26",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1203",
+      "date": "2026-10-27",
+      "kind": "work",
+      "hours": 10.5
+    },
+    {
+      "staff": "OP-1203",
+      "date": "2026-10-28",
+      "kind": "work",
+      "hours": 9.5
+    },
+    {
+      "staff": "OP-1203",
+      "date": "2026-10-29",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1203",
+      "date": "2026-10-30",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1203",
+      "date": "2026-10-31",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1203",
+      "date": "2026-11-01",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1215",
+      "date": "2026-10-19",
+      "kind": "work",
+      "hours": 8.6
+    },
+    {
+      "staff": "OP-1215",
+      "date": "2026-10-20",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1215",
+      "date": "2026-10-21",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1215",
+      "date": "2026-10-22",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1215",
+      "date": "2026-10-23",
+      "kind": "leave",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1215",
+      "date": "2026-10-24",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1215",
+      "date": "2026-10-25",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1215",
+      "date": "2026-10-26",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1215",
+      "date": "2026-10-27",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1215",
+      "date": "2026-10-28",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1215",
+      "date": "2026-10-29",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1215",
+      "date": "2026-10-30",
+      "kind": "work",
+      "hours": 7.6
+    },
+    {
+      "staff": "OP-1215",
+      "date": "2026-10-31",
+      "kind": "off",
+      "hours": 0
+    },
+    {
+      "staff": "OP-1215",
+      "date": "2026-11-01",
+      "kind": "work",
+      "hours": 4.0
+    }
+  ]
+}

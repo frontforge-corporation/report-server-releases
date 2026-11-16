@@ -1,0 +1,744 @@
+{
+  "$schema": "https://reportforge.dev/schema/rfml/0.2.json",
+  "rfml": "0.2",
+  "id": "fieldbook-release-notes",
+  "meta": {
+    "title": "Fieldbook release notes",
+    "description": "Quillmont Software's release notes for Fieldbook, newest version first from the data. Each change has a New, Improved, Fixed, Security or Deprecated badge coloured by a conditional style and a link to its issue; a contents list links to each version, and a known issues box appears when there are any.",
+    "locale": "en-GB",
+    "tags": [
+      "example",
+      "documentation",
+      "release-notes"
+    ]
+  },
+  "data": {
+    "main": {
+      "schema": {
+        "$ref": "schemas/main.json"
+      },
+      "sample": "samples/main.json",
+      "description": "The releases the notes cover, with their changes, and the known issues in the latest one."
+    }
+  },
+  "vars": {
+    "latest": "First(data.main.releases.filter(r, r.date == Max(data.main.releases.map(x, x.date))).map(r, r.version))",
+    "oldest": "First(data.main.releases.filter(r, r.date == Min(data.main.releases.map(x, x.date))).map(r, r.version))",
+    "knownCount": "Count(Coalesce(data.main.knownIssues, []))"
+  },
+  "styles": {
+    "tokens": {
+      "brand": "#1F6F5C",
+      "brand-dark": "#185A4B",
+      "accent": "#F2A541",
+      "ink": "#1E2B2E",
+      "muted": "#56676A",
+      "line": "#D3E2DC",
+      "panel": "#EEF5F2",
+      "new": "#1F6F5C",
+      "improved": "#2F5FA7",
+      "fixed": "#5B4BA0",
+      "security": "#B42318",
+      "deprecated": "#8A5A00",
+      "space-1": "3pt",
+      "space-2": "6pt",
+      "space-3": "10pt",
+      "space-4": "16pt"
+    },
+    "defaults": {
+      "document": {
+        "color": "var(--ink)",
+        "font-family": "Arimo",
+        "font-size": "9pt",
+        "line-height": 1.4
+      },
+      "heading": {
+        "margin": 0,
+        "color": "var(--brand)",
+        "font-size": "15pt",
+        "font-weight": 700,
+        "line-height": 1.2
+      },
+      "link": {
+        "color": "var(--brand)",
+        "text-decoration": "underline"
+      }
+    },
+    "classes": {
+      "kicker": {
+        "color": "var(--muted)",
+        "font-size": "8pt",
+        "font-weight": 700,
+        "letter-spacing": "1.4pt",
+        "text-transform": "uppercase"
+      },
+      "title": {
+        "margin-top": "var(--space-1)",
+        "color": "var(--brand-dark)",
+        "font-size": "26pt",
+        "font-weight": 700,
+        "line-height": 1.1
+      },
+      "subtitle": {
+        "margin-top": "var(--space-2)",
+        "color": "var(--muted)",
+        "font-size": "10pt"
+      },
+      "intro": {
+        "max-width": "150mm",
+        "margin-top": "var(--space-3)",
+        "font-size": "10pt"
+      },
+      "contents-title": {
+        "margin-bottom": "var(--space-1)",
+        "color": "var(--muted)",
+        "font-size": "7.5pt",
+        "font-weight": 700,
+        "letter-spacing": "1pt",
+        "text-transform": "uppercase"
+      },
+      "release-block": {
+        "margin-top": "var(--space-4)",
+        "padding-top": "var(--space-3)",
+        "border-top": "2pt solid var(--brand)"
+      },
+      "release-meta": {
+        "margin-top": "2pt",
+        "color": "var(--muted)",
+        "font-size": "8.5pt"
+      },
+      "latest": {
+        "padding": "1pt 5pt",
+        "border-radius": "6pt",
+        "background-color": "var(--accent)",
+        "color": "var(--ink)",
+        "font-size": "7pt",
+        "font-weight": 700,
+        "letter-spacing": "0.6pt",
+        "text-transform": "uppercase"
+      },
+      "summary": {
+        "margin-top": "var(--space-2)",
+        "font-size": "10pt"
+      },
+      "counts": {
+        "margin-top": "var(--space-1)",
+        "color": "var(--muted)",
+        "font-size": "8pt"
+      },
+      "upgrade": {
+        "margin-top": "var(--space-2)",
+        "padding": "var(--space-2) var(--space-3)",
+        "border-left": "2.5pt solid var(--accent)",
+        "background-color": "#FDF4E3"
+      },
+      "change": {
+        "padding": "var(--space-2) 0",
+        "border-bottom": "0.5pt solid var(--line)",
+        "column-gap": "var(--space-3)",
+        "display": "grid",
+        "align-items": "start",
+        "grid-template-columns": "21mm 1fr",
+        "break-inside": "avoid"
+      },
+      "tag": {
+        "margin-top": "1pt",
+        "padding": "1.5pt 0",
+        "border": "0.75pt solid var(--new)",
+        "border-radius": "3pt",
+        "background-color": "var(--new)",
+        "color": "#FFFFFF",
+        "font-size": "6.5pt",
+        "font-weight": 700,
+        "letter-spacing": "0.6pt",
+        "text-align": "center",
+        "text-transform": "uppercase"
+      },
+      "tag-new": {
+        "border-color": "var(--new)",
+        "background-color": "var(--new)"
+      },
+      "tag-improved": {
+        "border-color": "var(--improved)",
+        "background-color": "var(--improved)"
+      },
+      "tag-fixed": {
+        "border-color": "var(--fixed)",
+        "background-color": "var(--fixed)"
+      },
+      "tag-security": {
+        "border-color": "var(--security)",
+        "background-color": "var(--security)"
+      },
+      "tag-deprecated": {
+        "border-color": "var(--deprecated)",
+        "background-color": "#FFFFFF",
+        "color": "var(--deprecated)"
+      },
+      "change-title": {
+        "font-weight": 700
+      },
+      "change-detail": {
+        "margin-top": "1pt"
+      },
+      "change-meta": {
+        "margin-top": "2pt",
+        "color": "var(--muted)",
+        "font-size": "7.5pt"
+      },
+      "known-box": {
+        "margin-top": "var(--space-4)",
+        "padding": "var(--space-3) var(--space-3) var(--space-2)",
+        "border": "0.75pt solid #E9C98B",
+        "border-left": "4pt solid var(--accent)",
+        "border-radius": "3pt",
+        "background-color": "#FFFAF0"
+      },
+      "known-issue": {
+        "padding": "var(--space-2) 0",
+        "border-top": "0.5pt solid #EED9AE",
+        "break-inside": "avoid"
+      },
+      "known-title": {
+        "font-weight": 700
+      },
+      "issue-link": {
+        "font-weight": 400
+      },
+      "strong": {
+        "font-weight": 700
+      },
+      "muted": {
+        "color": "var(--muted)"
+      },
+      "small": {
+        "font-size": "7.5pt"
+      }
+    }
+  },
+  "pages": [
+    {
+      "id": "notes-page",
+      "size": "A4",
+      "margin": "18mm 20mm 20mm",
+      "footerDistance": "10mm",
+      "header": [
+        {
+          "type": "box",
+          "id": "page-header",
+          "class": [
+            "small",
+            "muted"
+          ],
+          "style": {
+            "display": "flex",
+            "justify-content": "space-between"
+          },
+          "children": [
+            {
+              "type": "text",
+              "id": "header-product",
+              "content": [
+                {
+                  "type": "span",
+                  "content": "Fieldbook",
+                  "class": [
+                    "strong"
+                  ]
+                },
+                " release notes"
+              ]
+            },
+            {
+              "type": "text",
+              "id": "header-company",
+              "content": "Quillmont Software"
+            }
+          ]
+        }
+      ],
+      "footer": [
+        {
+          "type": "box",
+          "id": "page-footer",
+          "class": [
+            "small",
+            "muted"
+          ],
+          "style": {
+            "display": "flex",
+            "justify-content": "space-between"
+          },
+          "children": [
+            {
+              "type": "text",
+              "id": "footer-site",
+              "content": "quillmont.example/fieldbook/releases · support@quillmont.example · 1800 975 707"
+            },
+            {
+              "type": "text",
+              "id": "footer-page",
+              "content": "Page {{ page.number }} of {{ page.count }}"
+            }
+          ]
+        }
+      ],
+      "background": [
+        {
+          "type": "box",
+          "id": "edge",
+          "style": {
+            "width": "4mm",
+            "background-color": "var(--brand)",
+            "top": 0,
+            "bottom": 0,
+            "left": 0
+          }
+        }
+      ],
+      "variants": {
+        "first": {
+          "header": []
+        }
+      }
+    }
+  ],
+  "body": [
+    {
+      "type": "box",
+      "id": "masthead",
+      "children": [
+        {
+          "type": "text",
+          "id": "kicker",
+          "class": [
+            "kicker"
+          ],
+          "content": "Quillmont Software · Customer documentation"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "class": [
+            "title"
+          ],
+          "content": "Fieldbook release notes"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "class": [
+            "subtitle"
+          ],
+          "content": [
+            "{{ If(vars.oldest == vars.latest, 'Version ' + vars.latest, 'Versions ' + vars.oldest + ' to ' + vars.latest) }} · published {{ Format(data.main.published, 'd MMMM y') }}",
+            {
+              "type": "span",
+              "content": " · {{ data.main.audience }}",
+              "if": "has(data.main.audience)"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "intro",
+          "class": [
+            "intro"
+          ],
+          "content": [
+            "What changed in each Fieldbook release, newest first. Every change links to its issue on quillmont.example, where you can read the discussion and follow up.",
+            {
+              "type": "span",
+              "content": [
+                " Problems we know about in {{ vars.latest }} are under ",
+                {
+                  "type": "link",
+                  "href": "'#known-issues'",
+                  "content": "Known issues"
+                },
+                " below."
+              ],
+              "if": "vars.knownCount > 0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "box",
+      "id": "contents",
+      "style": {
+        "max-width": "110mm",
+        "margin-top": "var(--space-3)"
+      },
+      "children": [
+        {
+          "type": "text",
+          "id": "contents-title",
+          "class": [
+            "contents-title"
+          ],
+          "content": "In these notes"
+        },
+        {
+          "type": "toc",
+          "id": "toc",
+          "style": {
+            "parts": {
+              "entry": {
+                "padding": "3pt 0",
+                "border-bottom": "0.5pt solid var(--line)",
+                "font-size": "9.5pt"
+              },
+              "leader": {
+                "color": "var(--line)"
+              },
+              "page-number": {
+                "color": "var(--brand)",
+                "font-weight": 700
+              }
+            }
+          },
+          "levels": 1,
+          "meta": {
+            "description": "Links to each version's heading, and to the known issues, with their pages."
+          }
+        }
+      ]
+    },
+    {
+      "type": "box",
+      "id": "known-issues",
+      "if": "vars.knownCount > 0",
+      "class": [
+        "known-box"
+      ],
+      "children": [
+        {
+          "type": "heading",
+          "id": "known-heading",
+          "level": 1,
+          "content": "Known issues"
+        },
+        {
+          "type": "text",
+          "id": "known-intro",
+          "class": [
+            "muted"
+          ],
+          "content": "Problems in Fieldbook {{ vars.latest }} that are not fixed yet. Each links to its issue, where you can follow the fix."
+        },
+        {
+          "type": "repeat",
+          "id": "known-list",
+          "source": "data.main.knownIssues",
+          "as": "k",
+          "detail": [
+            {
+              "type": "box",
+              "id": "known-issue",
+              "class": [
+                "known-issue"
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "known-title",
+                  "class": [
+                    "known-title"
+                  ],
+                  "content": [
+                    "{{ k.title }} ",
+                    {
+                      "type": "link",
+                      "href": "'https://quillmont.example/issues/' + k.issue",
+                      "content": "{{ k.issue }}",
+                      "class": [
+                        "issue-link"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "known-detail",
+                  "if": "has(k.detail)",
+                  "content": "{{ k.detail }}"
+                },
+                {
+                  "type": "text",
+                  "id": "known-workaround",
+                  "if": "has(k.workaround)",
+                  "content": [
+                    {
+                      "type": "span",
+                      "content": "Workaround: ",
+                      "class": [
+                        "strong"
+                      ]
+                    },
+                    "{{ k.workaround }}"
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "known-fix",
+                  "if": "has(k.fixExpected)",
+                  "class": [
+                    "muted"
+                  ],
+                  "content": "A fix is planned for Fieldbook {{ k.fixExpected }}."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "repeat",
+      "id": "releases",
+      "source": "data.main.releases",
+      "as": "r",
+      "sort": [
+        {
+          "by": "r.date",
+          "direction": "desc"
+        }
+      ],
+      "vars": {
+        "counts": "Join(['new', 'improved', 'fixed', 'security', 'deprecated'].filter(t, r.changes.exists(c, c.tag == t)).map(t, Text(Count(r.changes.filter(c, c.tag == t))) + ' ' + t), ' · ')"
+      },
+      "detail": [
+        {
+          "type": "box",
+          "id": "release",
+          "class": [
+            "release-block"
+          ],
+          "children": [
+            {
+              "type": "heading",
+              "id": "release-heading",
+              "level": 1,
+              "content": "Fieldbook {{ r.version }}"
+            },
+            {
+              "type": "text",
+              "id": "release-meta",
+              "class": [
+                "release-meta"
+              ],
+              "content": [
+                "Released {{ Format(r.date, 'd MMMM y') }}",
+                {
+                  "type": "span",
+                  "content": " · {{ r.platforms }}",
+                  "if": "has(r.platforms)"
+                },
+                {
+                  "type": "span",
+                  "content": [
+                    " ",
+                    {
+                      "type": "span",
+                      "content": "Latest",
+                      "class": [
+                        "latest"
+                      ]
+                    }
+                  ],
+                  "if": "r.version == vars.latest"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "release-summary",
+              "class": [
+                "summary"
+              ],
+              "content": "{{ r.summary }}"
+            },
+            {
+              "type": "text",
+              "id": "release-counts",
+              "class": [
+                "counts"
+              ],
+              "content": "{{ vars.counts }}"
+            },
+            {
+              "type": "text",
+              "id": "upgrade-note",
+              "if": "has(r.upgradeNote)",
+              "class": [
+                "upgrade"
+              ],
+              "content": [
+                {
+                  "type": "span",
+                  "content": "Before you update: ",
+                  "class": [
+                    "strong"
+                  ]
+                },
+                "{{ r.upgradeNote }}"
+              ]
+            },
+            {
+              "type": "repeat",
+              "id": "changes",
+              "source": "r.changes",
+              "as": "c",
+              "sort": [
+                {
+                  "by": "Switch(c.tag, 'new', 1, 'improved', 2, 'fixed', 3, 'security', 4, 5)"
+                }
+              ],
+              "detail": [
+                {
+                  "type": "box",
+                  "id": "change",
+                  "class": [
+                    "change"
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "change-tag",
+                      "class": [
+                        "tag"
+                      ],
+                      "rules": [
+                        {
+                          "if": "c.tag == 'new'",
+                          "class": [
+                            "tag-new"
+                          ]
+                        },
+                        {
+                          "if": "c.tag == 'improved'",
+                          "class": [
+                            "tag-improved"
+                          ]
+                        },
+                        {
+                          "if": "c.tag == 'fixed'",
+                          "class": [
+                            "tag-fixed"
+                          ]
+                        },
+                        {
+                          "if": "c.tag == 'security'",
+                          "class": [
+                            "tag-security"
+                          ]
+                        },
+                        {
+                          "if": "c.tag == 'deprecated'",
+                          "class": [
+                            "tag-deprecated"
+                          ]
+                        }
+                      ],
+                      "content": "{{ Switch(c.tag, 'new', 'New', 'improved', 'Improved', 'fixed', 'Fixed', 'security', 'Security', 'Deprecated') }}"
+                    },
+                    {
+                      "type": "box",
+                      "id": "change-body",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "change-title",
+                          "class": [
+                            "change-title"
+                          ],
+                          "content": "{{ c.title }}"
+                        },
+                        {
+                          "type": "text",
+                          "id": "change-detail",
+                          "if": "has(c.detail)",
+                          "class": [
+                            "change-detail"
+                          ],
+                          "content": "{{ c.detail }}"
+                        },
+                        {
+                          "type": "text",
+                          "id": "change-meta",
+                          "if": "has(c.area) || has(c.issue)",
+                          "class": [
+                            "change-meta"
+                          ],
+                          "content": [
+                            {
+                              "type": "span",
+                              "content": "{{ c.area }}",
+                              "if": "has(c.area)"
+                            },
+                            {
+                              "type": "span",
+                              "content": " · ",
+                              "if": "has(c.area) && has(c.issue)"
+                            },
+                            {
+                              "type": "link",
+                              "href": "'https://quillmont.example/issues/' + c.issue",
+                              "content": "{{ c.issue }}"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "tests": [
+    {
+      "name": "sample lists three releases newest first",
+      "data": {
+        "main": "samples/main.json"
+      },
+      "expect": [
+        "pages.size() == 3",
+        "nodes('release-heading').map(b, b.page) == [2, 3, 3]",
+        "node('known-issues').page == 1",
+        "diagnostics.all(d, d.severity != 'error' && d.severity != 'warning')",
+        "nodes('release-heading').map(b, b.text) == ['Fieldbook 4.2.0', 'Fieldbook 4.1.2', 'Fieldbook 4.1.0']",
+        "text('subtitle').startsWith('Versions 4.1.0 to 4.2.0')",
+        "nodes('change-tag').map(b, b.text).filter(t, t == 'SECURITY').size() == 2",
+        "nodes('change-tag')[0].text == 'NEW' && nodes('change-tag')[8].text == 'DEPRECATED'",
+        "nodes('release-counts')[0].text == '3 new · 2 improved · 2 fixed · 1 security · 1 deprecated'",
+        "nodes('upgrade-note').size() == 1",
+        "visible('known-issues') && nodes('known-issue').size() == 2",
+        "text('intro').endsWith('Problems we know about in 4.2.0 are under Known issues below.')",
+        "text('toc').contains('Fieldbook 4.2.0') && text('toc').contains('Known issues')"
+      ],
+      "snapshot": true
+    },
+    {
+      "name": "one release without known issues leaves the box out",
+      "data": {
+        "main": "tests/one-release.json"
+      },
+      "expect": [
+        "pages.size() == 1",
+        "diagnostics.all(d, d.severity != 'error' && d.severity != 'warning')",
+        "!visible('known-issues')",
+        "text('subtitle') == 'Version 4.2.1 · published 16 November 2026'",
+        "text('intro').endsWith('follow up.')",
+        "nodes('change-tag').map(b, b.text) == ['FIXED', 'FIXED']",
+        "nodes('change-meta').map(b, b.text) == ['Web app · FB-2331', 'FB-2336']",
+        "!visible('upgrade-note')"
+      ]
+    }
+  ]
+}

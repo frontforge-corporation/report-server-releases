@@ -1,0 +1,30 @@
+{
+  "printed": "2026-11-02",
+  "app": {
+    "version": "4.2",
+    "downloadMb": 86.4,
+    "webAddress": "app.quillmont.example",
+    "helpUrl": "https://quillmont.example/fieldbook/start"
+  },
+  "workspace": {
+    "name": "Veldmark Facility Services",
+    "code": "VELD-4821",
+    "admin": "Ilse Brannagh"
+  },
+  "plan": {
+    "name": "Team",
+    "pricePerUser": 12.5,
+    "users": 18,
+    "devicesPerUser": 2,
+    "storageGb": 250,
+    "usedGb": 37.6,
+    "offlinePhotos": 12000,
+    "renews": "2027-01-01"
+  },
+  "support": [
+    { "channel": "phone", "days": "weekdays", "opens": "08:00", "closes": "18:00", "contact": "+61 2 5550 0123" },
+    { "channel": "chat", "days": "weekdays", "opens": "07:00", "closes": "20:00" },
+    { "channel": "chat", "days": "saturday", "opens": "09:00", "closes": "13:00" },
+    { "channel": "email", "days": "everyday", "replyHours": 4, "contact": "support@quillmont.example" }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "course": {
+    "code": "FB-ADM-201",
+    "title": "Fieldbook Administrator for Multi-Site Inspection Programmes",
+    "hours": 14.5,
+    "modules": 6
+  },
+  "cohort": {
+    "name": "October 2026, weekend group",
+    "delivery": "in person at the Quillmont Academy training rooms"
+  },
+  "signatories": [
+    { "name": "Callum Westerby", "role": "Course lead" },
+    { "name": "Dr Imogen Rathbourne", "role": "Head of Quillmont Academy" }
+  ],
+  "participants": [
+    { "name": "Anneliese Marguerite Vantreight-Saarlund", "organisation": "Veldmark Facility Services", "status": "completed", "score": 0.9, "completed": "2026-11-01", "certificate": "QA-26-1190" },
+    { "name": "Yusra Calloway-Finch", "status": "in-progress" }
+  ]
+}

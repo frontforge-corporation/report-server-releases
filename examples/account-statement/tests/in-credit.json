@@ -1,0 +1,21 @@
+{
+  "customer": {"name": "Weirton Heights Bowls Club", "attention": "Accounts payable", "addressLines": ["PO Box 18", "WEIRTON HEIGHTS QLD 4996"]},
+  "account": {"number": "8801 4118 27", "paymentReference": "8801411827", "manager": "Megan Doyle"},
+  "statement": {"number": "ST-2609-0588", "date": "2026-09-30", "periodStart": "2026-07-01", "issueDate": "2026-10-02", "dueDate": "2026-10-30", "openingBalance": 460.31},
+  "sites": [
+    {"name": "Clubhouse", "address": "3 Green Street, Weirton Heights"},
+    {"name": "Greens", "address": "3 Green Street, Weirton Heights"}
+  ],
+  "transactions": [
+    {"date": "2026-07-02", "kind": "bill", "reference": "B2604021", "site": "Clubhouse", "description": "Water and wastewater, June", "amount": 206.99},
+    {"date": "2026-07-04", "kind": "bill", "reference": "B2604028", "site": "Greens", "description": "Water and wastewater, June", "amount": 291.1},
+    {"date": "2026-07-20", "kind": "payment", "reference": "EFT 4491", "description": "Payment received, thank you", "amount": -460.31},
+    {"date": "2026-08-02", "kind": "bill", "reference": "B2604035", "site": "Clubhouse", "description": "Water and wastewater, July", "amount": 191.44},
+    {"date": "2026-08-04", "kind": "bill", "reference": "B2604042", "site": "Greens", "description": "Water and wastewater, July", "amount": 276.63},
+    {"date": "2026-08-20", "kind": "payment", "reference": "EFT 4504", "description": "Payment received, thank you", "amount": -498.09},
+    {"date": "2026-09-02", "kind": "bill", "reference": "B2604049", "site": "Clubhouse", "description": "Water and wastewater, August", "amount": 189.05},
+    {"date": "2026-09-04", "kind": "bill", "reference": "B2604056", "site": "Greens", "description": "Water and wastewater, August", "amount": 307.04},
+    {"date": "2026-09-20", "kind": "payment", "reference": "EFT 4517", "description": "Payment received, thank you", "amount": -468.07},
+    {"date": "2026-09-28", "kind": "payment", "reference": "EFT 4999", "description": "Payment received, thank you", "amount": -996.09}
+  ]
+}

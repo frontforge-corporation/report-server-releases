@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Meter readings for one quarter",
+  "type": "object",
+  "required": [
+    "quarter",
+    "issued",
+    "zones",
+    "readings"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "quarter": {
+      "type": "object",
+      "title": "Quarter",
+      "required": [
+        "label",
+        "start",
+        "end"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "type": "string",
+          "title": "Label"
+        },
+        "start": {
+          "type": "string",
+          "format": "date",
+          "title": "First day"
+        },
+        "end": {
+          "type": "string",
+          "format": "date",
+          "title": "Last day"
+        }
+      }
+    },
+    "issued": {
+      "type": "string",
+      "format": "date",
+      "title": "Issued"
+    },
+    "zones": {
+      "type": "array",
+      "title": "Zones",
+      "description": "Every zone in the reading round, read or not",
+      "items": {
+        "type": "object",
+        "required": [
+          "code",
+          "name",
+          "route",
+          "reader"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "route": {
+            "type": "string",
+            "title": "Route"
+          },
+          "reader": {
+            "type": "string",
+            "title": "Meter reader"
+          }
+        }
+      }
+    },
+    "readings": {
+      "type": "array",
+      "title": "Readings",
+      "items": {
+        "type": "object",
+        "required": [
+          "meter",
+          "zone",
+          "address",
+          "sizeMm",
+          "previousDate",
+          "previousReading",
+          "currentDate",
+          "currentReading",
+          "readType",
+          "previousQuarterKl"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "meter": {
+            "type": "string",
+            "title": "Meter number"
+          },
+          "zone": {
+            "type": "string",
+            "title": "Zone code",
+            "description": "The code of the zone in `zones`"
+          },
+          "address": {
+            "type": "string",
+            "title": "Address"
+          },
+          "sizeMm": {
+            "type": "integer",
+            "title": "Meter size (mm)"
+          },
+          "previousDate": {
+            "type": "string",
+            "format": "date",
+            "title": "Previous read date"
+          },
+          "previousReading": {
+            "type": "integer",
+            "title": "Previous reading (kL)"
+          },
+          "currentDate": {
+            "type": "string",
+            "format": "date",
+            "title": "Current read date"
+          },
+          "currentReading": {
+            "type": "integer",
+            "title": "Current reading (kL)"
+          },
+          "readType": {
+            "type": "string",
+            "enum": [
+              "actual",
+              "estimated"
+            ],
+            "title": "Read type"
+          },
+          "previousQuarterKl": {
+            "type": "integer",
+            "title": "Last quarter's use (kL)"
+          },
+          "note": {
+            "type": "string",
+            "title": "Reader's note"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,2051 @@
+{
+  "$schema": "https://reportforge.dev/schema/rfml/0.2.json",
+  "rfml": "0.2",
+  "id": "management-pack",
+  "meta": {
+    "title": "Monthly management pack",
+    "description": "Ostrand & Pell's monthly management pack on A4, for a month and a region you pick. Four KPI tiles that turn red when a target is missed, revenue against budget, utilisation and pipeline charts, fees by region and service line in a matrix, the pipeline and active projects, and each region's commentary. In the HTML viewer, regions open to their projects and projects to their notes.",
+    "locale": "en-AU",
+    "currency": "AUD",
+    "tags": [
+      "example",
+      "management",
+      "parameters",
+      "charts",
+      "matrix",
+      "drill-down"
+    ]
+  },
+  "params": [
+    {
+      "name": "month",
+      "type": "date",
+      "label": "Month",
+      "description": "The month the pack reports on.",
+      "default": "Date(2026, 9, 1)",
+      "required": true,
+      "options": {
+        "source": "Distinct(data.main.regionMonths.map(r, r.month))",
+        "value": "row",
+        "label": "Format(row, 'MMMM y')"
+      }
+    },
+    {
+      "name": "region",
+      "type": "string",
+      "label": "Region",
+      "description": "One region, or all of them.",
+      "default": "'all'",
+      "required": true,
+      "options": [
+        {
+          "value": "all",
+          "label": "All regions"
+        },
+        {
+          "value": "Metro",
+          "label": "Metro"
+        },
+        {
+          "value": "Coastal",
+          "label": "Coastal"
+        },
+        {
+          "value": "Northern",
+          "label": "Northern"
+        },
+        {
+          "value": "Inland",
+          "label": "Inland"
+        }
+      ]
+    }
+  ],
+  "data": {
+    "main": {
+      "schema": {
+        "$ref": "schemas/main.json"
+      },
+      "sample": "samples/main.json",
+      "description": "Twelve months of fees, budgets and hours by region, with today's active projects, pipeline and each region's commentary."
+    }
+  },
+  "vars": {
+    "regionNames": "If(params.region == 'all', data.main.regions.map(r, r.name), [params.region])",
+    "scope": "If(params.region == 'all', 'All regions', params.region + ' region')",
+    "monthName": "Format(params.month, 'MMMM y')",
+    "html": "StartsWith(output.format, 'html')",
+    "fees": "data.main.fees.filter(f, f.region in vars.regionNames)",
+    "regionMonths": "data.main.regionMonths.filter(r, r.region in vars.regionNames)",
+    "monthFees": "vars.fees.filter(f, f.month == params.month)",
+    "thisMonth": "vars.regionMonths.filter(r, r.month == params.month)",
+    "revenue": "Sum(vars.monthFees.map(f, f.amount))",
+    "budget": "Sum(vars.thisMonth.map(r, r.budget))",
+    "revenueMet": "vars.revenue >= vars.budget",
+    "revenueGap": "(vars.revenue - vars.budget) / vars.budget",
+    "fyStart": "Date(If(Month(params.month) >= 7, Year(params.month), Year(params.month) - 1), 7, 1)",
+    "fyRevenue": "Sum(vars.fees.filter(f, f.month >= vars.fyStart && f.month <= params.month).map(f, f.amount))",
+    "fyBudget": "Sum(vars.regionMonths.filter(r, r.month >= vars.fyStart && r.month <= params.month).map(r, r.budget))",
+    "utilisation": "Sum(vars.thisMonth.map(r, r.billableHours)) / Sum(vars.thisMonth.map(r, r.availableHours))",
+    "utilisationMet": "vars.utilisation >= data.main.targets.utilisation",
+    "headcount": "Sum(vars.thisMonth.map(r, r.headcount))",
+    "window": "Distinct(data.main.regionMonths.map(r, r.month)).filter(m, m <= params.month && m > DateAdd(params.month, -12, 'month'))",
+    "trend": "vars.window.map(m, {'month': m, 'revenue': Sum(vars.fees.filter(f, f.month == m).map(f, f.amount)), 'budget': Sum(vars.regionMonths.filter(r, r.month == m).map(r, r.budget)), 'utilisation': Sum(vars.regionMonths.filter(r, r.month == m).map(r, r.billableHours)) / Sum(vars.regionMonths.filter(r, r.month == m).map(r, r.availableHours))})",
+    "pipeline": "data.main.pipeline.filter(p, p.region in vars.regionNames)",
+    "weighted": "Sum(vars.pipeline.map(p, p.value * p.probability))",
+    "cover": "vars.weighted / vars.budget",
+    "coverMet": "vars.cover >= data.main.targets.pipelineCoverMonths",
+    "stages": "['Qualifying', 'Proposal', 'Shortlisted', 'Verbal win'].map(s, {'stage': s, 'value': Sum(vars.pipeline.filter(p, p.stage == s).map(p, p.value)), 'weighted': Sum(vars.pipeline.filter(p, p.stage == s).map(p, p.value * p.probability))})",
+    "projects": "data.main.projects.filter(p, p.region in vars.regionNames)",
+    "onTrack": "vars.projects.filter(p, p.status == 'On track').size()",
+    "onTrackShare": "If(vars.projects.size() > 0, vars.onTrack / vars.projects.size(), 1)",
+    "onTrackMet": "vars.onTrackShare >= data.main.targets.onTrackShare"
+  },
+  "styles": {
+    "tokens": {
+      "brand": "#22406B",
+      "accent": "#C8762B",
+      "ink": "#1E2430",
+      "muted": "#5B6675",
+      "line": "#DCE1E8",
+      "panel": "#F1F4F8",
+      "negative": "#B42318",
+      "positive": "#1F7A4D",
+      "warning": "#A15C07",
+      "space-1": "3pt",
+      "space-2": "6pt",
+      "space-3": "12pt",
+      "chart-1": "#22406B",
+      "chart-2": "#C8762B",
+      "chart-3": "#7F9CC2",
+      "chart-4": "#5B6675",
+      "chart-5": "#1F7A4D",
+      "chart-6": "#B42318"
+    },
+    "defaults": {
+      "document": {
+        "color": "var(--ink)",
+        "font-family": "Arimo",
+        "font-size": "8.5pt",
+        "line-height": 1.3
+      },
+      "heading": {
+        "margin": "0 0 var(--space-1)",
+        "color": "var(--ink)",
+        "font-size": "9pt",
+        "font-weight": 700
+      },
+      "table": {
+        "width": "100%",
+        "font-size": "8pt",
+        "border-collapse": "collapse",
+        "parts": {
+          "cell": {
+            "padding": "2.5pt 4pt",
+            "border-bottom": "0.5pt solid var(--line)"
+          },
+          "header-cell": {
+            "padding-top": "4pt",
+            "border-bottom": "0.75pt solid var(--brand)",
+            "color": "var(--muted)",
+            "font-size": "7.5pt",
+            "font-weight": 700
+          },
+          "footer-cell": {
+            "border-bottom": 0,
+            "font-weight": 700
+          },
+          "group-header": {
+            "padding": 0
+          }
+        }
+      },
+      "chart": {
+        "parts": {
+          "axis-label": {
+            "color": "var(--muted)",
+            "font-size": "7pt"
+          },
+          "legend-label": {
+            "color": "var(--ink)",
+            "font-size": "7.5pt"
+          },
+          "data-label": {
+            "color": "var(--ink)",
+            "font-size": "7pt"
+          }
+        }
+      }
+    },
+    "classes": {
+      "wordmark": {
+        "color": "var(--brand)",
+        "font-size": "15pt",
+        "font-weight": 700,
+        "line-height": 1.1,
+        "letter-spacing": "0.2pt"
+      },
+      "muted": {
+        "color": "var(--muted)"
+      },
+      "small": {
+        "font-size": "7.5pt"
+      },
+      "num": {
+        "font-variant-numeric": "tabular-nums",
+        "text-align": "right"
+      },
+      "kicker": {
+        "color": "var(--muted)",
+        "font-size": "7pt",
+        "font-weight": 700,
+        "letter-spacing": "0.4pt",
+        "text-transform": "uppercase"
+      },
+      "section": {
+        "margin": "0 0 var(--space-2)",
+        "padding-bottom": "var(--space-1)",
+        "border-bottom": "1pt solid var(--brand)",
+        "color": "var(--brand)",
+        "font-size": "12pt",
+        "font-weight": 700
+      },
+      "card": {
+        "padding": "var(--space-2) var(--space-3) var(--space-3)",
+        "border": "0.75pt solid var(--line)",
+        "border-radius": "4pt",
+        "break-inside": "avoid"
+      },
+      "card-note": {
+        "margin-bottom": "var(--space-2)",
+        "color": "var(--muted)",
+        "font-size": "7.5pt"
+      },
+      "chart": {
+        "width": "100%",
+        "height": "64mm"
+      },
+      "status-at-risk": {
+        "color": "var(--warning)",
+        "font-weight": 700
+      },
+      "status-late": {
+        "color": "var(--negative)",
+        "font-weight": 700
+      },
+      "status-on-track": {
+        "color": "var(--positive)"
+      }
+    }
+  },
+  "components": {
+    "kpi-tile": {
+      "description": "A KPI tile: label, value, a status pill and a delta line that are green when the target is met and red when it is missed, and a note.",
+      "props": {
+        "type": "object",
+        "required": [
+          "label",
+          "value",
+          "met",
+          "delta"
+        ],
+        "properties": {
+          "label": {
+            "type": "string",
+            "description": "What the tile measures"
+          },
+          "value": {
+            "type": "string",
+            "description": "The value, formatted"
+          },
+          "unit": {
+            "type": "string",
+            "description": "Unit shown after the value"
+          },
+          "met": {
+            "type": "boolean",
+            "description": "Whether the target was met"
+          },
+          "delta": {
+            "type": "string",
+            "description": "The value against its target"
+          },
+          "note": {
+            "type": "string",
+            "description": "A line of context under the delta"
+          }
+        }
+      },
+      "parts": {
+        "status": "kpi-status",
+        "value": "kpi-value"
+      },
+      "template": [
+        {
+          "type": "box",
+          "id": "kpi-tile",
+          "style": {
+            "min-height": "23mm",
+            "padding": "var(--space-2) var(--space-2) var(--space-2) var(--space-3)",
+            "border-top": "2.5pt solid var(--positive)",
+            "background-color": "var(--panel)"
+          },
+          "rules": [
+            {
+              "if": "!props.met",
+              "style": {
+                "border-top-color": "var(--negative)"
+              }
+            }
+          ],
+          "children": [
+            {
+              "type": "box",
+              "id": "kpi-top",
+              "style": {
+                "display": "flex",
+                "justify-content": "space-between",
+                "align-items": "center"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "id": "kpi-label",
+                  "class": [
+                    "kicker"
+                  ],
+                  "content": "{{ props.label }}"
+                },
+                {
+                  "type": "text",
+                  "id": "kpi-status",
+                  "style": {
+                    "padding": "1pt 5pt",
+                    "border-radius": "6pt",
+                    "background-color": "var(--positive)",
+                    "color": "#FFFFFF",
+                    "font-size": "6.5pt",
+                    "font-weight": 700
+                  },
+                  "rules": [
+                    {
+                      "if": "!props.met",
+                      "style": {
+                        "background-color": "var(--negative)"
+                      }
+                    }
+                  ],
+                  "content": "{{ If(props.met, 'On target', 'Missed') }}"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "kpi-value",
+              "style": {
+                "margin": "var(--space-1) 0 1pt",
+                "font-size": "19pt",
+                "font-weight": 700,
+                "line-height": 1.1
+              },
+              "content": [
+                "{{ props.value }}",
+                {
+                  "type": "span",
+                  "content": " {{ props.unit }}",
+                  "style": {
+                    "color": "var(--muted)",
+                    "font-size": "9pt",
+                    "font-weight": 400
+                  }
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "kpi-delta",
+              "style": {
+                "color": "var(--positive)",
+                "font-weight": 700
+              },
+              "rules": [
+                {
+                  "if": "!props.met",
+                  "style": {
+                    "color": "var(--negative)"
+                  }
+                }
+              ],
+              "content": "{{ props.delta }}"
+            },
+            {
+              "type": "text",
+              "id": "kpi-note",
+              "if": "!IsBlank(props.note)",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "{{ props.note }}"
+            }
+          ]
+        }
+      ]
+    },
+    "region-card": {
+      "description": "One region's page section: its lead, fees against budget, utilisation and staff, and the lead's commentary on the month.",
+      "props": {
+        "type": "object",
+        "required": [
+          "name",
+          "lead",
+          "office",
+          "revenue",
+          "budget",
+          "utilisation",
+          "headcount",
+          "weighted",
+          "watch",
+          "utilisationMet"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Region"
+          },
+          "lead": {
+            "type": "string",
+            "description": "Regional lead"
+          },
+          "office": {
+            "type": "string",
+            "description": "Main office"
+          },
+          "revenue": {
+            "type": "number",
+            "description": "Fees earned in the month ($)"
+          },
+          "budget": {
+            "type": "number",
+            "description": "Fee budget for the month ($)"
+          },
+          "utilisation": {
+            "type": "number",
+            "description": "Billable share of available hours"
+          },
+          "headcount": {
+            "type": "integer",
+            "description": "Fee-earning staff"
+          },
+          "commentary": {
+            "type": "string",
+            "description": "The lead's commentary, if filed"
+          },
+          "utilisationMet": {
+            "type": "boolean",
+            "description": "Whether utilisation met its target"
+          },
+          "weighted": {
+            "type": "number",
+            "description": "The region's weighted pipeline ($)"
+          },
+          "watch": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Projects at risk or late, each with its status"
+          }
+        }
+      },
+      "template": [
+        {
+          "type": "box",
+          "id": "region-card",
+          "class": [
+            "card"
+          ],
+          "style": {
+            "min-height": "104mm",
+            "border-top": "2.5pt solid var(--brand)"
+          },
+          "children": [
+            {
+              "type": "heading",
+              "id": "region-name",
+              "style": {
+                "margin": 0,
+                "color": "var(--brand)",
+                "font-size": "11pt"
+              },
+              "level": 3,
+              "content": "{{ props.name }}"
+            },
+            {
+              "type": "text",
+              "id": "region-lead",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "style": {
+                "margin-bottom": "var(--space-2)"
+              },
+              "content": "{{ props.lead }}, regional lead · {{ props.office }} office"
+            },
+            {
+              "type": "box",
+              "id": "region-figures",
+              "style": {
+                "margin-bottom": "var(--space-2)",
+                "padding": "var(--space-1) 0",
+                "border-top": "0.5pt solid var(--line)",
+                "border-bottom": "0.5pt solid var(--line)",
+                "display": "grid",
+                "grid-template-columns": "1.5fr 1fr 1fr 0.5fr"
+              },
+              "children": [
+                {
+                  "type": "box",
+                  "id": "region-fees-box",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "region-fees-label",
+                      "class": [
+                        "kicker"
+                      ],
+                      "content": "Fees"
+                    },
+                    {
+                      "type": "text",
+                      "id": "region-fees",
+                      "style": {
+                        "font-size": "10pt",
+                        "font-weight": 700
+                      },
+                      "content": "${{ Format(props.revenue / 1000, 'number:0') }}k"
+                    },
+                    {
+                      "type": "text",
+                      "id": "region-fees-delta",
+                      "class": [
+                        "small"
+                      ],
+                      "style": {
+                        "color": "var(--positive)"
+                      },
+                      "rules": [
+                        {
+                          "if": "props.revenue < props.budget",
+                          "style": {
+                            "color": "var(--negative)"
+                          }
+                        }
+                      ],
+                      "content": "{{ If(props.revenue >= props.budget, '▲ ', '▼ ') + Format(Abs(props.revenue - props.budget) / props.budget, 'percent:1') + If(props.revenue >= props.budget, ' over', ' under') }} budget"
+                    }
+                  ]
+                },
+                {
+                  "type": "box",
+                  "id": "region-util-box",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "region-util-label",
+                      "class": [
+                        "kicker"
+                      ],
+                      "content": "Utilisation"
+                    },
+                    {
+                      "type": "text",
+                      "id": "region-util",
+                      "style": {
+                        "font-size": "10pt",
+                        "font-weight": 700
+                      },
+                      "rules": [
+                        {
+                          "if": "!props.utilisationMet",
+                          "style": {
+                            "color": "var(--negative)"
+                          }
+                        }
+                      ],
+                      "content": "{{ Format(props.utilisation, 'percent:1') }}"
+                    }
+                  ]
+                },
+                {
+                  "type": "box",
+                  "id": "region-pipeline-box",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "region-pipeline-label",
+                      "class": [
+                        "kicker"
+                      ],
+                      "content": "Pipeline"
+                    },
+                    {
+                      "type": "text",
+                      "id": "region-pipeline",
+                      "style": {
+                        "font-size": "10pt",
+                        "font-weight": 700
+                      },
+                      "content": "${{ Format(props.weighted / 1000, 'number:0') }}k"
+                    },
+                    {
+                      "type": "text",
+                      "id": "region-pipeline-note",
+                      "class": [
+                        "muted",
+                        "small"
+                      ],
+                      "content": "weighted"
+                    }
+                  ]
+                },
+                {
+                  "type": "box",
+                  "id": "region-staff-box",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "region-staff-label",
+                      "class": [
+                        "kicker"
+                      ],
+                      "content": "Staff"
+                    },
+                    {
+                      "type": "text",
+                      "id": "region-staff",
+                      "style": {
+                        "font-size": "10pt",
+                        "font-weight": 700
+                      },
+                      "content": "{{ props.headcount }}"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "region-chart-note",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "Fees ($k, columns) against budget (line), last 12 months"
+            },
+            {
+              "type": "chart",
+              "id": "region-chart",
+              "style": {
+                "width": "100%",
+                "height": "34mm",
+                "margin-bottom": "var(--space-2)"
+              },
+              "source": "data.main.regionMonths.filter(r, r.region == props.name && r.month in vars.window)",
+              "as": "m",
+              "kind": "combo",
+              "category": "Format(m.month, 'MMM')",
+              "series": [
+                {
+                  "id": "fees",
+                  "name": "Fees",
+                  "value": "Sum(data.main.fees.filter(f, f.region == m.region && f.month == m.month).map(f, f.amount)) / 1000",
+                  "kind": "column",
+                  "color": "var(--chart-1)"
+                },
+                {
+                  "id": "budget",
+                  "name": "Budget",
+                  "value": "m.budget / 1000",
+                  "kind": "line",
+                  "color": "var(--chart-2)"
+                }
+              ],
+              "axes": {
+                "y": {
+                  "format": "number:0",
+                  "min": 0,
+                  "gridlines": true
+                }
+              },
+              "legend": {
+                "position": "none"
+              },
+              "alt": "{{ props.name }} fees against budget each month, in $ thousands, to {{ vars.monthName }}.",
+              "meta": {
+                "description": "The region's monthly fees as columns and its budget as a line."
+              }
+            },
+            {
+              "type": "text",
+              "id": "region-commentary",
+              "if": "!IsBlank(props.commentary)",
+              "content": "{{ props.commentary }}"
+            },
+            {
+              "type": "text",
+              "id": "region-no-commentary",
+              "if": "IsBlank(props.commentary)",
+              "class": [
+                "muted"
+              ],
+              "style": {
+                "font-style": "italic"
+              },
+              "content": "No commentary was filed for this month."
+            },
+            {
+              "type": "text",
+              "id": "region-watch-label",
+              "class": [
+                "kicker"
+              ],
+              "style": {
+                "margin-top": "var(--space-2)"
+              },
+              "content": "Watch list"
+            },
+            {
+              "type": "list",
+              "id": "region-watch",
+              "if": "props.watch.size() > 0",
+              "style": {
+                "padding-left": "10pt"
+              },
+              "children": [
+                {
+                  "type": "repeat",
+                  "id": "region-watch-items",
+                  "source": "props.watch",
+                  "as": "w",
+                  "detail": [
+                    {
+                      "type": "item",
+                      "id": "region-watch-item",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "region-watch-text",
+                          "content": "{{ w }}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "region-watch-none",
+              "if": "props.watch.size() == 0",
+              "class": [
+                "muted"
+              ],
+              "content": "Every project is on track."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "pages": [
+    {
+      "id": "portrait",
+      "size": "A4",
+      "margin": "14mm 14mm 16mm",
+      "header": [
+        {
+          "type": "box",
+          "id": "header-band",
+          "class": [
+            "muted",
+            "small"
+          ],
+          "style": {
+            "margin-bottom": "var(--space-3)",
+            "padding-bottom": "var(--space-1)",
+            "border-bottom": "0.5pt solid var(--line)",
+            "display": "flex",
+            "justify-content": "space-between"
+          },
+          "children": [
+            {
+              "type": "text",
+              "id": "header-title",
+              "content": [
+                {
+                  "type": "span",
+                  "content": "Ostrand & Pell",
+                  "style": {
+                    "color": "var(--brand)",
+                    "font-weight": 700
+                  }
+                },
+                " · Monthly management pack · {{ vars.monthName }} · {{ vars.scope }}"
+              ]
+            },
+            {
+              "type": "text",
+              "id": "header-confidential",
+              "content": "Management in confidence"
+            }
+          ]
+        }
+      ],
+      "footer": [
+        {
+          "type": "box",
+          "id": "footer-band",
+          "class": [
+            "muted",
+            "small"
+          ],
+          "style": {
+            "padding-top": "var(--space-1)",
+            "border-top": "0.5pt solid var(--line)",
+            "display": "flex",
+            "justify-content": "space-between"
+          },
+          "children": [
+            {
+              "type": "text",
+              "id": "footer-company",
+              "content": "Ostrand & Pell Pty Ltd · 48 Haverleigh Street, Wenmoor VIC 3999 · (03) 5550 0210 · ostrandpell.example · ABN 63 128 405 917"
+            },
+            {
+              "type": "text",
+              "id": "footer-page",
+              "content": "Page {{ page.number }} of {{ page.count }}"
+            }
+          ]
+        }
+      ],
+      "variants": {
+        "first": {
+          "header": []
+        }
+      }
+    }
+  ],
+  "body": [
+    {
+      "type": "box",
+      "id": "masthead",
+      "style": {
+        "margin-bottom": "var(--space-3)",
+        "padding-bottom": "var(--space-2)",
+        "border-bottom": "1.5pt solid var(--brand)",
+        "display": "flex",
+        "justify-content": "space-between",
+        "align-items": "flex-end"
+      },
+      "children": [
+        {
+          "type": "box",
+          "id": "masthead-brand",
+          "children": [
+            {
+              "type": "text",
+              "id": "wordmark",
+              "class": [
+                "wordmark"
+              ],
+              "content": [
+                "Ostrand ",
+                {
+                  "type": "span",
+                  "content": "&",
+                  "style": {
+                    "color": "var(--accent)"
+                  }
+                },
+                " Pell"
+              ]
+            },
+            {
+              "type": "heading",
+              "id": "title",
+              "style": {
+                "margin": "1pt 0 0",
+                "font-size": "12pt",
+                "font-weight": 400
+              },
+              "level": 1,
+              "content": "Monthly management pack"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "masthead-month",
+          "style": {
+            "text-align": "right"
+          },
+          "children": [
+            {
+              "type": "text",
+              "id": "month",
+              "style": {
+                "color": "var(--brand)",
+                "font-size": "15pt",
+                "font-weight": 700,
+                "line-height": 1.1
+              },
+              "content": "{{ vars.monthName }}"
+            },
+            {
+              "type": "text",
+              "id": "scope",
+              "style": {
+                "font-weight": 700
+              },
+              "content": "{{ vars.scope }}"
+            },
+            {
+              "type": "text",
+              "id": "issued",
+              "class": [
+                "muted"
+              ],
+              "content": "Issued {{ Format(data.main.issued, 'd MMMM y') }} · {{ data.main.preparedBy }}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "box",
+      "id": "kpis",
+      "style": {
+        "margin-bottom": "16pt",
+        "column-gap": "var(--space-2)",
+        "display": "grid",
+        "grid-template-columns": "1fr 1fr 1fr 1fr"
+      },
+      "children": [
+        {
+          "type": "use",
+          "id": "kpi-revenue",
+          "component": "kpi-tile",
+          "props": {
+            "label": "'Fee revenue'",
+            "value": "If(vars.revenue >= 1000000, '$' + Format(vars.revenue / 1000000, 'number:2'), '$' + Format(vars.revenue / 1000, 'number:0'))",
+            "unit": "If(vars.revenue >= 1000000, 'm', 'k')",
+            "met": "vars.revenueMet",
+            "delta": "If(vars.revenueMet, '▲ ', '▼ ') + Format(Abs(vars.revenueGap), 'percent:1') + If(vars.revenueMet, ' over', ' under') + ' budget'",
+            "note": "'Year to date ' + If(vars.fyRevenue >= 1000000, '$' + Format(vars.fyRevenue / 1000000, 'number:2') + 'm', '$' + Format(vars.fyRevenue / 1000, 'number:0') + 'k') + ' of ' + If(vars.fyBudget >= 1000000, '$' + Format(vars.fyBudget / 1000000, 'number:2') + 'm', '$' + Format(vars.fyBudget / 1000, 'number:0') + 'k')"
+          },
+          "meta": {
+            "description": "Fees earned in the month against the fee budget, with the financial year to date."
+          }
+        },
+        {
+          "type": "use",
+          "id": "kpi-utilisation",
+          "component": "kpi-tile",
+          "props": {
+            "label": "'Utilisation'",
+            "value": "Format(vars.utilisation * 100, 'number:1')",
+            "unit": "'%'",
+            "met": "vars.utilisationMet",
+            "delta": "If(vars.utilisationMet, '▲ ', '▼ ') + Format(Abs(vars.utilisation - data.main.targets.utilisation) * 100, 'number:1') + If(vars.utilisationMet, ' pts above', ' pts below') + ' target'",
+            "note": "'Target ' + Format(data.main.targets.utilisation, 'percent:0') + '; ' + Text(vars.headcount) + ' fee earners'"
+          },
+          "meta": {
+            "description": "Billable hours as a share of available hours in the month."
+          }
+        },
+        {
+          "type": "use",
+          "id": "kpi-pipeline",
+          "component": "kpi-tile",
+          "props": {
+            "label": "'Pipeline'",
+            "value": "If(vars.weighted >= 1000000, '$' + Format(vars.weighted / 1000000, 'number:2'), '$' + Format(vars.weighted / 1000, 'number:0'))",
+            "unit": "If(vars.weighted >= 1000000, 'm', 'k')",
+            "met": "vars.coverMet",
+            "delta": "Format(vars.cover, 'number:1') + ' months of budget'",
+            "note": "'Weighted; target ' + Format(data.main.targets.pipelineCoverMonths, 'number:1') + ' months'"
+          },
+          "meta": {
+            "description": "Open opportunities weighted by their chance of winning, in months of this month's fee budget."
+          }
+        },
+        {
+          "type": "use",
+          "id": "kpi-projects",
+          "component": "kpi-tile",
+          "props": {
+            "label": "'Projects'",
+            "value": "Text(vars.onTrack) + '/' + Text(vars.projects.size())",
+            "unit": "'on track'",
+            "met": "vars.onTrackMet",
+            "delta": "Format(vars.onTrackShare, 'percent:0') + ' against ' + Format(data.main.targets.onTrackShare, 'percent:0') + ' target'",
+            "note": "Text(vars.projects.filter(p, p.status == 'At risk').size()) + ' at risk, ' + Text(vars.projects.filter(p, p.status == 'Late').size()) + ' late'"
+          },
+          "meta": {
+            "description": "Active projects on track, at risk and late."
+          }
+        }
+      ]
+    },
+    {
+      "type": "box",
+      "id": "charts",
+      "style": {
+        "margin-bottom": "var(--space-3)",
+        "column-gap": "var(--space-3)",
+        "display": "grid",
+        "grid-template-columns": "1.25fr 1fr"
+      },
+      "children": [
+        {
+          "type": "box",
+          "id": "card-revenue",
+          "class": [
+            "card"
+          ],
+          "children": [
+            {
+              "type": "heading",
+              "id": "revenue-title",
+              "level": 2,
+              "content": "Fee revenue against budget"
+            },
+            {
+              "type": "text",
+              "id": "revenue-note",
+              "class": [
+                "card-note"
+              ],
+              "content": "$ thousands a month, {{ Format(vars.window[0], 'MMMM y') }} to {{ vars.monthName }}"
+            },
+            {
+              "type": "chart",
+              "id": "chart-revenue",
+              "class": [
+                "chart"
+              ],
+              "source": "vars.trend",
+              "as": "t",
+              "kind": "combo",
+              "category": "Format(t.month, 'MMM')",
+              "series": [
+                {
+                  "id": "revenue",
+                  "name": "Fee revenue",
+                  "value": "t.revenue / 1000",
+                  "kind": "column",
+                  "color": "var(--chart-1)"
+                },
+                {
+                  "id": "budget",
+                  "name": "Budget",
+                  "value": "t.budget / 1000",
+                  "kind": "line",
+                  "color": "var(--chart-2)"
+                }
+              ],
+              "axes": {
+                "y": {
+                  "format": "number:0",
+                  "min": 0,
+                  "gridlines": true
+                }
+              },
+              "legend": {
+                "position": "top"
+              },
+              "alt": "Fee revenue against budget each month from {{ Format(vars.window[0], 'MMMM y') }} to {{ vars.monthName }}, {{ vars.scope }}. This month ${{ Format(vars.revenue / 1000, 'number:0') }}k against a budget of ${{ Format(vars.budget / 1000, 'number:0') }}k.",
+              "meta": {
+                "description": "Monthly fee revenue as columns and the fee budget as a line."
+              }
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "card-utilisation",
+          "class": [
+            "card"
+          ],
+          "children": [
+            {
+              "type": "heading",
+              "id": "utilisation-title",
+              "level": 2,
+              "content": "Utilisation"
+            },
+            {
+              "type": "text",
+              "id": "utilisation-note",
+              "class": [
+                "card-note"
+              ],
+              "content": "Billable share of available hours, against the {{ Format(data.main.targets.utilisation, 'percent:0') }} target"
+            },
+            {
+              "type": "chart",
+              "id": "chart-utilisation",
+              "class": [
+                "chart"
+              ],
+              "source": "vars.trend",
+              "as": "t",
+              "kind": "line",
+              "category": "Format(t.month, 'MMM')",
+              "series": [
+                {
+                  "id": "utilisation",
+                  "name": "Utilisation",
+                  "value": "t.utilisation",
+                  "color": "var(--chart-1)"
+                },
+                {
+                  "id": "target",
+                  "name": "Target",
+                  "value": "data.main.targets.utilisation",
+                  "color": "var(--chart-6)"
+                }
+              ],
+              "axes": {
+                "y": {
+                  "format": "percent:0",
+                  "min": 0.5,
+                  "max": 0.9,
+                  "gridlines": true
+                }
+              },
+              "legend": {
+                "position": "top"
+              },
+              "alt": "Utilisation each month from {{ Format(vars.window[0], 'MMMM y') }} to {{ vars.monthName }}, {{ vars.scope }}, against a target of {{ Format(data.main.targets.utilisation, 'percent:0') }}. This month {{ Format(vars.utilisation, 'percent:1') }}.",
+              "meta": {
+                "description": "Monthly utilisation and its target."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "box",
+      "id": "bottom",
+      "style": {
+        "column-gap": "var(--space-3)",
+        "display": "grid",
+        "grid-template-columns": "auto 1fr"
+      },
+      "children": [
+        {
+          "type": "box",
+          "id": "card-fees",
+          "class": [
+            "card"
+          ],
+          "children": [
+            {
+              "type": "heading",
+              "id": "fees-title",
+              "level": 2,
+              "content": "Fees by region and service line"
+            },
+            {
+              "type": "text",
+              "id": "fees-note",
+              "class": [
+                "card-note"
+              ],
+              "content": "$ thousands earned in {{ vars.monthName }}, regions by fees"
+            },
+            {
+              "type": "matrix",
+              "id": "matrix-fees",
+              "style": {
+                "parts": {
+                  "corner": {
+                    "padding": "2.5pt 5pt",
+                    "border-bottom": "0.75pt solid var(--brand)",
+                    "color": "var(--muted)",
+                    "font-weight": 700,
+                    "text-align": "left"
+                  },
+                  "row-header": {
+                    "padding": "2.5pt 5pt",
+                    "border-bottom": "0.5pt solid var(--line)",
+                    "font-weight": 700
+                  },
+                  "column-header": {
+                    "padding": "2.5pt 5pt",
+                    "border-bottom": "0.75pt solid var(--brand)",
+                    "color": "var(--muted)",
+                    "font-weight": 700,
+                    "text-align": "right"
+                  },
+                  "cell": {
+                    "padding": "2.5pt 5pt",
+                    "border-bottom": "0.5pt solid var(--line)",
+                    "font-variant-numeric": "tabular-nums",
+                    "text-align": "right"
+                  },
+                  "total-row": {
+                    "background-color": "var(--panel)"
+                  },
+                  "total-column": {
+                    "background-color": "var(--panel)"
+                  },
+                  "total-cell": {
+                    "font-weight": 700
+                  }
+                }
+              },
+              "source": "vars.monthFees",
+              "as": "f",
+              "rows": [
+                {
+                  "id": "by-region",
+                  "by": "f.region",
+                  "sort": {
+                    "by": "Sum(group.rows.map(r, r.amount))",
+                    "direction": "desc"
+                  }
+                }
+              ],
+              "columns": [
+                {
+                  "id": "by-line",
+                  "by": "f.serviceLine"
+                }
+              ],
+              "cells": [
+                {
+                  "id": "fees",
+                  "value": "Sum(cell.rows.map(r, r.amount)) / 1000",
+                  "format": "number:1"
+                }
+              ],
+              "totals": {
+                "rows": true,
+                "columns": true,
+                "label": "Total"
+              },
+              "corner": "Region",
+              "meta": {
+                "description": "Fees per region and service line in the month, with totals for each region and each service line."
+              }
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "card-year",
+          "class": [
+            "card"
+          ],
+          "style": {
+            "border-color": "var(--panel)",
+            "background-color": "var(--panel)"
+          },
+          "children": [
+            {
+              "type": "heading",
+              "id": "year-title",
+              "level": 2,
+              "content": "Financial year to date"
+            },
+            {
+              "type": "text",
+              "id": "year-note",
+              "class": [
+                "card-note"
+              ],
+              "content": "{{ Format(vars.fyStart, 'MMMM y') }} to {{ vars.monthName }}"
+            },
+            {
+              "type": "text",
+              "id": "year-fees",
+              "style": {
+                "font-size": "14pt",
+                "font-weight": 700
+              },
+              "content": "{{ If(vars.fyRevenue >= 1000000, '$' + Format(vars.fyRevenue / 1000000, 'number:2') + 'm', '$' + Format(vars.fyRevenue / 1000, 'number:0') + 'k') }}"
+            },
+            {
+              "type": "text",
+              "id": "year-budget",
+              "class": [
+                "muted"
+              ],
+              "style": {
+                "margin-bottom": "var(--space-2)"
+              },
+              "content": "against a budget of {{ If(vars.fyBudget >= 1000000, '$' + Format(vars.fyBudget / 1000000, 'number:2') + 'm', '$' + Format(vars.fyBudget / 1000, 'number:0') + 'k') }}"
+            },
+            {
+              "type": "text",
+              "id": "year-delta",
+              "style": {
+                "color": "var(--positive)",
+                "font-weight": 700
+              },
+              "rules": [
+                {
+                  "if": "vars.fyRevenue < vars.fyBudget",
+                  "style": {
+                    "color": "var(--negative)"
+                  }
+                }
+              ],
+              "content": "{{ If(vars.fyRevenue >= vars.fyBudget, '▲ $', '▼ $') + Format(Abs(vars.fyRevenue - vars.fyBudget) / 1000, 'number:0') + 'k' + If(vars.fyRevenue >= vars.fyBudget, ' ahead of', ' behind') }} budget"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "box",
+      "id": "card-glance",
+      "class": [
+        "card"
+      ],
+      "style": {
+        "margin-top": "var(--space-3)"
+      },
+      "children": [
+        {
+          "type": "heading",
+          "id": "glance-title",
+          "level": 2,
+          "content": "Regions at a glance"
+        },
+        {
+          "type": "text",
+          "id": "glance-note",
+          "class": [
+            "card-note"
+          ],
+          "content": "{{ vars.monthName }}; pipeline weighted, projects as at {{ Format(data.main.issued, 'd MMMM y') }}"
+        },
+        {
+          "type": "table",
+          "id": "table-glance",
+          "source": "data.main.regions.filter(r, r.name in vars.regionNames)",
+          "as": "g",
+          "vars": {
+            "gRows": "vars.thisMonth.filter(x, x.region == g.name)",
+            "gFees": "Sum(vars.monthFees.filter(f, f.region == g.name).map(f, f.amount))",
+            "gBudget": "Sum(vars.gRows.map(x, x.budget))",
+            "gGap": "(vars.gFees - vars.gBudget) / vars.gBudget",
+            "gUtil": "Sum(vars.gRows.map(x, x.billableHours)) / Sum(vars.gRows.map(x, x.availableHours))",
+            "gProjects": "vars.projects.filter(x, x.region == g.name)"
+          },
+          "columns": [
+            {
+              "id": "gl-region",
+              "width": "2.6fr",
+              "header": "Region",
+              "cellChildren": [
+                {
+                  "type": "text",
+                  "id": "gl-name",
+                  "style": {
+                    "font-weight": 700
+                  },
+                  "content": "{{ g.name }}"
+                },
+                {
+                  "type": "text",
+                  "id": "gl-lead",
+                  "class": [
+                    "muted",
+                    "small"
+                  ],
+                  "content": "{{ g.lead }}"
+                }
+              ],
+              "footer": "{{ vars.scope }}"
+            },
+            {
+              "id": "gl-fees",
+              "width": "1fr",
+              "header": "Fees $k",
+              "class": [
+                "num"
+              ],
+              "cell": "{{ Format(vars.gFees / 1000, 'number:0') }}",
+              "footer": "{{ Format(vars.revenue / 1000, 'number:0') }}"
+            },
+            {
+              "id": "gl-budget",
+              "width": "1fr",
+              "header": "Budget $k",
+              "class": [
+                "num"
+              ],
+              "cell": "{{ Format(vars.gBudget / 1000, 'number:0') }}",
+              "footer": "{{ Format(vars.budget / 1000, 'number:0') }}"
+            },
+            {
+              "id": "gl-gap",
+              "width": "1fr",
+              "header": "Variance",
+              "class": [
+                "num"
+              ],
+              "rules": [
+                {
+                  "if": "Sum(vars.monthFees.filter(f, f.region == g.name).map(f, f.amount)) < Sum(vars.thisMonth.filter(x, x.region == g.name).map(x, x.budget))",
+                  "class": [
+                    "status-late"
+                  ]
+                }
+              ],
+              "cell": "{{ If(vars.gGap >= 0, '+', '') + Format(vars.gGap, 'percent:1') }}",
+              "footer": "{{ If(vars.revenueGap >= 0, '+', '') + Format(vars.revenueGap, 'percent:1') }}"
+            },
+            {
+              "id": "gl-util",
+              "width": "1.1fr",
+              "header": "Utilisation",
+              "class": [
+                "num"
+              ],
+              "rules": [
+                {
+                  "if": "Sum(vars.thisMonth.filter(x, x.region == g.name).map(x, x.billableHours)) < data.main.targets.utilisation * Sum(vars.thisMonth.filter(x, x.region == g.name).map(x, x.availableHours))",
+                  "class": [
+                    "status-late"
+                  ]
+                }
+              ],
+              "cell": "{{ Format(vars.gUtil, 'percent:1') }}",
+              "footer": "{{ Format(vars.utilisation, 'percent:1') }}"
+            },
+            {
+              "id": "gl-staff",
+              "width": "0.8fr",
+              "header": "Staff",
+              "class": [
+                "num"
+              ],
+              "cell": "{{ Sum(vars.gRows.map(x, x.headcount)) }}",
+              "footer": "{{ vars.headcount }}"
+            },
+            {
+              "id": "gl-pipeline",
+              "width": "1.1fr",
+              "header": "Pipeline $k",
+              "class": [
+                "num"
+              ],
+              "cell": "{{ Format(Sum(vars.pipeline.filter(x, x.region == g.name).map(x, x.value * x.probability)) / 1000, 'number:0') }}",
+              "footer": "{{ Format(vars.weighted / 1000, 'number:0') }}"
+            },
+            {
+              "id": "gl-projects",
+              "width": "1.2fr",
+              "header": "On track",
+              "class": [
+                "num"
+              ],
+              "cell": "{{ vars.gProjects.filter(x, x.status == 'On track').size() }} of {{ vars.gProjects.size() }}",
+              "footer": "{{ vars.onTrack }} of {{ vars.projects.size() }}"
+            }
+          ],
+          "meta": {
+            "description": "Each region's fees, budget, utilisation, staff, weighted pipeline and projects on track, with the totals."
+          }
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "id": "pipeline-title",
+      "class": [
+        "section"
+      ],
+      "style": {
+        "break-before": "page"
+      },
+      "level": 2,
+      "content": "Pipeline"
+    },
+    {
+      "type": "text",
+      "id": "pipeline-note",
+      "class": [
+        "card-note"
+      ],
+      "content": "Open opportunities as at {{ Format(data.main.issued, 'd MMMM y') }}, {{ Lower(vars.scope) }}: ${{ Format(Sum(vars.pipeline.map(p, p.value)) / 1000000, 'number:2') }}m in total, ${{ Format(vars.weighted / 1000000, 'number:2') }}m weighted by the chance of winning."
+    },
+    {
+      "type": "box",
+      "id": "pipeline-body",
+      "style": {
+        "margin-bottom": "var(--space-3)",
+        "column-gap": "var(--space-3)",
+        "display": "grid",
+        "grid-template-columns": "58mm 1fr"
+      },
+      "children": [
+        {
+          "type": "chart",
+          "id": "chart-pipeline",
+          "style": {
+            "width": "100%",
+            "height": "70mm"
+          },
+          "source": "vars.stages",
+          "as": "s",
+          "kind": "bar",
+          "category": "s.stage",
+          "series": [
+            {
+              "id": "value",
+              "name": "Value",
+              "value": "s.value / 1000",
+              "color": "var(--chart-3)"
+            },
+            {
+              "id": "weighted",
+              "name": "Weighted",
+              "value": "s.weighted / 1000",
+              "color": "var(--chart-1)"
+            }
+          ],
+          "axes": {
+            "y": {
+              "format": "number:0",
+              "min": 0,
+              "gridlines": true
+            }
+          },
+          "legend": {
+            "position": "top"
+          },
+          "alt": "Pipeline by stage in $ thousands, value and weighted value: {{ Join(vars.stages.map(s, s.stage + ' ' + Format(s.value / 1000, 'number:0') + ' and ' + Format(s.weighted / 1000, 'number:0')), '; ') }}.",
+          "meta": {
+            "description": "The pipeline's value and weighted value by stage, earliest stage first."
+          }
+        },
+        {
+          "type": "table",
+          "id": "table-pipeline",
+          "source": "vars.pipeline",
+          "as": "o",
+          "sort": [
+            {
+              "by": "o.value * o.probability",
+              "direction": "desc"
+            }
+          ],
+          "columns": [
+            {
+              "id": "op-name",
+              "width": "4.2fr",
+              "header": "Opportunity",
+              "cellChildren": [
+                {
+                  "type": "text",
+                  "id": "op-title",
+                  "style": {
+                    "font-weight": 700
+                  },
+                  "content": "{{ o.name }}"
+                },
+                {
+                  "type": "text",
+                  "id": "op-client",
+                  "class": [
+                    "muted",
+                    "small"
+                  ],
+                  "content": "{{ o.client }} · {{ o.region }}"
+                }
+              ],
+              "footer": "{{ region.count }} opportunities"
+            },
+            {
+              "id": "op-stage",
+              "width": "1.6fr",
+              "header": "Stage",
+              "cell": "{{ o.stage }}"
+            },
+            {
+              "id": "op-decision",
+              "width": "1.3fr",
+              "header": "Decision",
+              "cell": "{{ Format(o.decision, 'MMM y') }}",
+              "sortable": true,
+              "sortBy": "o.decision"
+            },
+            {
+              "id": "op-value",
+              "width": "1.1fr",
+              "header": "$k",
+              "class": [
+                "num"
+              ],
+              "cell": "{{ Format(o.value / 1000, 'number:0') }}",
+              "footer": "{{ Format(Sum(region.rows.map(x, x.value)) / 1000, 'number:0') }}",
+              "sortable": true,
+              "sortBy": "o.value"
+            },
+            {
+              "id": "op-chance",
+              "width": "0.8fr",
+              "header": "Odds",
+              "class": [
+                "num"
+              ],
+              "cell": "{{ Format(o.probability, 'percent:0') }}"
+            },
+            {
+              "id": "op-weighted",
+              "width": "1.2fr",
+              "header": "Weighted",
+              "class": [
+                "num"
+              ],
+              "cell": "{{ Format(o.value * o.probability / 1000, 'number:0') }}",
+              "footer": "{{ Format(Sum(region.rows.map(x, x.value * x.probability)) / 1000, 'number:0') }}"
+            }
+          ],
+          "empty": [
+            {
+              "type": "text",
+              "id": "no-pipeline",
+              "class": [
+                "muted"
+              ],
+              "content": "No open opportunities."
+            }
+          ],
+          "meta": {
+            "description": "Open opportunities, largest weighted value first, with the totals."
+          }
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "id": "projects-title",
+      "class": [
+        "section"
+      ],
+      "level": 2,
+      "content": "Active projects"
+    },
+    {
+      "type": "text",
+      "id": "projects-note",
+      "class": [
+        "card-note"
+      ],
+      "content": "As at {{ Format(data.main.issued, 'd MMMM y') }}, by region. {{ If(vars.html, 'Click a region to see its projects, and a project to read its manager’s note.', 'Each project has its manager’s note.') }}"
+    },
+    {
+      "type": "table",
+      "id": "table-projects",
+      "source": "vars.projects",
+      "as": "p",
+      "sort": [
+        {
+          "by": "p.contractValue",
+          "direction": "desc"
+        }
+      ],
+      "groups": [
+        {
+          "id": "by-region",
+          "by": "p.region",
+          "header": [
+            {
+              "type": "box",
+              "id": "region-head",
+              "style": {
+                "padding": "var(--space-1) 4pt",
+                "background-color": "var(--panel)",
+                "display": "flex",
+                "justify-content": "space-between"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "id": "region-head-name",
+                  "style": {
+                    "color": "var(--brand)",
+                    "font-size": "9pt",
+                    "font-weight": 700
+                  },
+                  "content": "{{ group.key }}",
+                  "actions": [
+                    {
+                      "on": "click",
+                      "toggle": "by-region",
+                      "initial": "!StartsWith(output.format, 'html')"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "region-head-summary",
+                  "class": [
+                    "muted"
+                  ],
+                  "content": "{{ group.count }} {{ If(group.count == 1, 'project', 'projects') }} · ${{ Format(Sum(group.rows.map(x, x.contractValue)) / 1000, 'number:0') }}k contracted · {{ group.rows.filter(x, x.status == 'On track').size() }} on track"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "columns": [
+        {
+          "id": "pr-name",
+          "width": "4fr",
+          "header": "Project",
+          "cellChildren": [
+            {
+              "type": "text",
+              "id": "pr-title",
+              "style": {
+                "font-weight": 700
+              },
+              "content": "{{ p.name }}",
+              "actions": [
+                {
+                  "on": "click",
+                  "toggle": "pr-note",
+                  "initial": "!StartsWith(output.format, 'html')"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "pr-client",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "{{ p.code }} · {{ p.client }} · {{ p.manager }}"
+            },
+            {
+              "type": "text",
+              "id": "pr-note",
+              "class": [
+                "small"
+              ],
+              "style": {
+                "margin-top": "1pt",
+                "font-style": "italic"
+              },
+              "content": "{{ p.note }}"
+            }
+          ]
+        },
+        {
+          "id": "pr-line",
+          "width": "1.5fr",
+          "header": "Service line",
+          "cell": "{{ p.serviceLine }}"
+        },
+        {
+          "id": "pr-value",
+          "width": "1fr",
+          "header": "$k",
+          "class": [
+            "num"
+          ],
+          "cell": "{{ Format(p.contractValue / 1000, 'number:0') }}",
+          "sortable": true,
+          "sortBy": "p.contractValue"
+        },
+        {
+          "id": "pr-invoiced",
+          "width": "1.1fr",
+          "header": "Invoiced",
+          "class": [
+            "num"
+          ],
+          "cell": "{{ Format(p.invoicedToDate / p.contractValue, 'percent:0') }}"
+        },
+        {
+          "id": "pr-complete",
+          "width": "1.1fr",
+          "header": "Complete",
+          "class": [
+            "num"
+          ],
+          "cell": "{{ p.percentComplete }}%"
+        },
+        {
+          "id": "pr-status",
+          "width": "1.3fr",
+          "header": "Status",
+          "style": {
+            "padding-left": "8pt"
+          },
+          "rules": [
+            {
+              "if": "p.status == 'On track'",
+              "class": [
+                "status-on-track"
+              ]
+            },
+            {
+              "if": "p.status == 'At risk'",
+              "class": [
+                "status-at-risk"
+              ]
+            },
+            {
+              "if": "p.status == 'Late'",
+              "class": [
+                "status-late"
+              ]
+            }
+          ],
+          "cell": "● {{ p.status }}"
+        }
+      ],
+      "footerRows": [
+        {
+          "id": "projects-total",
+          "style": {
+            "border-top": "1pt solid var(--brand)"
+          },
+          "cells": [
+            {
+              "colspan": 2,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "projects-total-label",
+                  "content": "{{ vars.scope }} · {{ region.count }} projects"
+                }
+              ]
+            },
+            {
+              "class": [
+                "num"
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "projects-total-value",
+                  "content": "{{ Format(Sum(region.rows.map(x, x.contractValue)) / 1000, 'number:0') }}"
+                }
+              ]
+            },
+            {
+              "class": [
+                "num"
+              ],
+              "content": "{{ Format(Sum(region.rows.map(x, x.invoicedToDate)) / Sum(region.rows.map(x, x.contractValue)), 'percent:0') }}"
+            },
+            {
+              "colspan": 2,
+              "content": ""
+            }
+          ]
+        }
+      ],
+      "empty": [
+        {
+          "type": "text",
+          "id": "no-projects",
+          "class": [
+            "muted"
+          ],
+          "content": "No active projects."
+        }
+      ],
+      "meta": {
+        "description": "Active projects grouped by region, largest contract first. In HTML each region opens to its projects and each project to its note."
+      }
+    },
+    {
+      "type": "heading",
+      "id": "regions-title",
+      "class": [
+        "section"
+      ],
+      "style": {
+        "break-before": "page"
+      },
+      "level": 2,
+      "content": "Regional commentary",
+      "export": {
+        "xlsx": {
+          "skip": true
+        }
+      }
+    },
+    {
+      "type": "text",
+      "id": "regions-note",
+      "class": [
+        "card-note"
+      ],
+      "content": "Each regional lead on {{ vars.monthName }}, with the region's figures and the projects to watch.",
+      "export": {
+        "xlsx": {
+          "skip": true
+        }
+      }
+    },
+    {
+      "type": "box",
+      "id": "regions",
+      "style": {
+        "display": "grid",
+        "gap": "var(--space-3)",
+        "grid-template-columns": "1fr 1fr"
+      },
+      "children": [
+        {
+          "type": "repeat",
+          "id": "region-sections",
+          "source": "data.main.regions.filter(r, r.name in vars.regionNames)",
+          "as": "rg",
+          "vars": {
+            "rows": "vars.thisMonth.filter(x, x.region == rg.name)"
+          },
+          "detail": [
+            {
+              "type": "use",
+              "id": "region",
+              "component": "region-card",
+              "props": {
+                "name": "rg.name",
+                "lead": "rg.lead",
+                "office": "rg.office",
+                "revenue": "Sum(vars.monthFees.filter(f, f.region == rg.name).map(f, f.amount))",
+                "budget": "Sum(vars.rows.map(x, x.budget))",
+                "utilisation": "Sum(vars.rows.map(x, x.billableHours)) / Sum(vars.rows.map(x, x.availableHours))",
+                "headcount": "Sum(vars.rows.map(x, x.headcount))",
+                "commentary": "Coalesce(Lookup(data.main.commentary, c, c.month == params.month && c.region == rg.name, true).text, '')",
+                "utilisationMet": "Sum(vars.rows.map(x, x.billableHours)) / Sum(vars.rows.map(x, x.availableHours)) >= data.main.targets.utilisation",
+                "weighted": "Sum(vars.pipeline.filter(p, p.region == rg.name).map(p, p.value * p.probability))",
+                "watch": "vars.projects.filter(p, p.region == rg.name && p.status != 'On track').map(p, p.name + ' (' + Lower(p.status) + ')')"
+              },
+              "meta": {
+                "description": "One region's section of the pack."
+              }
+            }
+          ]
+        }
+      ],
+      "export": {
+        "xlsx": {
+          "skip": true
+        }
+      }
+    }
+  ],
+  "outputs": {
+    "pdf": {
+      "standard": "PDF/UA-1"
+    },
+    "xlsx": {
+      "sheets": [
+        {
+          "name": "Fees by region",
+          "from": "matrix-fees"
+        },
+        {
+          "name": "Regions",
+          "from": "table-glance"
+        },
+        {
+          "name": "Pipeline",
+          "from": "table-pipeline",
+          "autoFilter": true
+        },
+        {
+          "name": "Projects",
+          "from": "table-projects"
+        }
+      ]
+    }
+  },
+  "tests": [
+    {
+      "name": "September for all regions fills four pages",
+      "expect": [
+        "pages.size() == 4",
+        "diagnostics.all(d, d.severity != 'error')",
+        "text('month') == 'September 2026'",
+        "text('scope') == 'All regions'",
+        "text('kpi-revenue/kpi-value') == '$2.27 m'",
+        "text('kpi-revenue/kpi-status') == 'On target'",
+        "text('kpi-revenue/kpi-delta') == '▲ 1.9% over budget'",
+        "text('kpi-utilisation/kpi-status') == 'On target'",
+        "text('kpi-pipeline/kpi-status') == 'On target'",
+        "text('kpi-projects/kpi-status') == 'Missed'",
+        "text('kpi-projects/kpi-delta') == '79% against 80% target'",
+        "text('year-fees') == '$6.73m'",
+        "nodes('region').size() == 4",
+        "visible('pr-note')"
+      ],
+      "snapshot": true
+    },
+    {
+      "name": "the matrix totals the month's fees",
+      "expect": [
+        "text('matrix-fees').contains('936.7')",
+        "text('matrix-fees').contains('2,274.2')",
+        "text('matrix-fees').contains('813.3')",
+        "text('projects-total-value') == '8,061'",
+        "text('table-glance').contains('+1.9%')"
+      ]
+    },
+    {
+      "name": "one region filters every section",
+      "params": {
+        "region": "Inland"
+      },
+      "expect": [
+        "diagnostics.all(d, d.severity != 'error')",
+        "text('scope') == 'Inland region'",
+        "text('kpi-revenue/kpi-status') == 'Missed'",
+        "text('kpi-revenue/kpi-value') == '$311 k'",
+        "text('kpi-revenue/kpi-delta') == '▼ 5.3% under budget'",
+        "text('kpi-utilisation/kpi-status') == 'Missed'",
+        "text('kpi-projects/kpi-value') == '3/3 on track'",
+        "text('kpi-projects/kpi-status') == 'On target'",
+        "nodes('region').size() == 1",
+        "text('projects-total-label') == 'Inland region · 3 projects'",
+        "nodes('pr-title').size() == 3",
+        "text('year-delta') == '▼ $37k behind budget'"
+      ]
+    },
+    {
+      "name": "an earlier month changes the titles and figures",
+      "params": {
+        "month": "2026-08-01",
+        "region": "Coastal"
+      },
+      "expect": [
+        "diagnostics.all(d, d.severity != 'error')",
+        "text('month') == 'August 2026'",
+        "text('kpi-revenue/kpi-value') == '$588 k'",
+        "text('kpi-revenue/kpi-delta') == '▼ 0.2% under budget'",
+        "text('year-note') == 'July 2026 to August 2026'",
+        "StartsWith(text('region/region-commentary'), 'On budget.')"
+      ]
+    }
+  ]
+}

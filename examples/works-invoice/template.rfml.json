@@ -1,0 +1,1034 @@
+{
+  "$schema": "https://reportforge.dev/schema/rfml/0.1.json",
+  "rfml": "0.1",
+  "id": "works-invoice",
+  "meta": {
+    "title": "Works invoice",
+    "description": "A one-page A4 tax invoice to a builder for a new water connection and meter. It shows line items with GST per line and a discount, the subtotal, GST and total, payment terms, and a QR code that opens the online payment page.",
+    "locale": "en-AU",
+    "currency": "AUD",
+    "tags": [
+      "example",
+      "invoice",
+      "tax-invoice",
+      "qr-code",
+      "water"
+    ]
+  },
+  "data": {
+    "main": {
+      "schema": {
+        "$ref": "schemas/main.json"
+      },
+      "sample": "samples/main.json",
+      "description": "One invoice for the connection and meter works at one building site."
+    }
+  },
+  "vars": {
+    "gstRate": "0.1",
+    "subtotal": "Sum(data.main.lines.map(l, Round(l.quantity * l.unitPrice, 2)))",
+    "gst": "Sum(data.main.lines.filter(l, l.taxable).map(l, Round(Round(l.quantity * l.unitPrice, 2) * vars.gstRate, 2)))",
+    "total": "vars.subtotal + vars.gst",
+    "payUrl": "'https://larkmere.example/pay?ref=' + data.main.invoice.paymentReference"
+  },
+  "styles": {
+    "tokens": {
+      "brand": "#0073AF",
+      "ink": "#231F20",
+      "muted": "#4E6A75",
+      "line": "#D5E4EA",
+      "panel": "#E8F4FB",
+      "negative": "#B42318",
+      "positive": "#1F7A4D",
+      "accent": "#1A9E8F",
+      "space-1": "3pt",
+      "space-2": "6pt",
+      "space-3": "12pt"
+    },
+    "defaults": {
+      "document": {
+        "color": "var(--ink)",
+        "font-family": "Arimo",
+        "font-size": "9pt",
+        "line-height": 1.35
+      },
+      "heading": {
+        "margin": "var(--space-3) 0 var(--space-2)",
+        "color": "var(--brand)",
+        "font-size": "12pt",
+        "font-weight": 700
+      },
+      "table": {
+        "width": "100%",
+        "border-collapse": "collapse",
+        "parts": {
+          "cell": {
+            "padding": "3.5pt 4pt",
+            "border-bottom": "0.5pt solid var(--line)"
+          },
+          "header-cell": {
+            "padding-top": "5pt",
+            "padding-bottom": "5pt",
+            "border-bottom": "1pt solid var(--brand)",
+            "color": "var(--muted)",
+            "font-size": "7.5pt",
+            "font-weight": 700,
+            "letter-spacing": "0.3pt",
+            "text-transform": "uppercase"
+          }
+        }
+      }
+    },
+    "classes": {
+      "wordmark": {
+        "color": "var(--brand)",
+        "font-size": "20pt",
+        "font-weight": 700,
+        "line-height": 1.1
+      },
+      "muted": {
+        "color": "var(--muted)"
+      },
+      "small": {
+        "font-size": "7.5pt"
+      },
+      "strong": {
+        "font-weight": 700
+      },
+      "num": {
+        "font-variant-numeric": "tabular-nums",
+        "text-align": "right"
+      },
+      "kicker": {
+        "margin": "0 0 var(--space-1)",
+        "color": "var(--brand)",
+        "font-size": "7.5pt",
+        "font-weight": 700,
+        "letter-spacing": "0.3pt",
+        "text-transform": "uppercase"
+      },
+      "facts": {
+        "column-gap": "var(--space-3)",
+        "display": "grid",
+        "row-gap": "2pt",
+        "grid-template-columns": "1fr 1fr"
+      },
+      "panel": {
+        "padding": "var(--space-2) var(--space-3)",
+        "border-radius": "3pt",
+        "background-color": "var(--panel)"
+      },
+      "line-item": {
+        "display": "flex",
+        "justify-content": "space-between",
+        "gap": "var(--space-2)"
+      },
+      "party": {
+        "padding-top": "var(--space-2)",
+        "border-top": "1pt solid var(--brand)"
+      }
+    }
+  },
+  "pages": [
+    {
+      "id": "a4",
+      "size": "A4",
+      "margin": "22mm 16mm 18mm",
+      "header": [
+        {
+          "type": "box",
+          "id": "running-header",
+          "style": {
+            "margin-bottom": "var(--space-3)",
+            "padding-bottom": "var(--space-1)",
+            "border-bottom": "0.75pt solid var(--line)",
+            "display": "flex",
+            "justify-content": "space-between",
+            "align-items": "baseline"
+          },
+          "children": [
+            {
+              "type": "text",
+              "id": "running-brand",
+              "class": [
+                "strong"
+              ],
+              "style": {
+                "color": "var(--brand)"
+              },
+              "content": "Larkmere Water"
+            },
+            {
+              "type": "text",
+              "id": "running-invoice",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "Tax invoice {{ data.main.invoice.number }} (continued)"
+            }
+          ]
+        }
+      ],
+      "footer": [
+        {
+          "type": "box",
+          "id": "page-footer",
+          "style": {
+            "padding-top": "var(--space-1)",
+            "border-top": "0.5pt solid var(--line)",
+            "display": "flex",
+            "justify-content": "space-between"
+          },
+          "children": [
+            {
+              "type": "text",
+              "id": "footer-company",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "Larkmere Water  ·  ABN 12 345 678 901  ·  40 Weir Street, Larkmere QLD 4999  ·  larkmere.example"
+            },
+            {
+              "type": "text",
+              "id": "footer-page",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "Page {{ page.number }} of {{ page.count }}"
+            }
+          ]
+        }
+      ],
+      "variants": {
+        "first": {
+          "margin": "14mm 16mm 18mm",
+          "header": []
+        }
+      }
+    }
+  ],
+  "body": [
+    {
+      "type": "box",
+      "id": "masthead",
+      "style": {
+        "column-gap": "var(--space-3)",
+        "display": "grid",
+        "grid-template-columns": "1fr 1fr"
+      },
+      "children": [
+        {
+          "type": "box",
+          "id": "supplier",
+          "children": [
+            {
+              "type": "text",
+              "id": "wordmark",
+              "class": [
+                "wordmark"
+              ],
+              "content": "Larkmere Water"
+            },
+            {
+              "type": "text",
+              "id": "supplier-details",
+              "class": [
+                "muted"
+              ],
+              "style": {
+                "margin-top": "var(--space-2)"
+              },
+              "content": [
+                "40 Weir Street, Larkmere QLD 4999",
+                {
+                  "type": "br"
+                },
+                "PO Box 100, Larkmere QLD 4999",
+                {
+                  "type": "br"
+                },
+                "accounts@larkmere.example  ·  1300 975 707"
+              ]
+            },
+            {
+              "type": "text",
+              "id": "supplier-abn",
+              "class": [
+                "strong"
+              ],
+              "style": {
+                "margin-top": "var(--space-1)"
+              },
+              "content": "ABN 12 345 678 901"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "invoice-facts",
+          "children": [
+            {
+              "type": "heading",
+              "id": "title",
+              "style": {
+                "margin": "0 0 var(--space-2)",
+                "font-size": "22pt",
+                "line-height": 1.1,
+                "text-align": "right"
+              },
+              "level": 1,
+              "content": "Tax invoice"
+            },
+            {
+              "type": "box",
+              "id": "facts",
+              "class": [
+                "facts"
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "number-label",
+                  "class": [
+                    "muted"
+                  ],
+                  "content": "Invoice number"
+                },
+                {
+                  "type": "text",
+                  "id": "number-value",
+                  "class": [
+                    "num",
+                    "strong"
+                  ],
+                  "content": "{{ data.main.invoice.number }}"
+                },
+                {
+                  "type": "text",
+                  "id": "issued-label",
+                  "class": [
+                    "muted"
+                  ],
+                  "content": "Invoice date"
+                },
+                {
+                  "type": "text",
+                  "id": "issued-value",
+                  "class": [
+                    "num"
+                  ],
+                  "content": "{{ Format(data.main.invoice.issueDate, 'd MMMM y') }}"
+                },
+                {
+                  "type": "text",
+                  "id": "po-label",
+                  "if": "!IsBlank(data.main.invoice.purchaseOrder)",
+                  "class": [
+                    "muted"
+                  ],
+                  "content": "Your purchase order"
+                },
+                {
+                  "type": "text",
+                  "id": "po-value",
+                  "if": "!IsBlank(data.main.invoice.purchaseOrder)",
+                  "class": [
+                    "num"
+                  ],
+                  "content": "{{ data.main.invoice.purchaseOrder }}"
+                },
+                {
+                  "type": "text",
+                  "id": "account-label",
+                  "class": [
+                    "muted"
+                  ],
+                  "content": "Customer account"
+                },
+                {
+                  "type": "text",
+                  "id": "account-value",
+                  "class": [
+                    "num"
+                  ],
+                  "content": "{{ data.main.customer.account }}"
+                }
+              ],
+              "meta": {
+                "label": "Invoice facts"
+              }
+            },
+            {
+              "type": "box",
+              "id": "due-card",
+              "class": [
+                "panel"
+              ],
+              "style": {
+                "margin-top": "var(--space-2)"
+              },
+              "children": [
+                {
+                  "type": "box",
+                  "id": "due-amount",
+                  "class": [
+                    "line-item"
+                  ],
+                  "style": {
+                    "align-items": "baseline"
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "due-amount-label",
+                      "class": [
+                        "strong"
+                      ],
+                      "content": "Amount due"
+                    },
+                    {
+                      "type": "text",
+                      "id": "due-amount-value",
+                      "class": [
+                        "num",
+                        "strong"
+                      ],
+                      "style": {
+                        "color": "var(--brand)",
+                        "font-size": "15pt"
+                      },
+                      "content": "{{ Format(vars.total, 'currency') }}"
+                    }
+                  ]
+                },
+                {
+                  "type": "box",
+                  "id": "due-date",
+                  "class": [
+                    "line-item"
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "due-date-label",
+                      "content": "Due date"
+                    },
+                    {
+                      "type": "text",
+                      "id": "due-date-value",
+                      "class": [
+                        "num",
+                        "strong"
+                      ],
+                      "content": "{{ Format(data.main.invoice.dueDate, 'd MMMM y') }}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "box",
+      "id": "parties",
+      "style": {
+        "margin-top": "var(--space-3)",
+        "column-gap": "var(--space-3)",
+        "display": "grid",
+        "grid-template-columns": "1fr 1fr"
+      },
+      "children": [
+        {
+          "type": "box",
+          "id": "bill-to",
+          "class": [
+            "party"
+          ],
+          "children": [
+            {
+              "type": "heading",
+              "id": "bill-to-title",
+              "class": [
+                "kicker"
+              ],
+              "level": 2,
+              "content": "Bill to"
+            },
+            {
+              "type": "text",
+              "id": "customer-name",
+              "class": [
+                "strong"
+              ],
+              "content": "{{ data.main.customer.name }}"
+            },
+            {
+              "type": "text",
+              "id": "customer-attention",
+              "if": "!IsBlank(data.main.customer.attention)",
+              "content": "Attention: {{ data.main.customer.attention }}"
+            },
+            {
+              "type": "repeat",
+              "id": "customer-address",
+              "source": "data.main.customer.addressLines",
+              "as": "line",
+              "detail": [
+                {
+                  "type": "text",
+                  "id": "address-line",
+                  "content": "{{ line }}"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "customer-abn",
+              "if": "!IsBlank(data.main.customer.abn)",
+              "class": [
+                "muted"
+              ],
+              "content": "ABN {{ data.main.customer.abn }}"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "works",
+          "class": [
+            "party"
+          ],
+          "children": [
+            {
+              "type": "heading",
+              "id": "works-title",
+              "class": [
+                "kicker"
+              ],
+              "level": 2,
+              "content": "Works"
+            },
+            {
+              "type": "text",
+              "id": "works-description",
+              "class": [
+                "strong"
+              ],
+              "content": "{{ data.main.works.description }}"
+            },
+            {
+              "type": "text",
+              "id": "works-site",
+              "content": "{{ data.main.works.site }}"
+            },
+            {
+              "type": "text",
+              "id": "works-refs",
+              "class": [
+                "muted"
+              ],
+              "content": [
+                "Application {{ data.main.works.application }}  ·  completed {{ Format(data.main.works.completed, 'd MMM y') }}",
+                {
+                  "type": "br"
+                },
+                {
+                  "type": "span",
+                  "content": "Meter {{ data.main.works.meter }}",
+                  "if": "!IsBlank(data.main.works.meter)"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "id": "lines-heading",
+      "style": {
+        "margin-top": "14pt"
+      },
+      "level": 2,
+      "content": "Charges"
+    },
+    {
+      "type": "table",
+      "id": "table-lines",
+      "rules": [
+        {
+          "if": "l.unitPrice < 0",
+          "style": {
+            "parts": {
+              "row": {
+                "color": "var(--positive)"
+              }
+            }
+          }
+        }
+      ],
+      "source": "data.main.lines",
+      "as": "l",
+      "vars": {
+        "amount": "Round(l.quantity * l.unitPrice, 2)",
+        "lineGst": "If(l.taxable, Round(Round(l.quantity * l.unitPrice, 2) * vars.gstRate, 2), 0)"
+      },
+      "columns": [
+        {
+          "id": "col-code",
+          "width": "11fr",
+          "header": "Item",
+          "class": [
+            "muted"
+          ],
+          "cell": "{{ l.code }}"
+        },
+        {
+          "id": "col-description",
+          "width": "56fr",
+          "header": "Description",
+          "cell": "{{ l.description }}"
+        },
+        {
+          "id": "col-quantity",
+          "width": "7fr",
+          "header": "Qty",
+          "class": [
+            "num"
+          ],
+          "cell": "{{ l.quantity }}"
+        },
+        {
+          "id": "col-unit",
+          "width": "8fr",
+          "header": "Unit",
+          "cell": "{{ l.unit }}"
+        },
+        {
+          "id": "col-price",
+          "width": "14fr",
+          "header": "Unit price",
+          "class": [
+            "num"
+          ],
+          "cell": "{{ Format(l.unitPrice, 'currency') }}"
+        },
+        {
+          "id": "col-gst",
+          "width": "13fr",
+          "header": "GST",
+          "class": [
+            "num"
+          ],
+          "cell": "{{ If(l.taxable, Format(vars.lineGst, 'currency'), 'GST-free') }}"
+        },
+        {
+          "id": "col-amount",
+          "width": "15fr",
+          "header": "Amount",
+          "class": [
+            "num",
+            "strong"
+          ],
+          "cell": "{{ Format(vars.amount, 'currency') }}"
+        }
+      ],
+      "empty": [
+        {
+          "type": "text",
+          "id": "no-lines",
+          "class": [
+            "muted"
+          ],
+          "content": "No charges on this invoice."
+        }
+      ],
+      "meta": {
+        "description": "Unit prices and amounts exclude GST. A discount is a line with a negative unit price."
+      }
+    },
+    {
+      "type": "box",
+      "id": "summary",
+      "style": {
+        "margin-top": "var(--space-3)",
+        "column-gap": "18pt",
+        "display": "grid",
+        "grid-template-columns": "1fr 72mm",
+        "break-before": "avoid",
+        "break-inside": "avoid"
+      },
+      "children": [
+        {
+          "type": "box",
+          "id": "terms",
+          "children": [
+            {
+              "type": "heading",
+              "id": "terms-title",
+              "class": [
+                "kicker"
+              ],
+              "level": 2,
+              "content": "Payment terms"
+            },
+            {
+              "type": "text",
+              "id": "terms-body",
+              "content": "Payment is due within {{ data.main.invoice.termsDays }} days of the invoice date, by {{ Format(data.main.invoice.dueDate, 'd MMMM y') }}. Please quote invoice number {{ data.main.invoice.number }} and reference {{ data.main.invoice.paymentReference }} with your payment."
+            },
+            {
+              "type": "text",
+              "id": "terms-gst",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "style": {
+                "margin-top": "var(--space-2)"
+              },
+              "content": "Unit prices and amounts exclude GST. GST-free lines are supplies on which no GST is payable. Questions about this invoice: accounts@larkmere.example or 1300 975 707."
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "totals",
+          "children": [
+            {
+              "type": "box",
+              "id": "totals-subtotal",
+              "class": [
+                "line-item"
+              ],
+              "style": {
+                "padding": "2pt 0"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "id": "subtotal-label",
+                  "content": "Subtotal (excl. GST)"
+                },
+                {
+                  "type": "text",
+                  "id": "subtotal-value",
+                  "class": [
+                    "num"
+                  ],
+                  "content": "{{ Format(vars.subtotal, 'currency') }}"
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "id": "totals-gst",
+              "class": [
+                "line-item"
+              ],
+              "style": {
+                "padding": "2pt 0"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "id": "gst-label",
+                  "content": "GST"
+                },
+                {
+                  "type": "text",
+                  "id": "gst-value",
+                  "class": [
+                    "num"
+                  ],
+                  "content": "{{ Format(vars.gst, 'currency') }}"
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "id": "totals-total",
+              "class": [
+                "line-item"
+              ],
+              "style": {
+                "margin-top": "var(--space-1)",
+                "padding-top": "var(--space-1)",
+                "border-top": "1pt solid var(--brand)",
+                "color": "var(--brand)",
+                "font-size": "12pt",
+                "font-weight": 700,
+                "align-items": "baseline"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "id": "total-label",
+                  "content": "Total (incl. GST)"
+                },
+                {
+                  "type": "text",
+                  "id": "total-value",
+                  "class": [
+                    "num"
+                  ],
+                  "content": "{{ Format(vars.total, 'currency') }}"
+                }
+              ]
+            }
+          ],
+          "meta": {
+            "label": "Totals"
+          }
+        }
+      ]
+    },
+    {
+      "type": "box",
+      "id": "pay",
+      "class": [
+        "panel"
+      ],
+      "style": {
+        "margin-top": "14pt",
+        "padding": "var(--space-3)",
+        "column-gap": "var(--space-3)",
+        "display": "grid",
+        "grid-template-columns": "30mm 1fr",
+        "break-inside": "avoid"
+      },
+      "children": [
+        {
+          "type": "box",
+          "id": "pay-qr",
+          "children": [
+            {
+              "type": "barcode",
+              "id": "qr-pay",
+              "style": {
+                "width": "30mm",
+                "height": "30mm"
+              },
+              "symbology": "qr",
+              "value": "vars.payUrl",
+              "errorCorrection": "M",
+              "meta": {
+                "description": "Opens the payment page with this invoice's reference filled in."
+              }
+            },
+            {
+              "type": "text",
+              "id": "qr-caption",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "style": {
+                "margin-top": "var(--space-1)",
+                "text-align": "center"
+              },
+              "content": "Scan to pay"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "pay-options",
+          "children": [
+            {
+              "type": "heading",
+              "id": "pay-title",
+              "style": {
+                "margin": "0 0 var(--space-1)"
+              },
+              "level": 2,
+              "content": "How to pay"
+            },
+            {
+              "type": "text",
+              "id": "pay-ref",
+              "style": {
+                "margin-bottom": "var(--space-2)"
+              },
+              "content": [
+                "Pay {{ Format(vars.total, 'currency') }} by {{ Format(data.main.invoice.dueDate, 'd MMMM y') }}, quoting reference ",
+                {
+                  "type": "span",
+                  "content": "{{ data.main.invoice.paymentReference }}",
+                  "class": [
+                    "strong"
+                  ]
+                },
+                "."
+              ]
+            },
+            {
+              "type": "box",
+              "id": "pay-ways",
+              "style": {
+                "column-gap": "var(--space-3)",
+                "display": "grid",
+                "row-gap": "var(--space-2)",
+                "grid-template-columns": "1fr 1fr"
+              },
+              "children": [
+                {
+                  "type": "box",
+                  "id": "pay-online",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "pay-online-title",
+                      "class": [
+                        "kicker"
+                      ],
+                      "content": "Pay online"
+                    },
+                    {
+                      "type": "text",
+                      "id": "pay-online-body",
+                      "content": "Scan the code, or go to larkmere.example/pay and enter your reference."
+                    }
+                  ]
+                },
+                {
+                  "type": "box",
+                  "id": "pay-phone",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "pay-phone-title",
+                      "class": [
+                        "kicker"
+                      ],
+                      "content": "Pay by phone"
+                    },
+                    {
+                      "type": "text",
+                      "id": "pay-phone-body",
+                      "content": "Call 1300 975 709, 24 hours, with your card and reference."
+                    }
+                  ]
+                },
+                {
+                  "type": "box",
+                  "id": "pay-debit",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "pay-debit-title",
+                      "class": [
+                        "kicker"
+                      ],
+                      "content": "Direct debit"
+                    },
+                    {
+                      "type": "text",
+                      "id": "pay-debit-body",
+                      "content": "We can debit your builder account on each due date. Call 1300 975 707 to set it up."
+                    }
+                  ]
+                },
+                {
+                  "type": "box",
+                  "id": "pay-office",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "pay-office-title",
+                      "class": [
+                        "kicker"
+                      ],
+                      "content": "In person at our office"
+                    },
+                    {
+                      "type": "text",
+                      "id": "pay-office-body",
+                      "content": "40 Weir Street, Larkmere, 8.30am to 4.30pm weekdays."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "meta": {
+        "label": "How to pay"
+      }
+    }
+  ],
+  "outputs": {
+    "pdf": {
+      "standard": "PDF/UA-1"
+    },
+    "xlsx": {
+      "sheets": [
+        {
+          "name": "Charges",
+          "from": "table-lines",
+          "freeze": "A2"
+        }
+      ]
+    }
+  },
+  "tests": [
+    {
+      "name": "sample invoice fits on one page",
+      "data": {
+        "main": "samples/main.json"
+      },
+      "expect": [
+        "pages.size() == 1",
+        "diagnostics.all(d, d.severity != 'error')",
+        "text('subtotal-value') == '$7,510.40'",
+        "text('gst-value') == '$456.04'",
+        "text('total-value') == '$7,966.44'",
+        "text('due-amount-value') == text('total-value')",
+        "!visible('running-header')",
+        "visible('po-value') && visible('customer-abn')",
+        "node('qr-pay').page == 1"
+      ],
+      "snapshot": true
+    },
+    {
+      "name": "a long invoice repeats the table header and keeps the totals together",
+      "data": {
+        "main": "tests/many-lines.json"
+      },
+      "expect": [
+        "pages.size() == 2",
+        "diagnostics.all(d, d.severity != 'error')",
+        "nodes('table-lines').size() == 2",
+        "nodes('col-description').filter(b, b.kind == 'header-cell').map(b, b.page) == [1, 2]",
+        "nodes('summary').size() == 1",
+        "node('summary').page == 2",
+        "node('subtotal-value').page == node('total-value').page",
+        "text('total-value') == '$55,673.16'",
+        "text('gst-value') == '$2,647.56'",
+        "nodes('running-header').size() == 1 && node('running-header').page == 2",
+        "node('pay').page == pages.size()"
+      ]
+    },
+    {
+      "name": "an invoice without a purchase order, customer ABN or discount",
+      "data": {
+        "main": "tests/no-purchase-order.json"
+      },
+      "expect": [
+        "pages.size() == 1",
+        "diagnostics.all(d, d.severity != 'error')",
+        "!visible('po-label') && !visible('po-value')",
+        "!visible('customer-abn') && !visible('customer-attention')",
+        "text('gst-value') == '$58.10'",
+        "text('total-value') == '$639.10'",
+        "text('terms-body').startsWith('Payment is due within 14 days')"
+      ]
+    }
+  ]
+}

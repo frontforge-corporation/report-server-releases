@@ -1,0 +1,20 @@
+{
+  "examples": [
+    { "id": "water-bill", "category": "billing", "level": "advanced" },
+    { "id": "account-statement", "category": "billing", "level": "intermediate" },
+    { "id": "works-invoice", "category": "billing", "level": "intermediate" },
+    { "id": "customer-letter", "category": "letters", "level": "starter" },
+    { "id": "operations-dashboard", "category": "operations", "level": "advanced" },
+    { "id": "meter-readings", "category": "operations", "level": "intermediate" },
+    { "id": "backflow-certificate", "category": "certificates", "level": "intermediate" },
+    { "id": "parts-label", "category": "labels", "level": "starter" },
+    { "id": "fieldbook-user-guide", "category": "documentation", "level": "advanced" },
+    { "id": "fieldbook-release-notes", "category": "documentation", "level": "intermediate" },
+    { "id": "fieldbook-quick-start", "category": "documentation", "level": "intermediate" },
+    { "id": "course-certificate", "category": "certificates", "level": "starter" },
+    { "id": "management-pack", "category": "internal", "level": "advanced" },
+    { "id": "expense-claim", "category": "internal", "level": "starter" },
+    { "id": "purchase-order", "category": "internal", "level": "intermediate" },
+    { "id": "staff-roster", "category": "internal", "level": "intermediate" }
+  ]
+}

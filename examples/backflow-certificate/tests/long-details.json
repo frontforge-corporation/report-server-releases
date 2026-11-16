@@ -1,0 +1,58 @@
+{
+  "issueDate": "2026-10-23",
+  "complianceOfficer": {
+    "name": "Priya Ambrose",
+    "position": "Backflow Compliance Officer, Network Protection and Water Quality"
+  },
+  "tests": [
+    {
+      "certificateNumber": "BFC-26-04131",
+      "property": {
+        "owner": "Weirton Heights and District Community Health and Aged Care Precinct",
+        "address": "Building C, Level 1, 240-262 Riverside Esplanade",
+        "locality": "Weirton Heights QLD 4998",
+        "account": "30 611 045"
+      },
+      "device": {
+        "type": "Reduced pressure zone device with strainer and isolating valves",
+        "make": "Fluxguard",
+        "model": "RP-400 Series II",
+        "size": "100 mm",
+        "serial": "FG4-301266-B",
+        "location": "Below ground pit beside the loading dock, northern boundary of the site",
+        "hazard": "High"
+      },
+      "testDate": "2026-10-22",
+      "passed": false,
+      "retestBy": "2026-11-19",
+      "finding": "The relief valve opened below the minimum pressure and discharged continuously during the test. The first check valve did not hold the required differential, and debris was found in the strainer upstream of the device. The isolating valves were stiff to operate. Repair the relief valve and first check valve, clean the strainer, service the isolating valves, and book a re-test before the date shown.",
+      "tester": {
+        "name": "Alexandra Featherstonehaugh-Delacroix",
+        "licence": "BPT-31002",
+        "business": "Featherstonehaugh Hydraulic Compliance and Backflow Testing Services"
+      }
+    },
+    {
+      "certificateNumber": "BFC-26-04132",
+      "property": {
+        "owner": "Reedvale Commercial Laundry",
+        "address": "3 Millrace Court",
+        "locality": "Reedvale QLD 4997"
+      },
+      "device": {
+        "type": "Testable single check valve",
+        "make": "Aquastay",
+        "model": "SC-15",
+        "size": "15 mm",
+        "serial": "AQ-15-00912"
+      },
+      "testDate": "2026-10-22",
+      "passed": true,
+      "nextTestDue": "2027-10-22",
+      "tester": {
+        "name": "Daniel Okafor",
+        "licence": "BPT-30418"
+      }
+    }
+  ]
+}

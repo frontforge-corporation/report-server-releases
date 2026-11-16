@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Letter to customers",
+  "description": "One letter to one property about planned water main works in its street.",
+  "type": "object",
+  "required": ["letter", "recipient", "works", "schedule", "contact", "signatory"],
+  "additionalProperties": false,
+  "properties": {
+    "letter": {
+      "type": "object",
+      "required": ["date", "reference", "salutation"],
+      "additionalProperties": false,
+      "properties": {
+        "date": { "type": "string", "format": "date", "title": "Letter date" },
+        "reference": { "type": "string", "title": "Our reference" },
+        "salutation": { "type": "string", "title": "Salutation", "description": "Who the letter greets, such as \"Resident\" or \"Ms Nguyen\"." }
+      }
+    },
+    "recipient": {
+      "type": "object",
+      "required": ["name", "addressLines"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string", "title": "Addressee" },
+        "addressLines": { "type": "array", "title": "Postal address", "minItems": 1, "items": { "type": "string" } }
+      }
+    },
+    "works": {
+      "type": "object",
+      "required": ["street", "suburb", "start", "end", "days", "hours", "length", "outageHours"],
+      "additionalProperties": false,
+      "properties": {
+        "street": { "type": "string", "title": "Street" },
+        "suburb": { "type": "string", "title": "Suburb" },
+        "start": { "type": "string", "format": "date", "title": "Works start" },
+        "end": { "type": "string", "format": "date", "title": "Works finish" },
+        "days": { "type": "string", "title": "Working days" },
+        "hours": { "type": "string", "title": "Working hours" },
+        "length": { "type": "integer", "title": "Length of new main", "description": "In metres." },
+        "outageHours": { "type": "integer", "title": "Longest water interruption", "description": "In hours." }
+      }
+    },
+    "schedule": {
+      "type": "array",
+      "title": "Works schedule",
+      "items": {
+        "type": "object",
+        "required": ["stage", "from", "to", "detail"],
+        "additionalProperties": false,
+        "properties": {
+          "stage": { "type": "string", "title": "Stage" },
+          "from": { "type": "string", "format": "date", "title": "From" },
+          "to": { "type": "string", "format": "date", "title": "To" },
+          "detail": { "type": "string", "title": "What to expect" }
+        }
+      }
+    },
+    "contact": {
+      "type": "object",
+      "required": ["name", "title", "phone", "email"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string", "title": "Contact" },
+        "title": { "type": "string", "title": "Contact's role" },
+        "phone": { "type": "string", "title": "Direct line" },
+        "mobile": { "type": "string", "title": "Mobile" },
+        "email": { "type": "string", "title": "Email" }
+      }
+    },
+    "signatory": {
+      "type": "object",
+      "required": ["name", "title"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string", "title": "Signed by" },
+        "title": { "type": "string", "title": "Signatory's title" }
+      }
+    }
+  }
+}

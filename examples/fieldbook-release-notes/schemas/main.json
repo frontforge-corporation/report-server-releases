@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Fieldbook releases",
+  "description": "The Fieldbook releases these notes cover, each with its changes, and the known issues in the latest one.",
+  "type": "object",
+  "required": ["published", "releases"],
+  "additionalProperties": false,
+  "properties": {
+    "published": { "type": "string", "format": "date", "title": "Published", "description": "When these notes were published." },
+    "audience": { "type": "string", "title": "Audience", "description": "Who the notes are for, shown under the title." },
+    "releases": {
+      "type": "array",
+      "title": "Releases",
+      "description": "In any order: the notes list the newest first, by release date.",
+      "items": {
+        "type": "object",
+        "required": ["version", "date", "summary", "changes"],
+        "additionalProperties": false,
+        "properties": {
+          "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$", "title": "Version" },
+          "date": { "type": "string", "format": "date", "title": "Release date" },
+          "platforms": { "type": "string", "title": "Platforms", "description": "Where the release is available, such as \"iOS, Android and web\"." },
+          "summary": { "type": "string", "title": "Summary" },
+          "upgradeNote": { "type": "string", "title": "Before you update", "description": "Something administrators must know or do before updating." },
+          "changes": {
+            "type": "array",
+            "title": "Changes",
+            "items": {
+              "type": "object",
+              "required": ["tag", "title"],
+              "additionalProperties": false,
+              "properties": {
+                "tag": { "type": "string", "enum": ["new", "improved", "fixed", "security", "deprecated"], "title": "Kind of change" },
+                "area": { "type": "string", "title": "Area", "description": "The part of Fieldbook the change is in." },
+                "title": { "type": "string", "title": "Title" },
+                "detail": { "type": "string", "title": "Detail" },
+                "issue": { "type": "string", "pattern": "^FB-[0-9]+$", "title": "Issue", "description": "The issue on quillmont.example/issues, such as FB-2291." }
+              }
+            }
+          }
+        }
+      }
+    },
+    "knownIssues": {
+      "type": "array",
+      "title": "Known issues",
+      "description": "Problems in the latest release that are not fixed yet. Without any, the notes leave the box out.",
+      "items": {
+        "type": "object",
+        "required": ["title", "issue"],
+        "additionalProperties": false,
+        "properties": {
+          "title": { "type": "string", "title": "Title" },
+          "detail": { "type": "string", "title": "Detail" },
+          "workaround": { "type": "string", "title": "Workaround" },
+          "issue": { "type": "string", "pattern": "^FB-[0-9]+$", "title": "Issue" },
+          "fixExpected": { "type": "string", "title": "Fix expected in", "description": "The version a fix is planned for." }
+        }
+      }
+    }
+  }
+}

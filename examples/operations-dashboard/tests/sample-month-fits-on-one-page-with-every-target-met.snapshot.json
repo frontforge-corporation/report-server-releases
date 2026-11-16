@@ -1,0 +1,9 @@
+{
+  "test": "sample month fits on one page with every target met",
+  "pages": [
+    {
+      "page": 1,
+      "sha256": "dafb05fa9e67f9a6a7245b0114c1b5f6477d5e637b5c2f702ac8683af9e360b6"
+    }
+  ]
+}

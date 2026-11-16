@@ -1,0 +1,9 @@
+{
+  "test": "sample invoice fits on one page",
+  "pages": [
+    {
+      "page": 1,
+      "sha256": "8b94149de11d702221682e2d0da8eb139516759a64e21f0e56d5613c41c2ef19"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "test": "the goods receiving copy hides prices and adds a received column",
+  "pages": [
+    {
+      "page": 1,
+      "sha256": "e818cd9624c62d85885a64b3fd9582bd5d3a7165906c1bd0ed3606234a5f8891"
+    },
+    {
+      "page": 2,
+      "sha256": "f0e5f7957106b51f303ebd499828007eaa3f313aa77b2ed715bf91ba30295577"
+    }
+  ]
+}

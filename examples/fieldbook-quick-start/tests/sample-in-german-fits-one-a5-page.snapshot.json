@@ -1,0 +1,9 @@
+{
+  "test": "sample in German fits one A5 page",
+  "pages": [
+    {
+      "page": 1,
+      "sha256": "04b38f98947fac32e4cbdb28f39a098f417797678a99b070789b9d93d3b705ad"
+    }
+  ]
+}

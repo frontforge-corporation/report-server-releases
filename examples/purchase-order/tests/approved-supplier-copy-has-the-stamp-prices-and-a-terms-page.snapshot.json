@@ -1,0 +1,13 @@
+{
+  "test": "approved supplier copy has the stamp, prices and a terms page",
+  "pages": [
+    {
+      "page": 1,
+      "sha256": "e49d8db7d90ddb4daf93c25bb74836b556b4ecad3162475a76901aed89e22ad0"
+    },
+    {
+      "page": 2,
+      "sha256": "9162c9b80eb8537860fc6f6a8405e1d1c6f40e85bce26d45c2c3dddd80ae3fbd"
+    }
+  ]
+}

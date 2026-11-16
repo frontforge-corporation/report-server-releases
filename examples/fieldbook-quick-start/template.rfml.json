@@ -1,0 +1,1031 @@
+{
+  "$schema": "https://reportforge.dev/schema/rfml/0.2.json",
+  "rfml": "0.2",
+  "id": "fieldbook-quick-start",
+  "meta": {
+    "title": "Fieldbook quick-start card",
+    "description": "Quillmont Software's A5 card for new Fieldbook users, in English or German from the same template: five numbered steps, the workspace's plan and support hours, and a QR code to the video guides. Every word comes from the i18n catalogues, and dates, numbers, prices and plurals follow the card's language.",
+    "locale": "en-GB",
+    "currency": "EUR",
+    "tags": [
+      "example",
+      "documentation",
+      "quick-start",
+      "i18n"
+    ]
+  },
+  "params": [
+    {
+      "name": "language",
+      "type": "string",
+      "label": "Language",
+      "description": "The language the card is printed in. The whole card is one component, used once per language with its own lang, so both share every node and style.",
+      "default": "'en-GB'",
+      "options": [
+        {
+          "value": "en-GB",
+          "label": "English"
+        },
+        {
+          "value": "de-DE",
+          "label": "Deutsch"
+        }
+      ]
+    }
+  ],
+  "data": {
+    "main": {
+      "schema": {
+        "$ref": "schemas/main.json"
+      },
+      "sample": "samples/main.json",
+      "description": "The workspace the card is for: app, code, plan and support hours."
+    }
+  },
+  "vars": {
+    "supportPhone": "First(data.main.support.filter(r, r.channel == 'phone' && has(r.contact)).map(r, r.contact))",
+    "supportEmail": "Coalesce(First(data.main.support.filter(r, r.channel == 'email' && has(r.contact)).map(r, r.contact)), 'support@quillmont.example')"
+  },
+  "styles": {
+    "tokens": {
+      "brand": "#1F6F5C",
+      "brand-dark": "#185A4B",
+      "accent": "#F2A541",
+      "ink": "#1E2B2E",
+      "muted": "#56676A",
+      "line": "#D3E2DC",
+      "panel": "#EEF5F2",
+      "space-1": "3pt",
+      "space-2": "6pt",
+      "space-3": "10pt",
+      "space-4": "14pt"
+    },
+    "defaults": {
+      "document": {
+        "color": "var(--ink)",
+        "font-family": "Arimo",
+        "font-size": "8.5pt",
+        "line-height": 1.3
+      },
+      "heading": {
+        "margin": "7pt 0 2pt",
+        "color": "var(--brand)",
+        "font-size": "17pt",
+        "font-weight": 700,
+        "line-height": 1.15
+      },
+      "link": {
+        "color": "var(--brand)",
+        "text-decoration": "underline"
+      },
+      "table": {
+        "width": "100%",
+        "border-collapse": "collapse",
+        "parts": {
+          "cell": {
+            "padding": "2.5pt 3pt",
+            "border-bottom": "0.5pt solid var(--line)"
+          },
+          "header-cell": {
+            "padding-top": 0,
+            "border-bottom": "0.75pt solid var(--brand)",
+            "color": "var(--muted)",
+            "font-size": "6.5pt",
+            "font-weight": 700,
+            "letter-spacing": "0.3pt",
+            "text-transform": "uppercase"
+          }
+        }
+      }
+    },
+    "classes": {
+      "wordmark": {
+        "color": "var(--brand)",
+        "font-size": "15pt",
+        "font-weight": 700,
+        "line-height": 1.1
+      },
+      "kicker": {
+        "color": "var(--muted)",
+        "font-size": "7pt",
+        "font-weight": 700,
+        "letter-spacing": "1.2pt",
+        "text-transform": "uppercase"
+      },
+      "meta-line": {
+        "color": "var(--muted)",
+        "font-size": "7.5pt"
+      },
+      "lead": {
+        "margin-bottom": "8pt",
+        "color": "var(--muted)",
+        "font-size": "9pt"
+      },
+      "step": {
+        "margin-bottom": "4.5pt",
+        "column-gap": "var(--space-2)",
+        "display": "grid",
+        "grid-template-columns": "7mm 1fr",
+        "break-inside": "avoid"
+      },
+      "step-number": {
+        "width": "6.5mm",
+        "height": "6.5mm",
+        "border-radius": "3.25mm",
+        "background-color": "var(--brand)",
+        "color": "#FFFFFF",
+        "font-size": "10pt",
+        "font-weight": 700,
+        "line-height": "6.5mm",
+        "text-align": "center"
+      },
+      "step-title": {
+        "color": "var(--brand-dark)",
+        "font-size": "9.5pt",
+        "font-weight": 700
+      },
+      "step-body": {
+        "margin-top": "1pt"
+      },
+      "panel": {
+        "padding": "var(--space-2) var(--space-3) 7pt",
+        "border": "0.75pt solid var(--line)",
+        "border-top": "2.5pt solid var(--accent)",
+        "border-radius": "3pt"
+      },
+      "panel-title": {
+        "margin-bottom": "var(--space-2)",
+        "color": "var(--brand)",
+        "font-size": "9.5pt",
+        "font-weight": 700
+      },
+      "facts": {
+        "column-gap": "var(--space-2)",
+        "display": "grid",
+        "row-gap": "var(--space-1)",
+        "grid-template-columns": "auto 1fr"
+      },
+      "label": {
+        "color": "var(--muted)",
+        "font-size": "7.5pt"
+      },
+      "value": {
+        "font-size": "7.5pt",
+        "font-weight": 700
+      },
+      "hours": {
+        "font-size": "7.5pt"
+      },
+      "strong": {
+        "font-weight": 700
+      },
+      "small": {
+        "font-size": "7.5pt"
+      },
+      "tiny": {
+        "font-size": "6.5pt",
+        "line-height": 1.3
+      },
+      "muted": {
+        "color": "var(--muted)"
+      },
+      "nowrap": {
+        "white-space": "nowrap"
+      }
+    }
+  },
+  "assets": {
+    "fieldbook-icon": {
+      "kind": "image",
+      "src": "assets/fieldbook-icon.svg"
+    },
+    "phone-sketch": {
+      "kind": "image",
+      "src": "assets/phone-sketch.svg"
+    }
+  },
+  "components": {
+    "quick-start-card": {
+      "description": "The whole card. Its words come from `i18n` in the locale of the instance's `lang`, so one instance per language shares every node.",
+      "props": {
+        "type": "object",
+        "properties": {}
+      },
+      "template": [
+        {
+          "type": "box",
+          "id": "card",
+          "style": {
+            "break-inside": "avoid"
+          },
+          "children": [
+            {
+              "type": "box",
+              "id": "masthead",
+              "style": {
+                "padding-bottom": "7pt",
+                "border-bottom": "1.5pt solid var(--brand)",
+                "display": "flex",
+                "align-items": "center",
+                "gap": "var(--space-3)"
+              },
+              "children": [
+                {
+                  "type": "image",
+                  "id": "app-icon",
+                  "style": {
+                    "width": "11.5mm",
+                    "height": "11.5mm"
+                  },
+                  "asset": "fieldbook-icon",
+                  "decorative": true
+                },
+                {
+                  "type": "box",
+                  "id": "masthead-name",
+                  "style": {
+                    "flex": 1
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "wordmark",
+                      "class": [
+                        "wordmark"
+                      ],
+                      "content": "Fieldbook"
+                    },
+                    {
+                      "type": "text",
+                      "id": "kicker",
+                      "class": [
+                        "kicker"
+                      ],
+                      "content": "{{ T('kicker') }}"
+                    }
+                  ]
+                },
+                {
+                  "type": "box",
+                  "id": "masthead-meta",
+                  "style": {
+                    "text-align": "right"
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "version",
+                      "class": [
+                        "meta-line",
+                        "strong"
+                      ],
+                      "content": "{{ T('version', {'version': data.main.app.version}) }}"
+                    },
+                    {
+                      "type": "text",
+                      "id": "card-date",
+                      "class": [
+                        "meta-line"
+                      ],
+                      "content": "{{ T('updated', {'date': Format(data.main.printed, 'date:long')}) }}"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "heading",
+              "id": "title",
+              "level": 1,
+              "content": "{{ T('title') }}"
+            },
+            {
+              "type": "text",
+              "id": "lead",
+              "class": [
+                "lead"
+              ],
+              "content": "{{ T('lead', {'workspace': data.main.workspace.name}) }}"
+            },
+            {
+              "type": "box",
+              "id": "steps-row",
+              "style": {
+                "column-gap": "var(--space-4)",
+                "display": "grid",
+                "grid-template-columns": "1fr 30mm"
+              },
+              "children": [
+                {
+                  "type": "box",
+                  "id": "steps",
+                  "children": [
+                    {
+                      "type": "box",
+                      "id": "step-install",
+                      "class": [
+                        "step"
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "step-install-number",
+                          "class": [
+                            "step-number"
+                          ],
+                          "content": "1"
+                        },
+                        {
+                          "type": "box",
+                          "id": "step-install-text",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "step-install-title",
+                              "class": [
+                                "step-title"
+                              ],
+                              "content": "{{ T('step-install-title') }}"
+                            },
+                            {
+                              "type": "text",
+                              "id": "step-install-body",
+                              "class": [
+                                "step-body"
+                              ],
+                              "content": "{{ T('step-install-body', {'size': data.main.app.downloadMb, 'web': data.main.app.webAddress}) }}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "box",
+                      "id": "step-join",
+                      "class": [
+                        "step"
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "step-join-number",
+                          "class": [
+                            "step-number"
+                          ],
+                          "content": "2"
+                        },
+                        {
+                          "type": "box",
+                          "id": "step-join-text",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "step-join-title",
+                              "class": [
+                                "step-title"
+                              ],
+                              "content": "{{ T('step-join-title') }}"
+                            },
+                            {
+                              "type": "text",
+                              "id": "step-join-body",
+                              "class": [
+                                "step-body"
+                              ],
+                              "content": "{{ T('step-join-body', {'code': data.main.workspace.code}) }}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "box",
+                      "id": "step-offline",
+                      "class": [
+                        "step"
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "step-offline-number",
+                          "class": [
+                            "step-number"
+                          ],
+                          "content": "3"
+                        },
+                        {
+                          "type": "box",
+                          "id": "step-offline-text",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "step-offline-title",
+                              "class": [
+                                "step-title"
+                              ],
+                              "content": "{{ T('step-offline-title') }}"
+                            },
+                            {
+                              "type": "text",
+                              "id": "step-offline-body",
+                              "class": [
+                                "step-body"
+                              ],
+                              "content": "{{ T('step-offline-body', {'photos': data.main.plan.offlinePhotos}) }}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "box",
+                      "id": "step-inspect",
+                      "class": [
+                        "step"
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "step-inspect-number",
+                          "class": [
+                            "step-number"
+                          ],
+                          "content": "4"
+                        },
+                        {
+                          "type": "box",
+                          "id": "step-inspect-text",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "step-inspect-title",
+                              "class": [
+                                "step-title"
+                              ],
+                              "content": "{{ T('step-inspect-title') }}"
+                            },
+                            {
+                              "type": "text",
+                              "id": "step-inspect-body",
+                              "class": [
+                                "step-body"
+                              ],
+                              "content": "{{ T('step-inspect-body') }}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "box",
+                      "id": "step-sign",
+                      "class": [
+                        "step"
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "step-sign-number",
+                          "class": [
+                            "step-number"
+                          ],
+                          "content": "5"
+                        },
+                        {
+                          "type": "box",
+                          "id": "step-sign-text",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "step-sign-title",
+                              "class": [
+                                "step-title"
+                              ],
+                              "content": "{{ T('step-sign-title') }}"
+                            },
+                            {
+                              "type": "text",
+                              "id": "step-sign-body",
+                              "class": [
+                                "step-body"
+                              ],
+                              "content": "{{ T('step-sign-body') }}"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "box",
+                  "id": "aside",
+                  "children": [
+                    {
+                      "type": "image",
+                      "id": "phone",
+                      "style": {
+                        "width": "24mm",
+                        "height": "40mm",
+                        "margin": "0 auto"
+                      },
+                      "asset": "phone-sketch",
+                      "alt": "{{ T('phone-alt') }}"
+                    },
+                    {
+                      "type": "box",
+                      "id": "help",
+                      "style": {
+                        "margin-top": "var(--space-3)",
+                        "padding": "var(--space-2) var(--space-1)",
+                        "border-radius": "4pt",
+                        "background-color": "var(--panel)",
+                        "text-align": "center"
+                      },
+                      "children": [
+                        {
+                          "type": "barcode",
+                          "id": "help-code",
+                          "style": {
+                            "width": "18mm",
+                            "height": "18mm",
+                            "margin": "0 auto"
+                          },
+                          "symbology": "qr",
+                          "value": "data.main.app.helpUrl + '?lang=' + Left(locale, 2)",
+                          "errorCorrection": "M",
+                          "alt": "{{ T('help-alt') }}"
+                        },
+                        {
+                          "type": "text",
+                          "id": "help-title",
+                          "class": [
+                            "strong"
+                          ],
+                          "style": {
+                            "margin-top": "var(--space-1)"
+                          },
+                          "content": "{{ T('help-title') }}"
+                        },
+                        {
+                          "type": "text",
+                          "id": "help-body",
+                          "class": [
+                            "tiny",
+                            "muted"
+                          ],
+                          "content": "{{ T('help-body') }}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "id": "facts-row",
+              "style": {
+                "margin-top": "8pt",
+                "column-gap": "var(--space-3)",
+                "display": "grid",
+                "grid-template-columns": "53mm 1fr"
+              },
+              "children": [
+                {
+                  "type": "box",
+                  "id": "plan",
+                  "class": [
+                    "panel"
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "plan-title",
+                      "class": [
+                        "panel-title"
+                      ],
+                      "content": "{{ T('plan-title', {'plan': data.main.plan.name}) }}"
+                    },
+                    {
+                      "type": "box",
+                      "id": "plan-facts",
+                      "class": [
+                        "facts"
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "price-label",
+                          "class": [
+                            "label"
+                          ],
+                          "content": "{{ T('price-label') }}"
+                        },
+                        {
+                          "type": "text",
+                          "id": "price-value",
+                          "class": [
+                            "value"
+                          ],
+                          "content": "{{ T('price', {'price': Format(data.main.plan.pricePerUser, 'currency:EUR')}) }}"
+                        },
+                        {
+                          "type": "text",
+                          "id": "users-label",
+                          "class": [
+                            "label"
+                          ],
+                          "content": "{{ T('users-label') }}"
+                        },
+                        {
+                          "type": "text",
+                          "id": "users-value",
+                          "class": [
+                            "value"
+                          ],
+                          "content": "{{ T('users', {'n': data.main.plan.users, 'devices': data.main.plan.devicesPerUser}) }}"
+                        },
+                        {
+                          "type": "text",
+                          "id": "storage-label",
+                          "class": [
+                            "label"
+                          ],
+                          "content": "{{ T('storage-label') }}"
+                        },
+                        {
+                          "type": "text",
+                          "id": "storage-value",
+                          "class": [
+                            "value"
+                          ],
+                          "content": "{{ T('storage', {'used': data.main.plan.usedGb, 'total': data.main.plan.storageGb, 'share': Format(data.main.plan.usedGb / data.main.plan.storageGb, 'percent:0')}) }}"
+                        },
+                        {
+                          "type": "text",
+                          "id": "renews-label",
+                          "class": [
+                            "label"
+                          ],
+                          "content": "{{ T('renews-label') }}"
+                        },
+                        {
+                          "type": "text",
+                          "id": "renews-value",
+                          "class": [
+                            "value"
+                          ],
+                          "content": "{{ Format(data.main.plan.renews, 'date:long') }}"
+                        },
+                        {
+                          "type": "text",
+                          "id": "admin-label",
+                          "if": "has(data.main.workspace.admin)",
+                          "class": [
+                            "label"
+                          ],
+                          "content": "{{ T('admin-label') }}"
+                        },
+                        {
+                          "type": "text",
+                          "id": "admin-value",
+                          "if": "has(data.main.workspace.admin)",
+                          "class": [
+                            "value"
+                          ],
+                          "content": "{{ data.main.workspace.admin }}"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "box",
+                  "id": "support",
+                  "class": [
+                    "panel"
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "support-title",
+                      "class": [
+                        "panel-title"
+                      ],
+                      "content": "{{ T('support-title') }}"
+                    },
+                    {
+                      "type": "table",
+                      "id": "support-hours",
+                      "class": [
+                        "hours"
+                      ],
+                      "source": "data.main.support",
+                      "as": "s",
+                      "columns": [
+                        {
+                          "id": "col-channel",
+                          "width": "16fr",
+                          "header": "{{ T('col-channel') }}",
+                          "class": [
+                            "strong"
+                          ],
+                          "cell": "{{ Switch(s.channel, 'phone', T('channel-phone'), 'chat', T('channel-chat'), T('channel-email')) }}"
+                        },
+                        {
+                          "id": "col-days",
+                          "width": "18fr",
+                          "header": "{{ T('col-days') }}",
+                          "cellChildren": [
+                            {
+                              "type": "text",
+                              "id": "days-cell",
+                              "content": "{{ T('days', {'days': s.days}) }}"
+                            }
+                          ]
+                        },
+                        {
+                          "id": "col-hours",
+                          "width": "24fr",
+                          "header": "{{ T('col-hours') }}",
+                          "cellChildren": [
+                            {
+                              "type": "text",
+                              "id": "hours-cell",
+                              "content": "{{ If(has(s.opens), T('hours', {'opens': s.opens, 'closes': s.closes}), T('reply', {'n': Coalesce(s.replyHours, 24)})) }}"
+                            }
+                          ]
+                        }
+                      ],
+                      "empty": [
+                        {
+                          "type": "text",
+                          "id": "no-support",
+                          "class": [
+                            "muted"
+                          ],
+                          "content": "{{ T('no-support') }}"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "support-contact",
+                      "class": [
+                        "small"
+                      ],
+                      "style": {
+                        "margin-top": "var(--space-2)"
+                      },
+                      "content": [
+                        {
+                          "type": "span",
+                          "content": [
+                            "{{ T('channel-phone') }} ",
+                            {
+                              "type": "span",
+                              "content": "{{ vars.supportPhone }}",
+                              "class": [
+                                "strong",
+                                "nowrap"
+                              ]
+                            },
+                            " · "
+                          ],
+                          "if": "vars.supportPhone != null"
+                        },
+                        "{{ T('channel-email') }} ",
+                        {
+                          "type": "link",
+                          "href": "'mailto:' + vars.supportEmail",
+                          "content": "{{ vars.supportEmail }}",
+                          "class": [
+                            "strong"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "support-zone",
+                      "class": [
+                        "tiny",
+                        "muted"
+                      ],
+                      "style": {
+                        "margin-top": "2pt"
+                      },
+                      "content": "{{ T('zone') }}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "i18n": {
+    "de": {
+      "kicker": "Kurzanleitung",
+      "version": "Version {version}",
+      "updated": "Stand: {date}",
+      "title": "In fünf Schritten startklar",
+      "lead": "Willkommen bei {workspace} in Fieldbook, der Prüf-App für Telefon und Web. Die Schritte dauern am ersten Tag etwa zehn Minuten.",
+      "step-install-title": "Fieldbook installieren",
+      "step-install-body": "Laden Sie Fieldbook aus dem App-Store Ihres Telefons ({size, number} MB) oder öffnen Sie {web} im Browser Ihres Computers.",
+      "step-join-title": "Dem Arbeitsbereich beitreten",
+      "step-join-body": "Melden Sie sich mit Ihrer geschäftlichen E-Mail-Adresse an und geben Sie den Code {code} ein, wenn Fieldbook danach fragt.",
+      "step-offline-title": "Offline-Arbeit vorbereiten",
+      "step-offline-body": "Tippen Sie vor dem Einsatz auf Synchronisieren. Jedes Gerät speichert Ihre Checklisten und bis zu {photos, number} Fotos ohne Netz.",
+      "step-inspect-title": "Die erste Prüfung durchführen",
+      "step-inspect-body": "Wählen Sie eine Checkliste, arbeiten Sie jeden Punkt ab und ergänzen Sie Fotos und Notizen. Fieldbook speichert jede Antwort sofort.",
+      "step-sign-title": "Abzeichnen und teilen",
+      "step-sign-body": "Lassen Sie die Ansprechperson vor Ort auf dem Bildschirm unterschreiben. Fieldbook versendet den PDF-Bericht, sobald Sie wieder online sind.",
+      "phone-alt": "Ein Telefon mit einer Fieldbook-Checkliste, zwei Punkte abgehakt und ein Foto angehängt.",
+      "plan-title": "Ihr Tarif {plan}",
+      "price-label": "Preis",
+      "price": "{price} pro Person und Monat",
+      "users-label": "Personen",
+      "users": "{n, plural, one {# Person} other {# Personen}}, je {devices, plural, one {# Gerät} other {# Geräte}}",
+      "storage-label": "Speicher",
+      "storage": "{used, number} von {total, number} GB belegt ({share})",
+      "renews-label": "Verlängerung",
+      "admin-label": "Ihre Admin",
+      "support-title": "So erreichen Sie uns",
+      "col-channel": "Kanal",
+      "col-days": "Tage",
+      "col-hours": "Zeiten",
+      "channel-phone": "Telefon",
+      "channel-chat": "Chat",
+      "channel-email": "E-Mail",
+      "days": "{days, select, weekdays {Mo. bis Fr.} saturday {Samstag} other {Täglich}}",
+      "hours": "{opens}–{closes} Uhr",
+      "reply": "{n, plural, one {Antwort in # Stunde} other {Antwort in # Stunden}}",
+      "no-support": "Die Supportzeiten stehen auf quillmont.example.",
+      "zone": "Alle Zeiten in MEZ. Den Chat finden Sie in der App unter Hilfe.",
+      "help-title": "Videoanleitungen",
+      "help-body": "Kurze Videos zu jedem Schritt, auf Ihrem Telefon",
+      "help-alt": "QR-Code, der die Fieldbook-Videoanleitungen öffnet"
+    },
+    "en": {
+      "kicker": "Quick-start card",
+      "version": "Version {version}",
+      "updated": "Updated {date}",
+      "title": "Get started in five steps",
+      "lead": "Welcome to {workspace} on Fieldbook, the inspection app for phone and web. These steps take about ten minutes on your first day.",
+      "step-install-title": "Install Fieldbook",
+      "step-install-body": "Get Fieldbook from your phone's app store ({size, number} MB), or open {web} in a browser on your computer.",
+      "step-join-title": "Join your workspace",
+      "step-join-body": "Sign in with your work email address, then enter the workspace code {code} when Fieldbook asks for it.",
+      "step-offline-title": "Get ready to work offline",
+      "step-offline-body": "Tap Sync before you go on site. Each device keeps your checklists and up to {photos, number} photos without a signal.",
+      "step-inspect-title": "Run your first inspection",
+      "step-inspect-body": "Choose a checklist, work through each check, and add photos and notes as you go. Fieldbook saves every answer straight away.",
+      "step-sign-title": "Sign off and share",
+      "step-sign-body": "Ask the site contact to sign on screen. Fieldbook sends the PDF report as soon as you are back online.",
+      "phone-alt": "A phone showing a Fieldbook checklist with two checks ticked and a photo attached.",
+      "plan-title": "Your {plan} plan",
+      "price-label": "Price",
+      "price": "{price} per user a month",
+      "users-label": "Users",
+      "users": "{n, plural, one {# user} other {# users}}, {devices, plural, one {# device} other {# devices}} each",
+      "storage-label": "Storage",
+      "storage": "{used, number} of {total, number} GB used ({share})",
+      "renews-label": "Renews",
+      "admin-label": "Your admin",
+      "support-title": "When to reach us",
+      "col-channel": "Channel",
+      "col-days": "Days",
+      "col-hours": "Hours",
+      "channel-phone": "Phone",
+      "channel-chat": "Chat",
+      "channel-email": "Email",
+      "days": "{days, select, weekdays {Mon to Fri} saturday {Saturday} other {Every day}}",
+      "hours": "{opens}–{closes}",
+      "reply": "{n, plural, one {Reply within # hour} other {Reply within # hours}}",
+      "no-support": "Support hours are on quillmont.example.",
+      "zone": "Times are Central European Time. Chat is in the app, under Help.",
+      "help-title": "Video guides",
+      "help-body": "Two-minute videos of each step, on your phone",
+      "help-alt": "QR code that opens the Fieldbook video guides"
+    }
+  },
+  "pages": [
+    {
+      "id": "card-page",
+      "size": "A5",
+      "margin": "9mm 12mm 14mm",
+      "footerDistance": "6mm",
+      "footer": [
+        {
+          "type": "text",
+          "id": "page-footer",
+          "class": [
+            "small",
+            "muted"
+          ],
+          "style": {
+            "text-align": "center"
+          },
+          "content": "Quillmont Software · quillmont.example · support@quillmont.example · +61 2 5550 0123"
+        }
+      ],
+      "background": [
+        {
+          "type": "box",
+          "id": "edge",
+          "style": {
+            "height": "3mm",
+            "background-color": "var(--brand)",
+            "top": 0,
+            "right": 0,
+            "left": 0
+          }
+        }
+      ]
+    }
+  ],
+  "body": [
+    {
+      "type": "use",
+      "id": "card-en",
+      "if": "params.language != 'de-DE'",
+      "component": "quick-start-card",
+      "lang": "en-GB"
+    },
+    {
+      "type": "use",
+      "id": "card-de",
+      "if": "params.language == 'de-DE'",
+      "component": "quick-start-card",
+      "lang": "de-DE"
+    }
+  ],
+  "tests": [
+    {
+      "name": "sample in English fits one A5 page",
+      "data": {
+        "main": "samples/main.json"
+      },
+      "params": {
+        "language": "en-GB"
+      },
+      "expect": [
+        "pages.size() == 1",
+        "diagnostics.all(d, d.severity != 'error' && d.severity != 'warning')",
+        "visible('card-en') && !visible('card-de')",
+        "text('card-en/title') == 'Get started in five steps'",
+        "text('card-en/card-date') == 'Updated 2 November 2026'",
+        "text('card-en/step-install-body').contains('(86.4 MB)')",
+        "text('card-en/step-offline-body').contains('12,000 photos')",
+        "text('card-en/price-value') == '€12.50 per user a month'",
+        "text('card-en/users-value') == '18 users, 2 devices each'",
+        "text('card-en/storage-value') == '37.6 of 250 GB used (15%)'",
+        "text('card-en/renews-value') == '1 January 2027'",
+        "nodes('card-en/days-cell').map(b, b.text) == ['Mon to Fri', 'Mon to Fri', 'Saturday', 'Every day']",
+        "visible('card-en/help-code')"
+      ],
+      "snapshot": true
+    },
+    {
+      "name": "sample in German fits one A5 page",
+      "data": {
+        "main": "samples/main.json"
+      },
+      "params": {
+        "language": "de-DE"
+      },
+      "expect": [
+        "pages.size() == 1",
+        "diagnostics.all(d, d.severity != 'error' && d.severity != 'warning')",
+        "visible('card-de') && !visible('card-en')",
+        "text('card-de/title') == 'In fünf Schritten startklar'",
+        "text('card-de/card-date') == 'Stand: 2. November 2026'",
+        "text('card-de/step-install-body').contains('(86,4 MB)')",
+        "text('card-de/step-offline-body').contains('12.000 Fotos')",
+        "text('card-de/users-value') == '18 Personen, je 2 Geräte'",
+        "text('card-de/renews-value') == '1. Januar 2027'",
+        "nodes('card-de/hours-cell').map(b, b.text)[0] == '08:00–18:00 Uhr'"
+      ],
+      "snapshot": true
+    },
+    {
+      "name": "one user on one device reads in the singular",
+      "data": {
+        "main": "tests/single-user.json"
+      },
+      "params": {
+        "language": "de-DE"
+      },
+      "expect": [
+        "pages.size() == 1",
+        "text('card-de/users-value') == '1 Person, je 1 Gerät'",
+        "!visible('card-de/admin-value')",
+        "nodes('card-de/hours-cell').map(b, b.text) == ['Antwort in 1 Stunde']"
+      ]
+    }
+  ]
+}

@@ -9,4 +9,4 @@ Components whose package has no licence file; their licence is as declared, and 
 - rust taffy@0.15.1 (MIT)
 - rust uuid-simd@0.8.0 (MIT)
 - rust vsimd@0.8.0 (MIT)
-- rust wuff@0.2.9 (MIT)
+- rust wuff@0.2.10 (MIT)

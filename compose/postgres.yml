@@ -5,8 +5,9 @@
 #   docker compose -f docker-compose.yml -f postgres.yml up -d
 services:
   secrets:
-    image: ${REPORTD_IMAGE:-ghcr.io/frontforge-corporation/report-server:0.10.0-rc.1}
-    # Root, to write to ./secrets whoever owns it.
+    image: ${REPORTD_IMAGE:-ghcr.io/frontforge-corporation/report-server:0.10.0-rc.2}
+    # Root, to write to ./secrets whoever owns it, and on a Linux host to
+    # give the files to 65532, 0600 in a 0700 folder.
     user: "0:0"
     command: ["reportd", "compose-secrets", "--dir", "/secrets"]
     volumes:
@@ -14,6 +15,11 @@ services:
     restart: "no"
     healthcheck:
       disable: true
+    read_only: true
+    # Only what writing, and giving away, files in ./secrets needs.
+    cap_drop: [ALL]
+    cap_add: [CHOWN, DAC_OVERRIDE, FOWNER]
+    security_opt: [no-new-privileges:true]
 
   postgres:
     image: postgres:17
@@ -30,6 +36,16 @@ services:
       interval: 5s
       timeout: 5s
       retries: 12
+    # Postgres writes only its volume, its socket folder and /tmp. Its
+    # entrypoint starts as root to read the password and own its folders,
+    # then drops to the postgres user: those are the capabilities kept.
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /var/run/postgresql
+    cap_drop: [ALL]
+    cap_add: [CHOWN, DAC_OVERRIDE, FOWNER, SETGID, SETUID]
+    security_opt: [no-new-privileges:true]
     depends_on:
       secrets:
         condition: service_completed_successfully

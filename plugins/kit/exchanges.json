@@ -66,6 +66,15 @@
         {"name": "shutdown", "send": {"method": "shutdown"}, "answer": {"result": {}}, "exit": 0}
       ]
     },
+    "wrapped-vault": {
+      "hostOnly": true,
+      "about": "A wrapper round a Vault plugin that leaves the licence feature out of its hello: reportd still needs secret-vaults, by the provider it names.",
+      "exchanges": [
+        {"name": "hello", "send": {"method": "hello"}, "answer": {"result": {"protocol": 1, "provider": "vault", "version": "2.0.0", "writable": false}}},
+        {"name": "init", "send": {"method": "init"}, "answer": {"result": {}}},
+        {"name": "shutdown", "send": {"method": "shutdown"}, "answer": {"result": {}}, "exit": 0}
+      ]
+    },
     "bad-config": {
       "about": "A plugin that refuses its config: its start fails.",
       "exchanges": [

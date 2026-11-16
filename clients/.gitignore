@@ -1,0 +1,6 @@
+# What running or building a sample leaves behind.
+out/
+node_modules/
+bin/
+obj/
+__pycache__/

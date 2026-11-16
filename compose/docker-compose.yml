@@ -14,7 +14,7 @@ name: report-forge
 
 services:
   reportd:
-    image: ${REPORTD_IMAGE:-ghcr.io/frontforge-corporation/report-server:0.10.0-rc.1}
+    image: ${REPORTD_IMAGE:-ghcr.io/frontforge-corporation/report-server:0.10.0-rc.2}
     restart: unless-stopped
     ports:
       - "${REPORTD_PORT:-43123}:43123"
@@ -24,9 +24,17 @@ services:
       - REPORTD_PUBLICURL
       - REPORTD_LOGGING_FORMAT
       - REPORTD_LOGGING_LEVEL
+      - REPORTD_UPDATES_CHECK
     volumes:
       - data:/data
     # The image's own health check: reportd healthcheck (GET /livez).
+    # Hardened: a read-only root file system (reportd writes only /data
+    # and /tmp), no capabilities, and no gaining privileges.
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
 
 volumes:
   data:

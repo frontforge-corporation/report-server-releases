@@ -1,0 +1,20 @@
+{
+  "name": "report-server-client-sample",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A sample client for the Frontforge Report Server HTTP API, in TypeScript on Node.js",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "start": "node main.ts",
+    "events": "node main.ts events",
+    "check": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.4",
+    "typescript": "^6.0.3"
+  }
+}

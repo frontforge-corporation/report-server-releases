@@ -1,6 +1,6 @@
-# Frontforge Report Server 0.10.0-rc.1 with Docker Compose
+# Frontforge Report Server 0.10.0-rc.2 with Docker Compose
 
-This folder runs Frontforge Report Server 0.10.0-rc.1 on one machine. You need Docker with Compose v2 (`docker compose version`) and git. The image is `ghcr.io/frontforge-corporation/report-server:0.10.0-rc.1`, for amd64 and arm64.
+This folder runs Frontforge Report Server 0.10.0-rc.2 on one machine. You need Docker with Compose v2 (`docker compose version`) and git. The image is `ghcr.io/frontforge-corporation/report-server:0.10.0-rc.2`, for amd64 and arm64.
 
 ## Start it
 

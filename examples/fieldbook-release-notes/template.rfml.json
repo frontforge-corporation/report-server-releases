@@ -1,5 +1,5 @@
 {
-  "$schema": "https://reportforge.dev/schema/rfml/0.2.json",
+  "$schema": "https://docs.frontforge.com/schema/rfml/0.2.json",
   "rfml": "0.2",
   "id": "fieldbook-release-notes",
   "meta": {

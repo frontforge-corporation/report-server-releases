@@ -1,0 +1,126 @@
+# Frontforge Report Server Community Licence
+
+Version 1.2 · 1 November 2026
+
+These terms are an agreement between you and Frontforge Pty Ltd (ABN 80 600 354 283, ACN 600 354 283) of Brisbane, Queensland, Australia, "Frontforge", "we" or "us". "You" means the person who accepts them, and the organisation they accept them for. If you accept for an organisation, you confirm you may bind it.
+
+"Your organisation" means the organisation you accept these terms for (or, if you accept them only for yourself, you), together with its related bodies corporate (as defined in section 50 of the Corporations Act 2001 (Cth)). Your organisation may use the software under these terms, and you are responsible for its compliance with them. References to your own servers, applications, templates, data, customers and staff include those of your organisation.
+
+## 1. What these terms cover
+
+They cover the Community edition of Frontforge Report Server: the container image, the programs in it (reportd and renderd), the compose bundle, the studio and viewer they serve, and the documentation that comes with them, as Frontforge releases them (the "software").
+
+The software needs a licence to run, and the Community edition's licence is free. You get a Community licence from us at https://myaccount.frontforge.com, with an email address, and give it to the software when you set it up. A Community licence never expires. These terms cover the software used with a Community licence.
+
+You accept these terms by ticking "I accept" in the setup wizard. These terms are also shown in the README and included in the container image. If you install, copy, deploy or use the software without the setup wizard (for example with the compose bundle, or in a headless or automated deployment), you accept these terms by doing so. If you don't accept them, don't install or use it.
+
+## 2. What you may do
+
+We grant you a free, non-exclusive, non-transferable, worldwide licence to install and use the software, subject to these terms, commercial use included. That includes designing reports, rendering documents from your own data, and giving those documents to your own customers, staff and anyone else, through your own applications or otherwise. It also includes rendering documents from your own templates inside your own applications where your users or customers trigger the rendering and receive the documents.
+
+You may make the copies you need to do that: on your own servers, in your own private image registries, in backups, and for contractors who run the software for you under these terms. You are responsible for your contractors' compliance with these terms, and for their acts and omissions in connection with the software, as if they were your own.
+
+## 3. The Community limits
+
+The Community limits are the ones set in the release of the software you use. For this release, the Community edition allows 5 templates, 1 sub-report per template and 3 designer seats, and the features the software makes available with a Community licence. The software enforces those limits.
+
+A "designer seat" is one named user who can design or edit templates in the studio.
+
+A licence for a paid edition lifts the Community limits. A paid edition is used under its own agreement with us, not under these terms.
+
+## 4. What you may not do
+
+You may not:
+
+- get around the Community limits or the licence checks, or change the software to do so;
+- offer a Hosted Reporting Service;
+- sell, rent, lend or sublicense the software, or publish or distribute copies of it to others (for example in a public registry, or inside a product you distribute), except as section 2 allows;
+- reverse engineer, decompile or disassemble the software, except as far as the law allows despite this limit, or as section 6 allows;
+- remove or change the copyright, licence or attribution notices in the software;
+- use the software in breach of any law, including export control and sanctions laws that apply to you.
+
+A "Hosted Reporting Service" is any service or product, run by you or anyone else, that makes the studio, the designer or template management in the software available to anyone outside your organisation, or that lets anyone outside your organisation design, upload or manage their own templates.
+
+This section doesn't stop you rendering documents from your own templates inside your own applications, including where your users or customers trigger the rendering and receive the documents.
+
+The law that this section can't limit includes sections 47D to 47F of the Copyright Act 1968 (Cth), which allow some copying of computer programs for interoperability, error correction and security testing. Section 47H of that Act gives no effect to any agreement that excludes or limits them.
+
+## 5. Your content is yours
+
+Your templates, data, and the documents the software produces from them are yours. We claim no rights in them, and the software doesn't send them to us.
+
+The examples in the example gallery are there to be used: you may copy, change and share them, and anything you make from them, without restriction.
+
+## 6. Open source components
+
+The software includes open source components, each under its own licence. `THIRD_PARTY_NOTICES.md`, which ships with the software, lists them with their licences. Nothing in these terms limits what those licences allow you to do with those components. Where a component's licence requires it (for example, the GNU Lesser General Public License), you may modify and reverse engineer that component as that licence allows. The fonts bundled with the software are under the SIL Open Font Licence.
+
+## 7. What the software sends
+
+The software sends no telemetry, and checks its licence on your own server, without contacting us. On its own, it makes two kinds of requests to the internet:
+
+- **The version check:** once a day, reportd asks GitHub for the latest Frontforge Report Server release, to tell administrators when a newer one is out. The request carries no version, install ID or usage data.
+- **The example gallery:** at most once an hour, reportd reads the gallery's list from GitHub, and downloads an example when someone chooses it.
+
+GitHub sees the address of the server making the request, as with any request. Both can be turned off in the settings: `updates.check` (which the setup wizard also offers) and `examples.gallery`.
+
+The software also connects to services an administrator sets up in it, such as data sources, font sources, sign-in providers and webhooks, and only once they are set up.
+
+This section describes the requests this release makes. A future release may make different requests. If it does, we'll describe them in that release's terms.
+
+## 8. Updates and support
+
+We may release new versions of the software, but we don't promise to, or to fix any particular problem. We don't promise support for the Community edition. You may ask for help by email, at info@frontforge.com, and we'll help where we can.
+
+## 9. No warranty
+
+The software is free, and is provided "as is". As far as the law allows, we give no warranty or guarantee about it, express or implied, including that it is fit for a particular purpose, will work without interruption or errors, or will produce correct documents. You are responsible for checking the documents it produces before you rely on them.
+
+Some laws give you rights that can't be excluded, such as the consumer guarantees under the Australian Consumer Law. Nothing in these terms excludes those rights. Where the law allows us to limit our liability for failing to meet such a guarantee, our liability is limited, at our option, to supplying the Community edition again or supplying an equivalent version of it, or paying the amount you paid us for it.
+
+If you acquire the software for the purposes of a business, you and we agree that the Consumer Guarantees Act 1993 (NZ) does not apply, and, as far as section 5D of the Fair Trading Act 1986 (NZ) allows, that sections 9, 12A, 13 and 14(1) of that Act do not apply. You and we agree that it is fair and reasonable to be bound by this paragraph. It doesn't apply if you acquire the software as a consumer.
+
+## 10. Liability
+
+(a) As far as the law allows, we are not liable for any indirect or consequential loss, or for any loss of profit, revenue, data or goodwill.
+
+(b) As far as the law allows, our total liability to you under or in connection with these terms, including in negligence, is limited to AUD 100.
+
+(c) This clause does not limit our liability for fraud, wilful misconduct, death or personal injury, or any liability that cannot by law be limited or excluded.
+
+## 11. When these terms end
+
+These terms continue until they end. They end if you materially breach them and don't fix the breach within 30 days after we give you notice of it. We may end them immediately by notice to you if you materially breach them in a way that can't be fixed, or if you breach the first or second point in section 4 (getting around the Community limits or licence checks, or offering a Hosted Reporting Service). You may end them at any time by deleting every copy of the software you have.
+
+When they end, you must stop using the software and delete your copies of it. Your content stays yours, and you may keep it. Documents you have already given to others may stay with them.
+
+Sections 5, 6, 9, 10, 12, 13, 14, 16 and 17, and this paragraph, continue after these terms end.
+
+## 12. Trade marks
+
+These terms give you no rights in our names, logos or trade marks, or in the name Frontforge Report Server, except to say truthfully that your product or service uses the software. Don't remove or obscure our names, logos or product name where they appear in the software.
+
+## 13. Feedback
+
+If you give us suggestions, ideas or other feedback about the software, we may use them freely, for any purpose, without any obligation to you. Please don't send us anything you aren't free to share.
+
+## 14. If section 4 is breached
+
+A breach of section 4 may cause us harm that damages alone can't fix. If you breach, or threaten to breach, section 4, we may seek an injunction or other urgent relief, as well as any other remedy we have. Section 10 limits our liability to you. It doesn't limit your liability to us.
+
+## 15. Transferring these terms
+
+You may not assign or transfer these terms, or your rights under them, to anyone else. We may assign or novate these terms to anyone who acquires the software, or our business or the part of it the software belongs to. We'll do so by notice, which may be by publishing it with a release of the software. You agree now to any such novation.
+
+## 16. Notices
+
+Send notices to us by email to info@frontforge.com. We may give you notice by publishing it with a release of the software (for example, in its release notes), or by email to any address we have for you. We'll send a notice that you are in breach, or that ends these terms, directly to you, by email or any other address we have for you.
+
+## 17. General
+
+- **Each release has its own terms.** We may publish new versions of these terms with new releases of the software. The version that comes with a release covers that release; a new version applies to a release only if it comes with it, or you accept it.
+- **The whole agreement.** These terms are the whole agreement between you and us about the Community edition.
+- **If a part doesn't apply.** If a court decides part of these terms can't be enforced, the rest still applies.
+- **No waiver.** If we don't enforce a part of these terms, we may still enforce it later.
+- **Governing law.** These terms are governed by the laws of Queensland, Australia, and you and we submit to the non-exclusive jurisdiction of its courts. This doesn't take away any rights you have under the consumer laws of your own country that can't be excluded by agreement.
+- **Contact.** Frontforge Pty Ltd, Brisbane QLD, Australia, info@frontforge.com.

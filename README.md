@@ -2,7 +2,17 @@
 
 Frontforge Report Server is a report server you run yourself. You design reports in the browser, and your applications render them as PDF, Word, Excel or HTML from their own data, through an HTTP API.
 
-This repository holds what's public: the releases, and the example gallery your install reads. The code is developed elsewhere; this repository is written by its release and publishing workflows, not by hand.
+This repository holds what's public, as source: the setup that runs each release, the example reports, sample clients for the API, and the secret plugin kit. The code of the server is developed elsewhere; this repository is written by its release and publishing workflows, not by hand.
+
+| Folder | What |
+| --- | --- |
+| [`compose/`](compose/) | The release's Docker Compose setup: run it from a clone. |
+| [`examples/`](examples/) | The example reports' source: RFML, sample data, schemas, tests and images. |
+| [`gallery/`](gallery/) | The same examples as your install reads them, built from `examples/`. |
+| [`clients/`](clients/) | Sample API clients in C#, Python, Go and TypeScript. |
+| [`plugins/`](plugins/) | An example secret plugin, and the kit that checks one. |
+| `LICENSE`, `THIRD_PARTY_NOTICES.md`, [`licences/`](licences/) | The Community licence, and the third-party software in the release with its licence texts. |
+| `VERSION` | The release this checkout runs. |
 
 ## The Community edition
 
@@ -12,29 +22,49 @@ Community is used under the Frontforge Report Server Community Licence. Each rel
 
 ## Run it
 
-You need Docker with Compose v2.
+You need Docker with Compose v2, and git.
 
 1. Get your free Community licence at <https://myaccount.frontforge.com/community>. It's emailed to you.
-2. From the [latest release](https://github.com/frontforge-corporation/report-server-releases/releases/latest), download `report-server-compose-<version>.zip` and unzip it.
-3. In its folder:
+2. Clone this repository and start the compose setup:
 
    ```bash
+   git clone https://github.com/frontforge-corporation/report-server-releases.git
+   cd report-server-releases/compose
    cp .env.example .env
    docker compose up -d
    docker compose logs reportd | grep setupCode
    ```
 
-4. Open `http://localhost:43123/setup` and enter the code from the log. The setup wizard asks for your licence and creates the first administrator.
+   For a release other than the newest, clone its tag or line instead: `git clone --branch v0.10.0 …` or `--branch release/0.10`.
+3. Open `http://localhost:43123/setup` and enter the code from the log. The setup wizard asks for your licence and creates the first administrator.
 
-The bundle's own README covers the add-ons, backups and upgrading, and [the documentation](https://docs.frontforge.com/operations/docker) covers running it in full. Each release lists `SHA256SUMS` for its files and carries an SBOM of the image.
+To upgrade, take a backup, then `git pull` and `docker compose pull && docker compose up -d` in `compose/`. Its README covers the add-ons, backups and upgrading, and [the documentation](https://docs.frontforge.com/operations/docker) covers running it in full.
 
-The image is `ghcr.io/frontforge-corporation/report-server`, for amd64 and arm64, tagged with each version, its `x.y`, and `latest`.
+The image is `ghcr.io/frontforge-corporation/report-server`, for amd64 and arm64, tagged with each version, its `x.y`, and `latest`. The compose files name the release's version.
+
+## Releases, branches and tags
+
+- **`main` is the newest release.** Clone it to run the latest version.
+- **`release/<x.y>`**, such as `release/0.10`, is the newest release of that line, pre-releases included. Follow it to get that line's fixes and nothing newer.
+- **`v<version>`**, such as `v0.10.0`, is one release, and never moves. (`v0.9.0` and `v0.10.0-rc.1` moved once, in November 2026, onto commits that hold their source: in a clone made before, `git fetch --tags --force` updates them.) Its [GitHub release](https://github.com/frontforge-corporation/report-server-releases/releases) has the notes, the image's SBOM, the secret plugins for installs outside the image, and `SHA256SUMS`.
+
+Pre-releases (a version with a `-`, such as `0.10.0-rc.1`) are for trying out: they are on their tag and their line's branch, never on `main`.
 
 ## The example gallery
 
-`gallery/` holds the examples the studio offers under "Start from an example": the documents of Larkmere Water, a fictional water utility. Every install reads this folder, at most once an hour. An example that needs a newer report language than an install has is left out of its list, so new examples never break older installs.
+`examples/` holds the examples the studio offers under "Start from an example": bills, letters, documentation and internal business documents of three made-up organisations, each a folder of RFML, sample data, schemas, tests and images. `gallery/` is built from it, an `index.json` and a `.zip` per example, and every install reads it from `main`, at most once an hour. An example that needs a newer report language than an install has is left out of its list, so new examples never break older installs.
 
-On a machine without internet access, copy the `gallery/` folder to it and set `REPORTD_EXAMPLES_GALLERY` to that folder. Each example's `.zip` can also be imported into the studio directly.
+The examples are dedicated to the public domain under CC0 1.0 Universal (`examples/LICENSE.md`): copy, change and use them for anything, commercial use included, with no credit needed. CC0 covers the examples only, not Frontforge Report Server.
+
+On a machine without internet access, set `REPORTD_EXAMPLES_GALLERY` to the `gallery/` or `examples/` folder of a clone. Each example's `.zip` can also be imported into the studio directly.
+
+## Sample clients
+
+[`clients/`](clients/) holds small programs that show how an application uses the API: in C# (.NET), Python, Go and TypeScript (Node.js). Each authenticates with an API key, lists the templates, renders a PDF straight away, renders a batch in the background and downloads it, handles the API's errors, and listens to the server's events. They use only each language's own HTTP client, and are under the MIT licence (`clients/LICENSE`), so copy them into your application and change them as you like. [`clients/README.md`](clients/README.md) says how to run them.
+
+## Secret plugins
+
+`plugins/example` is a small secret plugin to copy, and `plugins/kit` the conformance kit that checks a plugin against the protocol (`go run github.com/frontforge-corporation/report-server-releases/plugins/kit@v1`). [Writing a secret plugin](https://docs.frontforge.com/operations/secret-plugins) explains them. Both are under the MIT licence.
 
 ## What your install sends
 

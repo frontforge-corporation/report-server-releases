@@ -1,0 +1,24 @@
+{
+  "invoice": {
+    "number": "INV-204602",
+    "issueDate": "2026-10-28",
+    "dueDate": "2026-11-11",
+    "paymentReference": "20460219",
+    "termsDays": 14
+  },
+  "customer": {
+    "name": "R and J Tamsin",
+    "account": "BLD-31107",
+    "addressLines": ["22 Osprey Lane", "WEIRTON HEIGHTS QLD 4997"]
+  },
+  "works": {
+    "site": "22 Osprey Lane, Weirton Heights QLD 4997",
+    "description": "Meter upgrade from 20 mm to 25 mm",
+    "application": "CON-2026-0874",
+    "completed": "2026-10-23"
+  },
+  "lines": [
+    { "code": "MT-25", "description": "Water meter, 25 mm, supplied and installed", "quantity": 1, "unit": "each", "unitPrice": 486.00, "taxable": true },
+    { "code": "MR-20", "description": "Removal of existing 20 mm meter", "quantity": 1, "unit": "each", "unitPrice": 95.00, "taxable": true }
+  ]
+}

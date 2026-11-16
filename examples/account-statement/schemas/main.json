@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Statement of account",
+  "description": "One business customer's account over a statement period: every bill, payment and charge, with what is still unpaid.",
+  "type": "object",
+  "required": ["customer", "account", "statement", "sites", "transactions"],
+  "additionalProperties": false,
+  "properties": {
+    "customer": {
+      "type": "object",
+      "required": ["name", "addressLines"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string", "title": "Customer" },
+        "attention": { "type": "string", "title": "Attention" },
+        "addressLines": { "type": "array", "title": "Postal address", "items": { "type": "string" } }
+      }
+    },
+    "account": {
+      "type": "object",
+      "required": ["number", "paymentReference"],
+      "additionalProperties": false,
+      "properties": {
+        "number": { "type": "string", "title": "Account number" },
+        "paymentReference": { "type": "string", "title": "Payment reference" },
+        "manager": { "type": "string", "title": "Account manager" }
+      }
+    },
+    "statement": {
+      "type": "object",
+      "required": ["number", "date", "periodStart", "issueDate", "dueDate", "openingBalance"],
+      "additionalProperties": false,
+      "properties": {
+        "number": { "type": "string", "title": "Statement number" },
+        "date": { "type": "string", "format": "date", "title": "Statement date", "description": "The last day of the period; balances and ageing are as at this date." },
+        "periodStart": { "type": "string", "format": "date", "title": "Period start" },
+        "issueDate": { "type": "string", "format": "date", "title": "Issue date" },
+        "dueDate": { "type": "string", "format": "date", "title": "Due date", "description": "When the current amount is due." },
+        "openingBalance": { "type": "number", "title": "Opening balance" }
+      }
+    },
+    "sites": {
+      "type": "array",
+      "title": "Properties on the account",
+      "items": {
+        "type": "object",
+        "required": ["name", "address"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string", "title": "Property" },
+          "address": { "type": "string", "title": "Address" }
+        }
+      }
+    },
+    "transactions": {
+      "type": "array",
+      "title": "Transactions",
+      "description": "In date order. Bills and interest are positive, payments and credits negative.",
+      "items": {
+        "type": "object",
+        "required": ["date", "kind", "reference", "description", "amount"],
+        "additionalProperties": false,
+        "properties": {
+          "date": { "type": "string", "format": "date", "title": "Date" },
+          "kind": { "type": "string", "enum": ["bill", "payment", "interest", "adjustment"], "title": "Kind" },
+          "reference": { "type": "string", "title": "Reference" },
+          "site": { "type": "string", "title": "Property", "description": "The property a bill or charge is for; blank for payments." },
+          "description": { "type": "string", "title": "Description" },
+          "amount": { "type": "number", "title": "Amount" },
+          "outstanding": { "type": "number", "title": "Still unpaid", "description": "What is left to pay of a bill or charge, as at the statement date." }
+        }
+      }
+    }
+  }
+}

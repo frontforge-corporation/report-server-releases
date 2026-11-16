@@ -1,0 +1,428 @@
+{
+  "month": "2026-09-01",
+  "issued": "2026-10-14",
+  "targets": {
+    "supplyPlanMl": 1310.0,
+    "leaksRepaired": 130,
+    "satisfactionPct": 85
+  },
+  "surveyResponses": 412,
+  "highlights": [
+    "A hot, dry September pushed supply over the plan; water restrictions start on 1 November if it continues.",
+    "Two crews were redeployed to the Weirton Heights main break, which slowed responses elsewhere."
+  ],
+  "history": [
+    {
+      "month": "2025-10-01",
+      "supplyMl": 1190.4,
+      "responseHours": 3.4,
+      "responseTargetHours": 3.5,
+      "satisfactionPct": 82
+    },
+    {
+      "month": "2025-11-01",
+      "supplyMl": 1262.8,
+      "responseHours": 3.6,
+      "responseTargetHours": 3.5,
+      "satisfactionPct": 81
+    },
+    {
+      "month": "2025-12-01",
+      "supplyMl": 1395.1,
+      "responseHours": 3.9,
+      "responseTargetHours": 3.5,
+      "satisfactionPct": 79
+    },
+    {
+      "month": "2026-01-01",
+      "supplyMl": 1442.6,
+      "responseHours": 3.7,
+      "responseTargetHours": 3.5,
+      "satisfactionPct": 80
+    },
+    {
+      "month": "2026-02-01",
+      "supplyMl": 1368.3,
+      "responseHours": 3.3,
+      "responseTargetHours": 3.5,
+      "satisfactionPct": 82
+    },
+    {
+      "month": "2026-03-01",
+      "supplyMl": 1301.7,
+      "responseHours": 3.1,
+      "responseTargetHours": 3.5,
+      "satisfactionPct": 83
+    },
+    {
+      "month": "2026-04-01",
+      "supplyMl": 1218.5,
+      "responseHours": 3.2,
+      "responseTargetHours": 3.5,
+      "satisfactionPct": 84
+    },
+    {
+      "month": "2026-05-01",
+      "supplyMl": 1154.2,
+      "responseHours": 2.9,
+      "responseTargetHours": 3.5,
+      "satisfactionPct": 84
+    },
+    {
+      "month": "2026-06-01",
+      "supplyMl": 1102.9,
+      "responseHours": 2.8,
+      "responseTargetHours": 3.5,
+      "satisfactionPct": 85
+    },
+    {
+      "month": "2026-07-01",
+      "supplyMl": 1098.4,
+      "responseHours": 2.9,
+      "responseTargetHours": 3.0,
+      "satisfactionPct": 86
+    },
+    {
+      "month": "2026-08-01",
+      "supplyMl": 1233.9,
+      "responseHours": 2.7,
+      "responseTargetHours": 3.0,
+      "satisfactionPct": 85
+    },
+    {
+      "month": "2026-09-01",
+      "supplyMl": 1342.8,
+      "responseHours": 3.4,
+      "responseTargetHours": 3.0,
+      "satisfactionPct": 81
+    }
+  ],
+  "complaints": [
+    {
+      "category": "Billing and accounts",
+      "count": 14
+    },
+    {
+      "category": "Leaks and bursts",
+      "count": 11
+    },
+    {
+      "category": "Water pressure",
+      "count": 9
+    },
+    {
+      "category": "Water quality",
+      "count": 6
+    },
+    {
+      "category": "Meters",
+      "count": 5
+    },
+    {
+      "category": "Other",
+      "count": 3
+    }
+  ],
+  "leaks": [
+    {
+      "zone": "Kingfisher Bend",
+      "month": "2025-10-01",
+      "count": 21
+    },
+    {
+      "zone": "Kingfisher Bend",
+      "month": "2025-11-01",
+      "count": 24
+    },
+    {
+      "zone": "Kingfisher Bend",
+      "month": "2025-12-01",
+      "count": 29
+    },
+    {
+      "zone": "Kingfisher Bend",
+      "month": "2026-01-01",
+      "count": 31
+    },
+    {
+      "zone": "Kingfisher Bend",
+      "month": "2026-02-01",
+      "count": 26
+    },
+    {
+      "zone": "Kingfisher Bend",
+      "month": "2026-03-01",
+      "count": 22
+    },
+    {
+      "zone": "Kingfisher Bend",
+      "month": "2026-04-01",
+      "count": 19
+    },
+    {
+      "zone": "Kingfisher Bend",
+      "month": "2026-05-01",
+      "count": 18
+    },
+    {
+      "zone": "Kingfisher Bend",
+      "month": "2026-06-01",
+      "count": 17
+    },
+    {
+      "zone": "Kingfisher Bend",
+      "month": "2026-07-01",
+      "count": 19
+    },
+    {
+      "zone": "Kingfisher Bend",
+      "month": "2026-08-01",
+      "count": 23
+    },
+    {
+      "zone": "Kingfisher Bend",
+      "month": "2026-09-01",
+      "count": 21
+    },
+    {
+      "zone": "Larkmere Central",
+      "month": "2025-10-01",
+      "count": 34
+    },
+    {
+      "zone": "Larkmere Central",
+      "month": "2025-11-01",
+      "count": 36
+    },
+    {
+      "zone": "Larkmere Central",
+      "month": "2025-12-01",
+      "count": 41
+    },
+    {
+      "zone": "Larkmere Central",
+      "month": "2026-01-01",
+      "count": 44
+    },
+    {
+      "zone": "Larkmere Central",
+      "month": "2026-02-01",
+      "count": 38
+    },
+    {
+      "zone": "Larkmere Central",
+      "month": "2026-03-01",
+      "count": 35
+    },
+    {
+      "zone": "Larkmere Central",
+      "month": "2026-04-01",
+      "count": 31
+    },
+    {
+      "zone": "Larkmere Central",
+      "month": "2026-05-01",
+      "count": 30
+    },
+    {
+      "zone": "Larkmere Central",
+      "month": "2026-06-01",
+      "count": 28
+    },
+    {
+      "zone": "Larkmere Central",
+      "month": "2026-07-01",
+      "count": 29
+    },
+    {
+      "zone": "Larkmere Central",
+      "month": "2026-08-01",
+      "count": 33
+    },
+    {
+      "zone": "Larkmere Central",
+      "month": "2026-09-01",
+      "count": 29
+    },
+    {
+      "zone": "Larkmere North",
+      "month": "2025-10-01",
+      "count": 18
+    },
+    {
+      "zone": "Larkmere North",
+      "month": "2025-11-01",
+      "count": 19
+    },
+    {
+      "zone": "Larkmere North",
+      "month": "2025-12-01",
+      "count": 23
+    },
+    {
+      "zone": "Larkmere North",
+      "month": "2026-01-01",
+      "count": 25
+    },
+    {
+      "zone": "Larkmere North",
+      "month": "2026-02-01",
+      "count": 21
+    },
+    {
+      "zone": "Larkmere North",
+      "month": "2026-03-01",
+      "count": 19
+    },
+    {
+      "zone": "Larkmere North",
+      "month": "2026-04-01",
+      "count": 16
+    },
+    {
+      "zone": "Larkmere North",
+      "month": "2026-05-01",
+      "count": 15
+    },
+    {
+      "zone": "Larkmere North",
+      "month": "2026-06-01",
+      "count": 15
+    },
+    {
+      "zone": "Larkmere North",
+      "month": "2026-07-01",
+      "count": 16
+    },
+    {
+      "zone": "Larkmere North",
+      "month": "2026-08-01",
+      "count": 18
+    },
+    {
+      "zone": "Larkmere North",
+      "month": "2026-09-01",
+      "count": 17
+    },
+    {
+      "zone": "Reedvale",
+      "month": "2025-10-01",
+      "count": 26
+    },
+    {
+      "zone": "Reedvale",
+      "month": "2025-11-01",
+      "count": 28
+    },
+    {
+      "zone": "Reedvale",
+      "month": "2025-12-01",
+      "count": 33
+    },
+    {
+      "zone": "Reedvale",
+      "month": "2026-01-01",
+      "count": 35
+    },
+    {
+      "zone": "Reedvale",
+      "month": "2026-02-01",
+      "count": 30
+    },
+    {
+      "zone": "Reedvale",
+      "month": "2026-03-01",
+      "count": 27
+    },
+    {
+      "zone": "Reedvale",
+      "month": "2026-04-01",
+      "count": 24
+    },
+    {
+      "zone": "Reedvale",
+      "month": "2026-05-01",
+      "count": 23
+    },
+    {
+      "zone": "Reedvale",
+      "month": "2026-06-01",
+      "count": 22
+    },
+    {
+      "zone": "Reedvale",
+      "month": "2026-07-01",
+      "count": 23
+    },
+    {
+      "zone": "Reedvale",
+      "month": "2026-08-01",
+      "count": 27
+    },
+    {
+      "zone": "Reedvale",
+      "month": "2026-09-01",
+      "count": 25
+    },
+    {
+      "zone": "Weirton Heights",
+      "month": "2025-10-01",
+      "count": 22
+    },
+    {
+      "zone": "Weirton Heights",
+      "month": "2025-11-01",
+      "count": 25
+    },
+    {
+      "zone": "Weirton Heights",
+      "month": "2025-12-01",
+      "count": 28
+    },
+    {
+      "zone": "Weirton Heights",
+      "month": "2026-01-01",
+      "count": 30
+    },
+    {
+      "zone": "Weirton Heights",
+      "month": "2026-02-01",
+      "count": 27
+    },
+    {
+      "zone": "Weirton Heights",
+      "month": "2026-03-01",
+      "count": 23
+    },
+    {
+      "zone": "Weirton Heights",
+      "month": "2026-04-01",
+      "count": 21
+    },
+    {
+      "zone": "Weirton Heights",
+      "month": "2026-05-01",
+      "count": 20
+    },
+    {
+      "zone": "Weirton Heights",
+      "month": "2026-06-01",
+      "count": 19
+    },
+    {
+      "zone": "Weirton Heights",
+      "month": "2026-07-01",
+      "count": 20
+    },
+    {
+      "zone": "Weirton Heights",
+      "month": "2026-08-01",
+      "count": 24
+    },
+    {
+      "zone": "Weirton Heights",
+      "month": "2026-09-01",
+      "count": 26
+    }
+  ]
+}

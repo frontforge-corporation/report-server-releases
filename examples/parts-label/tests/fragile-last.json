@@ -1,0 +1,39 @@
+{
+  "consignment": {
+    "number": "LWD2610270063",
+    "dispatched": "2026-10-27",
+    "deliverBy": "2026-10-29",
+    "workOrder": "WO-58240",
+    "from": {
+      "name": "Larkmere Water Depot",
+      "addressLines": [
+        "7 Sluice Road",
+        "Reedvale QLD 4997"
+      ],
+      "phone": "(07) 5550 0123"
+    },
+    "to": {
+      "crewCode": "C09",
+      "crew": "Crew 9, Treatment Plant Maintenance",
+      "site": "Weirton Heights reservoir, gate 2",
+      "addressLines": [
+        "Lot 7, Reservoir Road",
+        "Weirton Heights QLD 4998"
+      ],
+      "contact": "Jordan Nakamura-Ellis",
+      "phone": "0491 570 156"
+    }
+  },
+  "parcels": [
+    {
+      "weightKg": 14.25,
+      "contents": "2 × 50 mm pressure reducing valves, 4 × gate valve gaskets, 1 × flange bolt kit, 2 × spare pilot assemblies",
+      "handling": "standard"
+    },
+    {
+      "weightKg": 1.4,
+      "contents": "1 × flow meter transmitter, boxed, with its calibration certificate and a spare display module",
+      "handling": "fragile"
+    }
+  ]
+}

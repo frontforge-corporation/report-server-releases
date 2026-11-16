@@ -1,0 +1,1051 @@
+{
+  "$schema": "https://reportforge.dev/schema/rfml/0.1.json",
+  "rfml": "0.1",
+  "id": "meter-readings",
+  "meta": {
+    "title": "Meter readings report",
+    "description": "Larkmere Water's quarterly meter readings for the field operations team, on A4 landscape. A contents page of zones, then every reading grouped by zone with subtotals and a grand total, and unusual readings flagged.",
+    "locale": "en-AU",
+    "currency": "AUD",
+    "tags": [
+      "example",
+      "report",
+      "table",
+      "operations",
+      "water"
+    ]
+  },
+  "data": {
+    "main": {
+      "schema": {
+        "$ref": "schemas/main.json"
+      },
+      "sample": "samples/main.json",
+      "description": "One quarter's reading round: the zones in it and every meter reading."
+    }
+  },
+  "vars": {
+    "readings": "data.main.readings.map(r, {'kl': r.currentReading - r.previousReading, 'lastKl': r.previousQuarterKl, 'estimated': r.readType == 'estimated'})",
+    "totalKl": "Sum(vars.readings.map(r, r.kl))",
+    "lastTotalKl": "Sum(vars.readings.map(r, r.lastKl))",
+    "estimatedCount": "vars.readings.filter(r, r.estimated).size()",
+    "flaggedCount": "vars.readings.filter(r, r.kl < 0 || r.kl > 3 * r.lastKl).size()",
+    "readZones": "data.main.zones.filter(z, data.main.readings.exists(r, r.zone == z.code))",
+    "unreadZones": "data.main.zones.filter(z, !data.main.readings.exists(r, r.zone == z.code))"
+  },
+  "styles": {
+    "tokens": {
+      "brand": "#0073AF",
+      "ink": "#231F20",
+      "muted": "#4E6A75",
+      "line": "#D5E4EA",
+      "panel": "#E8F4FB",
+      "negative": "#B42318",
+      "positive": "#1F7A4D",
+      "accent": "#1A9E8F",
+      "negative-tint": "#FBEAE8",
+      "space-1": "3pt",
+      "space-2": "6pt",
+      "space-3": "12pt"
+    },
+    "defaults": {
+      "document": {
+        "color": "var(--ink)",
+        "font-family": "Arimo",
+        "font-size": "8.5pt",
+        "line-height": 1.3
+      },
+      "heading": {
+        "margin": "var(--space-3) 0 var(--space-2)",
+        "color": "var(--brand)",
+        "font-size": "11pt",
+        "font-weight": 700
+      },
+      "table": {
+        "width": "100%",
+        "font-size": "8pt",
+        "border-collapse": "collapse",
+        "parts": {
+          "cell": {
+            "padding": "2.5pt 4pt",
+            "border-bottom": "0.5pt solid var(--line)"
+          },
+          "header-cell": {
+            "padding-top": "4pt",
+            "border-bottom": "0.75pt solid var(--brand)",
+            "color": "var(--muted)",
+            "font-size": "7.5pt",
+            "font-weight": 700
+          },
+          "footer-cell": {
+            "border-bottom": 0,
+            "font-weight": 700
+          },
+          "group-footer": {
+            "background-color": "var(--panel)",
+            "font-weight": 700
+          }
+        }
+      }
+    },
+    "classes": {
+      "wordmark": {
+        "color": "var(--brand)",
+        "font-size": "16pt",
+        "font-weight": 700,
+        "line-height": 1.1
+      },
+      "muted": {
+        "color": "var(--muted)"
+      },
+      "small": {
+        "font-size": "7.5pt"
+      },
+      "num": {
+        "font-variant-numeric": "tabular-nums",
+        "text-align": "right"
+      },
+      "kicker": {
+        "color": "var(--muted)",
+        "font-size": "7pt",
+        "font-weight": 700,
+        "letter-spacing": "0.4pt",
+        "text-transform": "uppercase"
+      },
+      "stat": {
+        "padding": "var(--space-2) var(--space-3)",
+        "border-left": "3pt solid var(--brand)",
+        "border-radius": "2pt",
+        "background-color": "var(--panel)"
+      },
+      "stat-value": {
+        "margin": "2pt 0 1pt",
+        "font-size": "18pt",
+        "font-weight": 700,
+        "line-height": 1.1
+      },
+      "flag": {
+        "color": "var(--negative)",
+        "font-weight": 700
+      },
+      "estimated": {
+        "color": "var(--muted)",
+        "font-weight": 700,
+        "font-style": "italic"
+      }
+    }
+  },
+  "pages": [
+    {
+      "id": "landscape",
+      "size": "A4",
+      "orientation": "landscape",
+      "margin": "16mm 12mm 14mm",
+      "header": [
+        {
+          "type": "box",
+          "id": "page-header",
+          "class": [
+            "small"
+          ],
+          "style": {
+            "padding-bottom": "var(--space-1)",
+            "border-bottom": "0.5pt solid var(--line)",
+            "display": "flex",
+            "justify-content": "space-between"
+          },
+          "children": [
+            {
+              "type": "text",
+              "id": "header-title",
+              "content": [
+                {
+                  "type": "span",
+                  "content": "Larkmere Water",
+                  "style": {
+                    "color": "var(--brand)",
+                    "font-weight": 700
+                  }
+                },
+                " · Meter readings, {{ data.main.quarter.label }}"
+              ]
+            },
+            {
+              "type": "text",
+              "id": "header-zone",
+              "style": {
+                "font-weight": 700
+              },
+              "content": "{{ page.running('zone') }}"
+            }
+          ]
+        }
+      ],
+      "footer": [
+        {
+          "type": "box",
+          "id": "page-footer",
+          "class": [
+            "muted",
+            "small"
+          ],
+          "style": {
+            "padding-top": "var(--space-1)",
+            "border-top": "0.5pt solid var(--line)",
+            "display": "flex",
+            "justify-content": "space-between"
+          },
+          "children": [
+            {
+              "type": "text",
+              "id": "footer-company",
+              "content": "Field Operations · 40 Weir Street, Larkmere QLD 4999 · faults 1300 975 708 · For internal use"
+            },
+            {
+              "type": "text",
+              "id": "footer-page",
+              "content": "Page {{ page.number }} of {{ page.count }}"
+            }
+          ]
+        }
+      ],
+      "variants": {
+        "first": {
+          "margin": "12mm 12mm 14mm",
+          "header": []
+        }
+      }
+    }
+  ],
+  "body": [
+    {
+      "type": "box",
+      "id": "masthead",
+      "style": {
+        "margin-bottom": "var(--space-3)",
+        "padding-bottom": "var(--space-2)",
+        "border-bottom": "1.5pt solid var(--brand)",
+        "display": "flex",
+        "justify-content": "space-between",
+        "align-items": "flex-end"
+      },
+      "children": [
+        {
+          "type": "box",
+          "id": "masthead-brand",
+          "children": [
+            {
+              "type": "text",
+              "id": "wordmark",
+              "class": [
+                "wordmark"
+              ],
+              "content": "Larkmere Water"
+            },
+            {
+              "type": "text",
+              "id": "unit",
+              "class": [
+                "muted"
+              ],
+              "content": "Field Operations"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "masthead-title",
+          "style": {
+            "text-align": "right"
+          },
+          "children": [
+            {
+              "type": "text",
+              "id": "title",
+              "style": {
+                "color": "var(--ink)",
+                "font-size": "20pt",
+                "font-weight": 700,
+                "line-height": 1.1
+              },
+              "content": "Meter readings report"
+            },
+            {
+              "type": "text",
+              "id": "period",
+              "class": [
+                "muted"
+              ],
+              "content": "{{ data.main.quarter.label }} · issued {{ Format(data.main.issued, 'd MMMM y') }}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "box",
+      "id": "stats",
+      "style": {
+        "margin-bottom": "var(--space-3)",
+        "column-gap": "var(--space-3)",
+        "display": "grid",
+        "grid-template-columns": "1fr 1fr 1fr 1fr"
+      },
+      "children": [
+        {
+          "type": "box",
+          "id": "stat-meters",
+          "class": [
+            "stat"
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "stat-meters-label",
+              "class": [
+                "kicker"
+              ],
+              "content": "Meters read"
+            },
+            {
+              "type": "text",
+              "id": "stat-meters-value",
+              "class": [
+                "stat-value"
+              ],
+              "content": "{{ Format(vars.readings.size(), 'number:0') }}"
+            },
+            {
+              "type": "text",
+              "id": "stat-meters-note",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "in {{ vars.readZones.size() }} zones"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "stat-total",
+          "class": [
+            "stat"
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "stat-total-label",
+              "class": [
+                "kicker"
+              ],
+              "content": "Water used"
+            },
+            {
+              "type": "text",
+              "id": "stat-total-value",
+              "class": [
+                "stat-value"
+              ],
+              "content": "{{ Format(vars.totalKl, 'number:0') }} kL"
+            },
+            {
+              "type": "text",
+              "id": "stat-total-note",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "{{ Format(vars.lastTotalKl, 'number:0') }} kL last quarter"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "stat-estimated",
+          "class": [
+            "stat"
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "stat-estimated-label",
+              "class": [
+                "kicker"
+              ],
+              "content": "Estimated reads"
+            },
+            {
+              "type": "text",
+              "id": "stat-estimated-value",
+              "class": [
+                "stat-value"
+              ],
+              "content": "{{ vars.estimatedCount }}"
+            },
+            {
+              "type": "text",
+              "id": "stat-estimated-note",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "meters we couldn't get to"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "stat-flagged",
+          "class": [
+            "stat"
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "stat-flagged-label",
+              "class": [
+                "kicker"
+              ],
+              "content": "Readings to check"
+            },
+            {
+              "type": "text",
+              "id": "stat-flagged-value",
+              "class": [
+                "stat-value"
+              ],
+              "content": "{{ vars.flaggedCount }}"
+            },
+            {
+              "type": "text",
+              "id": "stat-flagged-note",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "negative, or over 3 × last quarter"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "box",
+      "id": "front",
+      "style": {
+        "column-gap": "18pt",
+        "display": "grid",
+        "grid-template-columns": "3fr 2fr"
+      },
+      "children": [
+        {
+          "type": "box",
+          "id": "contents",
+          "children": [
+            {
+              "type": "text",
+              "id": "contents-title",
+              "class": [
+                "kicker"
+              ],
+              "style": {
+                "margin-bottom": "var(--space-2)"
+              },
+              "content": "Zones in this report"
+            },
+            {
+              "type": "toc",
+              "id": "toc",
+              "style": {
+                "parts": {
+                  "entry": {
+                    "padding": "3pt 0",
+                    "border-bottom": "0.5pt solid var(--line)",
+                    "font-size": "10pt"
+                  },
+                  "leader": {
+                    "color": "var(--line)"
+                  },
+                  "page-number": {
+                    "color": "var(--brand)",
+                    "font-weight": 700
+                  }
+                }
+              },
+              "levels": 1,
+              "meta": {
+                "description": "Lists each zone's heading with the page its readings start on."
+              }
+            },
+            {
+              "type": "text",
+              "id": "unread-zones",
+              "if": "vars.unreadZones.size() > 0",
+              "class": [
+                "muted"
+              ],
+              "style": {
+                "margin-top": "var(--space-2)",
+                "font-style": "italic"
+              },
+              "content": "No meters were read in {{ Join(vars.unreadZones.map(z, z.name), ', ') }} this quarter."
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "key",
+          "style": {
+            "padding": "var(--space-2) var(--space-3)",
+            "border-radius": "2pt",
+            "background-color": "var(--panel)"
+          },
+          "children": [
+            {
+              "type": "text",
+              "id": "key-title",
+              "class": [
+                "kicker"
+              ],
+              "style": {
+                "margin-bottom": "var(--space-2)"
+              },
+              "content": "Reading the tables"
+            },
+            {
+              "type": "text",
+              "id": "key-use",
+              "content": "Use is the current reading less the previous one, in kilolitres (kL). Change compares it with the same meter's use last quarter."
+            },
+            {
+              "type": "text",
+              "id": "key-flags",
+              "style": {
+                "margin-top": "var(--space-2)"
+              },
+              "content": [
+                {
+                  "type": "span",
+                  "content": "▲ High use",
+                  "class": [
+                    "flag"
+                  ]
+                },
+                ": more than three times last quarter's use. Look for a leak."
+              ]
+            },
+            {
+              "type": "text",
+              "id": "key-negative",
+              "style": {
+                "margin-top": "var(--space-1)"
+              },
+              "content": [
+                {
+                  "type": "span",
+                  "content": "▼ Negative",
+                  "class": [
+                    "flag"
+                  ]
+                },
+                ": the reading is below the last one. Re-read the meter."
+              ]
+            },
+            {
+              "type": "text",
+              "id": "key-estimated",
+              "style": {
+                "margin-top": "var(--space-1)"
+              },
+              "content": [
+                {
+                  "type": "span",
+                  "content": "E",
+                  "class": [
+                    "estimated"
+                  ]
+                },
+                " after a reading: it was estimated, and the reader's note says why."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "follow-up-title",
+      "class": [
+        "kicker"
+      ],
+      "style": {
+        "margin": "18pt 0 var(--space-2)"
+      },
+      "content": "Readings to follow up"
+    },
+    {
+      "type": "table",
+      "id": "table-follow-up",
+      "source": "data.main.readings",
+      "as": "r",
+      "filter": "r.readType == 'estimated' || r.currentReading < r.previousReading || r.currentReading - r.previousReading > 3 * r.previousQuarterKl",
+      "sort": [
+        {
+          "by": "Lookup(data.main.zones, 'code', r.zone).name"
+        },
+        {
+          "by": "r.meter"
+        }
+      ],
+      "vars": {
+        "kl": "r.currentReading - r.previousReading"
+      },
+      "columns": [
+        {
+          "id": "fu-meter",
+          "width": "2fr",
+          "header": "Meter",
+          "cell": "{{ r.meter }}"
+        },
+        {
+          "id": "fu-zone",
+          "width": "3fr",
+          "header": "Zone",
+          "cell": "{{ Lookup(data.main.zones, 'code', r.zone).name }}"
+        },
+        {
+          "id": "fu-address",
+          "width": "3.6fr",
+          "header": "Address",
+          "cell": "{{ r.address }}"
+        },
+        {
+          "id": "fu-reason",
+          "width": "2.6fr",
+          "header": "Why",
+          "rules": [
+            {
+              "if": "r.currentReading < r.previousReading || r.currentReading - r.previousReading > 3 * r.previousQuarterKl",
+              "class": [
+                "flag"
+              ]
+            },
+            {
+              "if": "r.readType == 'estimated' && r.currentReading >= r.previousReading && r.currentReading - r.previousReading <= 3 * r.previousQuarterKl",
+              "class": [
+                "estimated"
+              ]
+            }
+          ],
+          "cell": "{{ If(r.currentReading < r.previousReading, '▼ Negative', If(r.currentReading - r.previousReading > 3 * r.previousQuarterKl, '▲ High use', 'Estimated')) }}"
+        },
+        {
+          "id": "fu-kl",
+          "width": "1.5fr",
+          "header": "Use kL",
+          "class": [
+            "num"
+          ],
+          "cell": "{{ Format(vars.kl, 'number:0') }}"
+        },
+        {
+          "id": "fu-last",
+          "width": "1.5fr",
+          "header": "Last qtr kL",
+          "class": [
+            "num"
+          ],
+          "cell": "{{ Format(r.previousQuarterKl, 'number:0') }}"
+        },
+        {
+          "id": "fu-note",
+          "width": "6fr",
+          "header": "Reader's note",
+          "style": {
+            "padding-left": "12pt"
+          },
+          "cell": "{{ r.note }}"
+        }
+      ],
+      "empty": [
+        {
+          "type": "text",
+          "id": "nothing-to-follow-up",
+          "class": [
+            "muted"
+          ],
+          "content": "Every meter was read and nothing looks unusual."
+        }
+      ],
+      "meta": {
+        "description": "The quarter's estimated and unusual readings, for the follow-up visits."
+      }
+    },
+    {
+      "type": "table",
+      "id": "table-readings",
+      "style": {
+        "break-before": "page"
+      },
+      "rules": [
+        {
+          "if": "r.currentReading < r.previousReading || r.currentReading - r.previousReading > 3 * r.previousQuarterKl",
+          "style": {
+            "parts": {
+              "row": {
+                "background-color": "var(--negative-tint)"
+              }
+            }
+          }
+        }
+      ],
+      "source": "data.main.readings",
+      "as": "r",
+      "sort": [
+        {
+          "by": "r.meter"
+        }
+      ],
+      "vars": {
+        "kl": "r.currentReading - r.previousReading",
+        "change": "If(r.previousQuarterKl > 0, (r.currentReading - r.previousReading - r.previousQuarterKl) / r.previousQuarterKl, null)",
+        "high": "r.currentReading - r.previousReading > 3 * r.previousQuarterKl",
+        "negative": "r.currentReading < r.previousReading",
+        "isEstimated": "r.readType == 'estimated'"
+      },
+      "groups": [
+        {
+          "id": "by-zone",
+          "by": "r.zone",
+          "sort": {
+            "by": "Lookup(data.main.zones, 'code', group.key).name"
+          },
+          "breakBefore": "page",
+          "repeatHeader": true,
+          "vars": {
+            "zone": "Lookup(data.main.zones, 'code', group.key)"
+          },
+          "header": [
+            {
+              "type": "heading",
+              "id": "zone-name",
+              "style": {
+                "margin": "var(--space-2) 0 0"
+              },
+              "level": 1,
+              "content": "{{ vars.zone.name }}{{ If(item.continued, ' (continued)', '') }}",
+              "running": {
+                "zone": "vars.zone.name"
+              }
+            },
+            {
+              "type": "text",
+              "id": "zone-details",
+              "class": [
+                "muted"
+              ],
+              "style": {
+                "margin-bottom": "var(--space-1)"
+              },
+              "content": "{{ vars.zone.route }} · read by {{ vars.zone.reader }} · {{ group.count }} meters"
+            }
+          ],
+          "footer": [
+            {
+              "id": "zone-subtotal",
+              "cells": [
+                {
+                  "colspan": 7,
+                  "content": "{{ vars.zone.name }} subtotal"
+                },
+                {
+                  "class": [
+                    "num"
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "subtotal-kl",
+                      "content": "{{ Format(Sum(group.rows.map(x, x.currentReading - x.previousReading)), 'number:0') }}"
+                    }
+                  ]
+                },
+                {
+                  "class": [
+                    "num"
+                  ],
+                  "content": "{{ Format(Sum(group.rows.map(x, x.previousQuarterKl)), 'number:0') }}"
+                },
+                {
+                  "colspan": 2,
+                  "content": ""
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "columns": [
+        {
+          "id": "col-meter",
+          "width": "2fr",
+          "header": "Meter",
+          "cell": "{{ r.meter }}"
+        },
+        {
+          "id": "col-address",
+          "width": "3.2fr",
+          "header": "Address",
+          "cell": "{{ r.address }}"
+        },
+        {
+          "id": "col-size",
+          "width": "1.1fr",
+          "header": "Size",
+          "class": [
+            "num"
+          ],
+          "cell": "{{ r.sizeMm }} mm"
+        },
+        {
+          "id": "col-prev-date",
+          "width": "1.6fr",
+          "header": "Last read",
+          "class": [
+            "num"
+          ],
+          "cell": "{{ Format(r.previousDate, 'd MMM') }}"
+        },
+        {
+          "id": "col-prev",
+          "width": "1.6fr",
+          "header": "Reading",
+          "class": [
+            "num"
+          ],
+          "cell": "{{ Format(r.previousReading, 'number:0') }}"
+        },
+        {
+          "id": "col-cur-date",
+          "width": "1.6fr",
+          "header": "This read",
+          "class": [
+            "num"
+          ],
+          "cell": "{{ Format(r.currentDate, 'd MMM') }}"
+        },
+        {
+          "id": "col-cur",
+          "width": "1.8fr",
+          "header": "Reading",
+          "class": [
+            "num"
+          ],
+          "cell": [
+            "{{ Format(r.currentReading, 'number:0') }}",
+            {
+              "type": "span",
+              "content": " E",
+              "class": [
+                "estimated"
+              ],
+              "if": "vars.isEstimated"
+            }
+          ]
+        },
+        {
+          "id": "col-kl",
+          "width": "1.5fr",
+          "header": "Use kL",
+          "class": [
+            "num"
+          ],
+          "style": {
+            "font-weight": 700
+          },
+          "rules": [
+            {
+              "if": "r.currentReading < r.previousReading || r.currentReading - r.previousReading > 3 * r.previousQuarterKl",
+              "style": {
+                "color": "var(--negative)"
+              }
+            }
+          ],
+          "cell": "{{ Format(vars.kl, 'number:0') }}"
+        },
+        {
+          "id": "col-last",
+          "width": "1.5fr",
+          "header": "Last qtr kL",
+          "class": [
+            "num"
+          ],
+          "cell": "{{ Format(r.previousQuarterKl, 'number:0') }}"
+        },
+        {
+          "id": "col-change",
+          "width": "1.4fr",
+          "header": "Change",
+          "class": [
+            "num"
+          ],
+          "rules": [
+            {
+              "if": "r.currentReading < r.previousReading || r.currentReading - r.previousReading > 3 * r.previousQuarterKl",
+              "style": {
+                "color": "var(--negative)",
+                "font-weight": 700
+              }
+            }
+          ],
+          "cell": "{{ If(vars.change == null || vars.negative, '–', If(vars.change > 0, '+', '') + Format(vars.change, 'percent:0')) }}"
+        },
+        {
+          "id": "col-flag",
+          "width": "5.6fr",
+          "header": "Flag and note",
+          "cellChildren": [
+            {
+              "type": "text",
+              "id": "flag-note",
+              "class": [
+                "small"
+              ],
+              "content": [
+                {
+                  "type": "span",
+                  "content": "▲ High use",
+                  "class": [
+                    "flag"
+                  ],
+                  "if": "vars.high"
+                },
+                {
+                  "type": "span",
+                  "content": "▼ Negative",
+                  "class": [
+                    "flag"
+                  ],
+                  "if": "vars.negative"
+                },
+                "{{ If((vars.high || vars.negative) && has(r.note), ' ', '') }}{{ r.note }}"
+              ]
+            }
+          ]
+        }
+      ],
+      "footerRows": [
+        {
+          "id": "grand-total",
+          "style": {
+            "border-top": "1pt solid var(--brand)",
+            "font-size": "9pt"
+          },
+          "cells": [
+            {
+              "colspan": 7,
+              "content": "All zones · {{ Format(region.count, 'number:0') }} meters"
+            },
+            {
+              "class": [
+                "num"
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "grand-total-kl",
+                  "content": "{{ Format(Sum(region.rows.map(x, x.currentReading - x.previousReading)), 'number:0') }}"
+                }
+              ]
+            },
+            {
+              "class": [
+                "num"
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "grand-total-last",
+                  "content": "{{ Format(Sum(region.rows.map(x, x.previousQuarterKl)), 'number:0') }}"
+                }
+              ]
+            },
+            {
+              "colspan": 2,
+              "content": ""
+            }
+          ]
+        }
+      ],
+      "empty": [
+        {
+          "type": "text",
+          "id": "no-readings",
+          "class": [
+            "muted"
+          ],
+          "content": "No meters were read this quarter."
+        }
+      ],
+      "meta": {
+        "description": "Every reading, grouped by zone, with a subtotal per zone and the grand total at the end."
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "sample round has a contents page and a page for each zone",
+      "data": {
+        "main": "samples/main.json"
+      },
+      "expect": [
+        "pages.size() >= 3 && pages.size() <= 5",
+        "diagnostics.all(d, d.severity != 'error')",
+        "node('toc').page == 1",
+        "nodes('zone-name').map(n, n.text) == ['Kingfisher Bend', 'Larkmere Central', 'Reedvale', 'Weirton Heights']",
+        "nodes('zone-name').map(n, n.page) == [2, 3, 4, 5]",
+        "node('grand-total-kl').page == pages.size()",
+        "text('grand-total-kl') == '11,246'",
+        "text('stat-total-value') == '11,246 kL'",
+        "!visible('unread-zones')"
+      ],
+      "snapshot": true
+    },
+    {
+      "name": "zone subtotals and the grand total add up",
+      "data": {
+        "main": "tests/short-round.json"
+      },
+      "expect": [
+        "nodes('subtotal-kl').map(n, n.text) == ['572', '700']",
+        "text('grand-total-kl') == '1,272'",
+        "text('grand-total-last') == '1,010'"
+      ]
+    },
+    {
+      "name": "a zone with no meters is left out and named on the first page",
+      "data": {
+        "main": "tests/short-round.json"
+      },
+      "expect": [
+        "pages.size() == 3",
+        "text('unread-zones') == 'No meters were read in Larkmere North this quarter.'",
+        "!nodes('zone-name').exists(n, n.text == 'Larkmere North')",
+        "text('stat-meters-note') == 'in 2 zones'"
+      ]
+    },
+    {
+      "name": "unusual readings are flagged",
+      "data": {
+        "main": "tests/short-round.json"
+      },
+      "expect": [
+        "nodes('flag-note').filter(n, n.text != '').map(n, n.text) == ['▲ High use Possible leak; customer letter sent', 'Locked gate', '▼ Negative Below the last reading; re-read booked']",
+        "text('stat-flagged-value') == '2'",
+        "text('stat-estimated-value') == '1'",
+        "nodes('fu-reason').map(n, n.text) == ['Why', '▲ High use', 'Estimated', '▼ Negative']"
+      ]
+    }
+  ]
+}

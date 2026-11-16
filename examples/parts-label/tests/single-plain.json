@@ -1,0 +1,22 @@
+{
+  "consignment": {
+    "number": "LWD2610270058",
+    "dispatched": "2026-10-27",
+    "from": {
+      "name": "Larkmere Water Depot",
+      "addressLines": ["7 Sluice Road", "Reedvale QLD 4997"]
+    },
+    "to": {
+      "crewCode": "C03",
+      "crew": "Crew 3, Meter Services",
+      "addressLines": ["40 Weir Street", "Larkmere QLD 4999"]
+    }
+  },
+  "parcels": [
+    {
+      "weightKg": 2,
+      "contents": "Seal kits and meter tags",
+      "handling": "standard"
+    }
+  ]
+}

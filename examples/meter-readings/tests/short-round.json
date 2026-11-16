@@ -1,0 +1,105 @@
+{
+  "quarter": {
+    "label": "July to September 2026",
+    "start": "2026-07-01",
+    "end": "2026-09-30"
+  },
+  "issued": "2026-10-06",
+  "zones": [
+    {
+      "code": "KB",
+      "name": "Kingfisher Bend",
+      "route": "Route 3",
+      "reader": "T. Okafor"
+    },
+    {
+      "code": "LC",
+      "name": "Larkmere Central",
+      "route": "Route 1",
+      "reader": "M. Lindqvist"
+    },
+    {
+      "code": "LN",
+      "name": "Larkmere North",
+      "route": "Route 5",
+      "reader": "A. Fitzgerald"
+    }
+  ],
+  "readings": [
+    {
+      "meter": "KB-1001",
+      "address": "3 Heron Close",
+      "sizeMm": 20,
+      "previousDate": "2026-06-16",
+      "previousReading": 1200,
+      "currentDate": "2026-09-15",
+      "currentReading": 1290,
+      "readType": "actual",
+      "previousQuarterKl": 84,
+      "zone": "KB"
+    },
+    {
+      "meter": "KB-1002",
+      "address": "7 Heron Close",
+      "sizeMm": 20,
+      "previousDate": "2026-06-16",
+      "previousReading": 2400,
+      "currentDate": "2026-09-15",
+      "currentReading": 2810,
+      "readType": "actual",
+      "previousQuarterKl": 96,
+      "zone": "KB",
+      "note": "Possible leak; customer letter sent"
+    },
+    {
+      "meter": "KB-1003",
+      "address": "12 Egret Court",
+      "sizeMm": 20,
+      "previousDate": "2026-06-16",
+      "previousReading": 5100,
+      "currentDate": "2026-09-15",
+      "currentReading": 5172,
+      "readType": "estimated",
+      "previousQuarterKl": 70,
+      "zone": "KB",
+      "note": "Locked gate"
+    },
+    {
+      "meter": "LC-1001",
+      "address": "40 Weir Street",
+      "sizeMm": 40,
+      "previousDate": "2026-06-16",
+      "previousReading": 15000,
+      "currentDate": "2026-09-15",
+      "currentReading": 15610,
+      "readType": "actual",
+      "previousQuarterKl": 590,
+      "zone": "LC"
+    },
+    {
+      "meter": "LC-1002",
+      "address": "2 Mill Lane",
+      "sizeMm": 20,
+      "previousDate": "2026-06-16",
+      "previousReading": 6120,
+      "currentDate": "2026-09-15",
+      "currentReading": 6108,
+      "readType": "actual",
+      "previousQuarterKl": 71,
+      "zone": "LC",
+      "note": "Below the last reading; re-read booked"
+    },
+    {
+      "meter": "LC-1003",
+      "address": "9 Mill Lane",
+      "sizeMm": 20,
+      "previousDate": "2026-06-16",
+      "previousReading": 3300,
+      "currentDate": "2026-09-15",
+      "currentReading": 3402,
+      "readType": "actual",
+      "previousQuarterKl": 99,
+      "zone": "LC"
+    }
+  ]
+}

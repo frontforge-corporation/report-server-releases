@@ -1,0 +1,886 @@
+{
+  "$schema": "https://reportforge.dev/schema/rfml/0.1.json",
+  "rfml": "0.1",
+  "id": "operations-dashboard",
+  "meta": {
+    "title": "Operations dashboard",
+    "description": "Larkmere Water's one-page monthly operations dashboard for the board, on A4 landscape. Four KPI tiles that turn red when a target is missed, 12-month supply and response-time charts, complaints by category, and leaks repaired by zone and month.",
+    "locale": "en-AU",
+    "currency": "AUD",
+    "tags": [
+      "example",
+      "dashboard",
+      "charts",
+      "matrix",
+      "water"
+    ]
+  },
+  "data": {
+    "main": {
+      "schema": {
+        "$ref": "schemas/main.json"
+      },
+      "sample": "samples/main.json",
+      "description": "One month of operations figures: targets, a 12-month history, complaints and leaks repaired by zone."
+    }
+  },
+  "vars": {
+    "current": "Lookup(data.main.history, 'month', data.main.month)",
+    "prior": "Lookup(data.main.history, 'month', DateAdd(data.main.month, -1, 'month'))",
+    "supplyMl": "vars.current.supplyMl",
+    "supplyMet": "vars.supplyMl <= data.main.targets.supplyPlanMl",
+    "supplyChange": "(vars.supplyMl - vars.prior.supplyMl) / vars.prior.supplyMl",
+    "leaksRepaired": "Sum(data.main.leaks.filter(l, l.month == data.main.month).map(l, l.count))",
+    "leaksPrior": "Sum(data.main.leaks.filter(l, l.month == vars.prior.month).map(l, l.count))",
+    "leaksMet": "vars.leaksRepaired >= data.main.targets.leaksRepaired",
+    "responseHours": "vars.current.responseHours",
+    "responseTarget": "vars.current.responseTargetHours",
+    "responseMet": "vars.responseHours <= vars.responseTarget",
+    "satisfaction": "vars.current.satisfactionPct",
+    "satisfactionMet": "vars.satisfaction >= data.main.targets.satisfactionPct",
+    "complaints": "Sum(data.main.complaints.map(c, c.count))",
+    "zones": "CountDistinct(data.main.leaks.map(l, l.zone))"
+  },
+  "styles": {
+    "tokens": {
+      "brand": "#0073AF",
+      "ink": "#231F20",
+      "muted": "#4E6A75",
+      "line": "#D5E4EA",
+      "panel": "#E8F4FB",
+      "negative": "#B42318",
+      "positive": "#1F7A4D",
+      "accent": "#1A9E8F",
+      "space-1": "3pt",
+      "space-2": "6pt",
+      "space-3": "12pt",
+      "chart-1": "#0073AF",
+      "chart-2": "#1A9E8F",
+      "chart-3": "#8FB8D0",
+      "chart-4": "#4E6A75",
+      "chart-5": "#F2A900",
+      "chart-6": "#B42318"
+    },
+    "defaults": {
+      "document": {
+        "color": "var(--ink)",
+        "font-family": "Arimo",
+        "font-size": "8.5pt",
+        "line-height": 1.3
+      },
+      "heading": {
+        "margin": "0 0 var(--space-1)",
+        "color": "var(--ink)",
+        "font-size": "9pt",
+        "font-weight": 700
+      },
+      "chart": {
+        "parts": {
+          "axis-label": {
+            "color": "var(--muted)",
+            "font-size": "7pt"
+          },
+          "legend-label": {
+            "color": "var(--ink)",
+            "font-size": "7.5pt"
+          },
+          "data-label": {
+            "color": "var(--ink)",
+            "font-size": "7pt"
+          }
+        }
+      }
+    },
+    "classes": {
+      "wordmark": {
+        "color": "var(--brand)",
+        "font-size": "16pt",
+        "font-weight": 700,
+        "line-height": 1.1
+      },
+      "muted": {
+        "color": "var(--muted)"
+      },
+      "small": {
+        "font-size": "7.5pt"
+      },
+      "card": {
+        "padding": "var(--space-2) var(--space-3) var(--space-3)",
+        "border": "0.75pt solid var(--line)",
+        "border-radius": "4pt",
+        "break-inside": "avoid"
+      },
+      "card-note": {
+        "margin-bottom": "var(--space-2)",
+        "color": "var(--muted)",
+        "font-size": "7.5pt"
+      },
+      "chart": {
+        "width": "100%",
+        "height": "50mm"
+      },
+      "kicker": {
+        "color": "var(--muted)",
+        "font-size": "7pt",
+        "font-weight": 700,
+        "letter-spacing": "0.4pt",
+        "text-transform": "uppercase"
+      }
+    }
+  },
+  "components": {
+    "kpi-tile": {
+      "description": "A KPI tile: label, value, a status pill and a delta line that are green when the target is met and red when it is missed, and a note.",
+      "props": {
+        "type": "object",
+        "required": [
+          "label",
+          "value",
+          "met",
+          "delta"
+        ],
+        "properties": {
+          "label": {
+            "type": "string",
+            "description": "What the tile measures"
+          },
+          "value": {
+            "type": "string",
+            "description": "The value, formatted"
+          },
+          "unit": {
+            "type": "string",
+            "description": "Unit shown after the value"
+          },
+          "met": {
+            "type": "boolean",
+            "description": "Whether the target was met"
+          },
+          "delta": {
+            "type": "string",
+            "description": "The value against its target"
+          },
+          "note": {
+            "type": "string",
+            "description": "A line of context under the delta"
+          }
+        }
+      },
+      "parts": {
+        "status": "kpi-status",
+        "value": "kpi-value"
+      },
+      "template": [
+        {
+          "type": "box",
+          "id": "kpi-tile",
+          "style": {
+            "padding": "var(--space-2) var(--space-3)",
+            "border-left": "3pt solid var(--positive)",
+            "border-radius": "2pt",
+            "background-color": "var(--panel)"
+          },
+          "rules": [
+            {
+              "if": "!props.met",
+              "style": {
+                "border-left-color": "var(--negative)"
+              }
+            }
+          ],
+          "children": [
+            {
+              "type": "box",
+              "id": "kpi-top",
+              "style": {
+                "display": "flex",
+                "justify-content": "space-between",
+                "align-items": "center"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "id": "kpi-label",
+                  "class": [
+                    "kicker"
+                  ],
+                  "content": "{{ props.label }}"
+                },
+                {
+                  "type": "text",
+                  "id": "kpi-status",
+                  "style": {
+                    "padding": "1pt 5pt",
+                    "border-radius": "6pt",
+                    "background-color": "var(--positive)",
+                    "color": "#FFFFFF",
+                    "font-size": "6.5pt",
+                    "font-weight": 700
+                  },
+                  "rules": [
+                    {
+                      "if": "!props.met",
+                      "style": {
+                        "background-color": "var(--negative)"
+                      }
+                    }
+                  ],
+                  "content": "{{ If(props.met, 'On target', 'Missed') }}"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "kpi-value",
+              "style": {
+                "margin": "var(--space-1) 0 1pt",
+                "font-size": "22pt",
+                "font-weight": 700,
+                "line-height": 1.1
+              },
+              "content": [
+                "{{ props.value }}",
+                {
+                  "type": "span",
+                  "content": " {{ props.unit }}",
+                  "style": {
+                    "color": "var(--muted)",
+                    "font-size": "10pt",
+                    "font-weight": 400
+                  }
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "kpi-delta",
+              "style": {
+                "color": "var(--positive)",
+                "font-weight": 700
+              },
+              "rules": [
+                {
+                  "if": "!props.met",
+                  "style": {
+                    "color": "var(--negative)"
+                  }
+                }
+              ],
+              "content": "{{ props.delta }}"
+            },
+            {
+              "type": "text",
+              "id": "kpi-note",
+              "if": "!IsBlank(props.note)",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "{{ props.note }}"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "pages": [
+    {
+      "id": "landscape",
+      "size": "A4",
+      "orientation": "landscape",
+      "margin": "10mm 12mm 14mm",
+      "footer": [
+        {
+          "type": "box",
+          "id": "footer-band",
+          "class": [
+            "muted",
+            "small"
+          ],
+          "style": {
+            "padding-top": "var(--space-1)",
+            "border-top": "0.5pt solid var(--line)",
+            "display": "flex",
+            "justify-content": "space-between"
+          },
+          "children": [
+            {
+              "type": "text",
+              "id": "footer-company",
+              "content": "Larkmere Water · 40 Weir Street, Larkmere QLD 4999 · larkmere.example · ABN 12 345 678 901"
+            },
+            {
+              "type": "text",
+              "id": "footer-confidential",
+              "content": "Board in confidence · Page {{ page.number }} of {{ page.count }}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "body": [
+    {
+      "type": "box",
+      "id": "masthead",
+      "style": {
+        "margin-bottom": "var(--space-3)",
+        "padding-bottom": "var(--space-2)",
+        "border-bottom": "1.5pt solid var(--brand)",
+        "display": "flex",
+        "justify-content": "space-between",
+        "align-items": "flex-end"
+      },
+      "children": [
+        {
+          "type": "box",
+          "id": "masthead-brand",
+          "children": [
+            {
+              "type": "text",
+              "id": "wordmark",
+              "class": [
+                "wordmark"
+              ],
+              "content": "Larkmere Water"
+            },
+            {
+              "type": "heading",
+              "id": "title",
+              "style": {
+                "margin": "1pt 0 0",
+                "font-size": "12pt",
+                "font-weight": 400
+              },
+              "level": 1,
+              "content": "Operations dashboard"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "masthead-month",
+          "style": {
+            "text-align": "right"
+          },
+          "children": [
+            {
+              "type": "text",
+              "id": "month",
+              "style": {
+                "color": "var(--brand)",
+                "font-size": "16pt",
+                "font-weight": 700,
+                "line-height": 1.1
+              },
+              "content": "{{ Format(data.main.month, 'MMMM y') }}"
+            },
+            {
+              "type": "text",
+              "id": "issued",
+              "class": [
+                "muted"
+              ],
+              "content": "Report to the board · issued {{ Format(data.main.issued, 'd MMMM y') }}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "box",
+      "id": "kpis",
+      "style": {
+        "margin-bottom": "var(--space-3)",
+        "column-gap": "var(--space-3)",
+        "display": "grid",
+        "grid-template-columns": "1fr 1fr 1fr 1fr"
+      },
+      "children": [
+        {
+          "type": "use",
+          "id": "kpi-supply",
+          "component": "kpi-tile",
+          "props": {
+            "label": "'Water supplied'",
+            "value": "Format(vars.supplyMl, 'number:1')",
+            "unit": "'ML'",
+            "met": "vars.supplyMet",
+            "delta": "If(vars.supplyMet, '▼ ' + Format(data.main.targets.supplyPlanMl - vars.supplyMl, 'number:0') + ' ML under', '▲ ' + Format(vars.supplyMl - data.main.targets.supplyPlanMl, 'number:0') + ' ML over') + ' the ' + Format(data.main.targets.supplyPlanMl, 'number:0') + ' ML plan'",
+            "note": "Format(Abs(vars.supplyChange), 'percent:1') + If(vars.supplyChange >= 0, ' more', ' less') + ' than ' + Format(vars.prior.month, 'MMMM')"
+          },
+          "meta": {
+            "description": "Megalitres supplied in the month against the supply plan."
+          }
+        },
+        {
+          "type": "use",
+          "id": "kpi-leaks",
+          "component": "kpi-tile",
+          "props": {
+            "label": "'Leaks repaired'",
+            "value": "Format(vars.leaksRepaired, 'number:0')",
+            "unit": "''",
+            "met": "vars.leaksMet",
+            "delta": "If(vars.leaksMet, '▲ ' + Text(vars.leaksRepaired - data.main.targets.leaksRepaired) + ' above', '▼ ' + Text(data.main.targets.leaksRepaired - vars.leaksRepaired) + ' below') + ' the target of ' + Text(data.main.targets.leaksRepaired)",
+            "note": "'Across ' + Text(vars.zones) + ' zones; ' + Text(vars.leaksPrior) + ' in ' + Format(vars.prior.month, 'MMMM')"
+          },
+          "meta": {
+            "description": "Leaks repaired in the month, the total of the matrix's last column."
+          }
+        },
+        {
+          "type": "use",
+          "id": "kpi-response",
+          "component": "kpi-tile",
+          "props": {
+            "label": "'Average response time'",
+            "value": "Format(vars.responseHours, 'number:1')",
+            "unit": "'hours'",
+            "met": "vars.responseMet",
+            "delta": "If(vars.responseMet, '▼ ' + Format(vars.responseTarget - vars.responseHours, 'number:1') + ' h inside', '▲ ' + Format(vars.responseHours - vars.responseTarget, 'number:1') + ' h over') + ' the ' + Format(vars.responseTarget, 'number:1') + ' h target'",
+            "note": "'From report to crew on site; ' + Format(vars.prior.responseHours, 'number:1') + ' h in ' + Format(vars.prior.month, 'MMMM')"
+          },
+          "meta": {
+            "description": "Average hours from a fault report to a crew on site."
+          }
+        },
+        {
+          "type": "use",
+          "id": "kpi-satisfaction",
+          "component": "kpi-tile",
+          "props": {
+            "label": "'Customer satisfaction'",
+            "value": "Text(vars.satisfaction)",
+            "unit": "'%'",
+            "met": "vars.satisfactionMet",
+            "delta": "If(vars.satisfactionMet, '▲ ' + Text(vars.satisfaction - data.main.targets.satisfactionPct) + ' pts above', '▼ ' + Text(data.main.targets.satisfactionPct - vars.satisfaction) + ' pts below') + ' the ' + Text(data.main.targets.satisfactionPct) + '% target'",
+            "note": "Format(data.main.surveyResponses, 'number:0') + ' survey responses; ' + Text(vars.prior.satisfactionPct) + '% in ' + Format(vars.prior.month, 'MMMM')"
+          },
+          "meta": {
+            "description": "Share of surveyed customers satisfied or very satisfied."
+          }
+        }
+      ]
+    },
+    {
+      "type": "box",
+      "id": "charts",
+      "style": {
+        "margin-bottom": "var(--space-3)",
+        "column-gap": "var(--space-3)",
+        "display": "grid",
+        "grid-template-columns": "1fr 1fr 1fr"
+      },
+      "children": [
+        {
+          "type": "box",
+          "id": "card-supply",
+          "class": [
+            "card"
+          ],
+          "children": [
+            {
+              "type": "heading",
+              "id": "supply-title",
+              "level": 2,
+              "content": "Water supplied"
+            },
+            {
+              "type": "text",
+              "id": "supply-note",
+              "class": [
+                "card-note"
+              ],
+              "content": "Megalitres a month, last 12 months"
+            },
+            {
+              "type": "chart",
+              "id": "chart-supply",
+              "class": [
+                "chart"
+              ],
+              "source": "data.main.history",
+              "as": "h",
+              "kind": "column",
+              "category": "Format(h.month, 'MMM')",
+              "series": [
+                {
+                  "id": "supply",
+                  "name": "Water supplied (ML)",
+                  "value": "h.supplyMl",
+                  "color": "var(--chart-1)"
+                }
+              ],
+              "axes": {
+                "y": {
+                  "format": "number:0",
+                  "min": 0,
+                  "gridlines": true
+                }
+              },
+              "legend": {
+                "position": "none"
+              },
+              "alt": "Water supplied each month from {{ Format(data.main.history[0].month, 'MMMM y') }} to {{ Format(data.main.month, 'MMMM y') }}, between {{ Format(Min(data.main.history.map(h, h.supplyMl)), 'number:0') }} and {{ Format(Max(data.main.history.map(h, h.supplyMl)), 'number:0') }} ML; {{ Format(vars.supplyMl, 'number:0') }} ML this month.",
+              "meta": {
+                "description": "Monthly water supplied, oldest month first."
+              }
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "card-response",
+          "class": [
+            "card"
+          ],
+          "children": [
+            {
+              "type": "heading",
+              "id": "response-title",
+              "level": 2,
+              "content": "Response time against target"
+            },
+            {
+              "type": "text",
+              "id": "response-note",
+              "class": [
+                "card-note"
+              ],
+              "content": "Average hours from fault report to crew on site"
+            },
+            {
+              "type": "chart",
+              "id": "chart-response",
+              "class": [
+                "chart"
+              ],
+              "source": "data.main.history",
+              "as": "h",
+              "kind": "line",
+              "category": "Format(h.month, 'MMM')",
+              "series": [
+                {
+                  "id": "actual",
+                  "name": "Average response",
+                  "value": "h.responseHours",
+                  "color": "var(--chart-1)"
+                },
+                {
+                  "id": "target",
+                  "name": "Target",
+                  "value": "h.responseTargetHours",
+                  "color": "var(--chart-6)"
+                }
+              ],
+              "axes": {
+                "y": {
+                  "format": "number:1",
+                  "min": 0,
+                  "gridlines": true
+                }
+              },
+              "legend": {
+                "position": "top"
+              },
+              "alt": "Average response time each month against its target. It was {{ Format(data.main.history[0].responseHours, 'number:1') }} hours in {{ Format(data.main.history[0].month, 'MMMM y') }} and {{ Format(vars.responseHours, 'number:1') }} hours this month, against a target of {{ Format(vars.responseTarget, 'number:1') }} hours.",
+              "meta": {
+                "description": "Monthly average response time and its target."
+              }
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "card-complaints",
+          "class": [
+            "card"
+          ],
+          "children": [
+            {
+              "type": "heading",
+              "id": "complaints-title",
+              "level": 2,
+              "content": "Complaints by category"
+            },
+            {
+              "type": "text",
+              "id": "complaints-note",
+              "class": [
+                "card-note"
+              ],
+              "content": "{{ If(vars.complaints == 0, 'None', Text(vars.complaints)) }} received in {{ Format(data.main.month, 'MMMM') }}"
+            },
+            {
+              "type": "chart",
+              "id": "chart-complaints",
+              "if": "vars.complaints > 0",
+              "class": [
+                "chart"
+              ],
+              "source": "data.main.complaints",
+              "as": "c",
+              "kind": "donut",
+              "category": "c.category",
+              "series": [
+                {
+                  "id": "complaints",
+                  "name": "Complaints",
+                  "value": "c.count"
+                }
+              ],
+              "legend": {
+                "position": "right"
+              },
+              "labels": {
+                "show": true,
+                "format": "number:0"
+              },
+              "alt": "{{ vars.complaints }} complaints in {{ Format(data.main.month, 'MMMM y') }}: {{ Join(data.main.complaints.map(c, c.category + ' ' + Text(c.count)), ', ') }}.",
+              "meta": {
+                "description": "The month's complaints split by category."
+              }
+            },
+            {
+              "type": "text",
+              "id": "complaints-empty",
+              "if": "vars.complaints == 0",
+              "class": [
+                "muted"
+              ],
+              "style": {
+                "height": "50mm",
+                "padding-top": "22mm",
+                "text-align": "center"
+              },
+              "content": "No complaints were recorded this month."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "box",
+      "id": "bottom",
+      "style": {
+        "column-gap": "var(--space-3)",
+        "display": "grid",
+        "grid-template-columns": "auto 1fr"
+      },
+      "children": [
+        {
+          "type": "box",
+          "id": "card-leaks",
+          "class": [
+            "card"
+          ],
+          "children": [
+            {
+              "type": "heading",
+              "id": "leaks-title",
+              "level": 2,
+              "content": "Leaks repaired by zone"
+            },
+            {
+              "type": "text",
+              "id": "leaks-note",
+              "class": [
+                "card-note"
+              ],
+              "content": "Leaks repaired in each supply zone, {{ Format(data.main.history[0].month, 'MMMM y') }} to {{ Format(data.main.month, 'MMMM y') }}"
+            },
+            {
+              "type": "matrix",
+              "id": "matrix-leaks",
+              "style": {
+                "width": "100%",
+                "parts": {
+                  "corner": {
+                    "padding": "2pt 4pt",
+                    "border-bottom": "0.75pt solid var(--brand)",
+                    "color": "var(--muted)",
+                    "font-weight": 700,
+                    "text-align": "left"
+                  },
+                  "row-header": {
+                    "padding": "2pt 4pt",
+                    "border-bottom": "0.5pt solid var(--line)",
+                    "font-weight": 700
+                  },
+                  "column-header": {
+                    "padding": "2pt 4pt",
+                    "border-bottom": "0.75pt solid var(--brand)",
+                    "color": "var(--muted)",
+                    "font-weight": 700,
+                    "text-align": "right"
+                  },
+                  "cell": {
+                    "padding": "2pt 4pt",
+                    "border-bottom": "0.5pt solid var(--line)",
+                    "font-variant-numeric": "tabular-nums",
+                    "text-align": "right"
+                  },
+                  "total-row": {
+                    "background-color": "var(--panel)"
+                  },
+                  "total-column": {
+                    "background-color": "var(--panel)"
+                  },
+                  "total-cell": {
+                    "font-weight": 700
+                  }
+                }
+              },
+              "source": "data.main.leaks",
+              "as": "l",
+              "rows": [
+                {
+                  "id": "by-zone",
+                  "by": "l.zone"
+                }
+              ],
+              "columns": [
+                {
+                  "id": "by-month",
+                  "by": "l.month",
+                  "header": [
+                    {
+                      "type": "text",
+                      "id": "month-head",
+                      "content": "{{ Format(group.key, 'MMM') }}"
+                    }
+                  ]
+                }
+              ],
+              "cells": [
+                {
+                  "id": "leaks",
+                  "value": "Sum(cell.rows.map(r, r.count))",
+                  "format": "number:0"
+                }
+              ],
+              "totals": {
+                "rows": true,
+                "columns": true,
+                "label": "Total"
+              },
+              "corner": "Zone",
+              "meta": {
+                "description": "Leaks repaired per zone and month, with totals for each zone and each month."
+              }
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "card-highlights",
+          "if": "data.main.highlights.size() > 0",
+          "class": [
+            "card"
+          ],
+          "style": {
+            "border-color": "var(--panel)",
+            "background-color": "var(--panel)"
+          },
+          "children": [
+            {
+              "type": "heading",
+              "id": "highlights-title",
+              "level": 2,
+              "content": "Highlights"
+            },
+            {
+              "type": "text",
+              "id": "highlights-note",
+              "class": [
+                "card-note"
+              ],
+              "content": "From the operations team"
+            },
+            {
+              "type": "list",
+              "id": "highlights",
+              "style": {
+                "padding-left": "10pt",
+                "parts": {
+                  "item": {
+                    "margin-bottom": "var(--space-2)"
+                  }
+                }
+              },
+              "children": [
+                {
+                  "type": "repeat",
+                  "id": "highlight-items",
+                  "source": "data.main.highlights",
+                  "as": "note",
+                  "detail": [
+                    {
+                      "type": "item",
+                      "id": "highlight",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "highlight-text",
+                          "content": "{{ note }}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "tests": [
+    {
+      "name": "sample month fits on one page with every target met",
+      "data": {
+        "main": "samples/main.json"
+      },
+      "expect": [
+        "pages.size() == 1",
+        "diagnostics.all(d, d.severity != 'error')",
+        "text('month') == 'September 2026'",
+        "text('kpi-leaks/kpi-value') == '142'",
+        "text('kpi-supply/kpi-status') == 'On target'",
+        "text('kpi-response/kpi-delta') == '▼ 0.4 h inside the 3.0 h target'",
+        "visible('chart-complaints')",
+        "!visible('complaints-empty')"
+      ],
+      "snapshot": true
+    },
+    {
+      "name": "missed targets turn the tiles red",
+      "data": {
+        "main": "tests/missed-targets.json"
+      },
+      "expect": [
+        "pages.size() == 1",
+        "text('kpi-supply/kpi-status') == 'Missed'",
+        "text('kpi-supply/kpi-delta') == '▲ 33 ML over the 1,310 ML plan'",
+        "text('kpi-leaks/kpi-delta') == '▼ 12 below the target of 130'",
+        "text('kpi-response/kpi-status') == 'Missed'",
+        "text('kpi-response/kpi-delta') == '▲ 0.4 h over the 3.0 h target'",
+        "text('kpi-satisfaction/kpi-delta') == '▼ 4 pts below the 85% target'"
+      ]
+    },
+    {
+      "name": "a month without complaints shows a note instead of the donut",
+      "data": {
+        "main": "tests/no-complaints.json"
+      },
+      "expect": [
+        "pages.size() == 1",
+        "diagnostics.all(d, d.severity != 'error')",
+        "!visible('chart-complaints')",
+        "text('complaints-empty') == 'No complaints were recorded this month.'",
+        "text('complaints-note') == 'None received in September'"
+      ]
+    }
+  ]
+}

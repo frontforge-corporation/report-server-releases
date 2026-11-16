@@ -1,0 +1,90 @@
+{
+  "customer": {
+    "name": "Kingfisher Bend Holdings",
+    "addressLines": [
+      "PO Box 77",
+      "KINGFISHER BEND QLD 4994"
+    ]
+  },
+  "account": {
+    "number": "2063 4410 05",
+    "paymentReference": "2063441005"
+  },
+  "bill": {
+    "number": "8100302296",
+    "issueDate": "2026-10-16",
+    "dueDate": "2026-11-13",
+    "periodStart": "2026-07-12",
+    "periodEnd": "2026-10-09",
+    "previousBalance": 0,
+    "wastewaterShare": 0.85
+  },
+  "property": {
+    "address": "9 Jetty Lane, Kingfisher Bend QLD 4994",
+    "lotPlan": "Lot 2 on SP 31876"
+  },
+  "payments": [],
+  "adjustments": [],
+  "meters": [
+    {
+      "number": "LW20 118204",
+      "size": "20 mm",
+      "previousDate": "2026-07-11",
+      "previousReading": 2164,
+      "currentDate": "2026-10-09",
+      "currentReading": 2211,
+      "readType": "Actual"
+    }
+  ],
+  "charges": [
+    {
+      "service": "Water",
+      "kind": "access",
+      "description": "Water access charge (20 mm meter)",
+      "quantity": 90,
+      "unit": "days",
+      "rate": 0.984,
+      "amount": 88.56
+    },
+    {
+      "service": "Water",
+      "kind": "usage",
+      "description": "Water usage",
+      "quantity": 47,
+      "unit": "kL",
+      "rate": 3.405,
+      "amount": 160.04
+    },
+    {
+      "service": "Water",
+      "kind": "usage",
+      "description": "Regional bulk water charge",
+      "quantity": 47,
+      "unit": "kL",
+      "rate": 3.12,
+      "amount": 146.64
+    },
+    {
+      "service": "Wastewater",
+      "kind": "access",
+      "description": "Wastewater access charge",
+      "quantity": 90,
+      "unit": "days",
+      "rate": 1.987,
+      "amount": 178.83
+    },
+    {
+      "service": "Wastewater",
+      "kind": "usage",
+      "description": "Wastewater usage (85% of water use)",
+      "quantity": 39.95,
+      "unit": "kL",
+      "rate": 1.21,
+      "amount": 48.34
+    }
+  ],
+  "usage": {
+    "regionalLitres": 560,
+    "history": []
+  }
+}

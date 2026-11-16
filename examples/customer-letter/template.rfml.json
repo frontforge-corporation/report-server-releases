@@ -1,0 +1,535 @@
+{
+  "$schema": "https://reportforge.dev/schema/rfml/0.1.json",
+  "rfml": "0.1",
+  "id": "customer-letter",
+  "meta": {
+    "title": "Letter to customers",
+    "description": "An A4 letter to residents about planned water main works in their street. It shows a letterhead on the first page, the address placed for a window envelope, merged fields in the text, a works schedule table and a signature block, with a short running header if the letter runs over.",
+    "locale": "en-AU",
+    "currency": "AUD",
+    "tags": [
+      "example",
+      "letter",
+      "notice",
+      "window-envelope",
+      "water"
+    ]
+  },
+  "data": {
+    "main": {
+      "schema": {
+        "$ref": "schemas/main.json"
+      },
+      "sample": "samples/main.json",
+      "description": "One letter to one property about the works in its street."
+    }
+  },
+  "styles": {
+    "tokens": {
+      "brand": "#0073AF",
+      "ink": "#231F20",
+      "muted": "#4E6A75",
+      "line": "#D5E4EA",
+      "panel": "#E8F4FB",
+      "negative": "#B42318",
+      "positive": "#1F7A4D",
+      "accent": "#1A9E8F",
+      "space-1": "3pt",
+      "space-2": "6pt",
+      "space-3": "12pt"
+    },
+    "defaults": {
+      "document": {
+        "color": "var(--ink)",
+        "font-family": "Arimo",
+        "font-size": "10pt",
+        "line-height": 1.4
+      },
+      "heading": {
+        "margin": "10pt 0 var(--space-1)",
+        "color": "var(--brand)",
+        "font-size": "10.5pt",
+        "font-weight": 700
+      },
+      "text": {
+        "margin": "0 0 var(--space-2)"
+      },
+      "table": {
+        "width": "100%",
+        "margin": "var(--space-1) 0 var(--space-2)",
+        "font-size": "9pt",
+        "border-collapse": "collapse",
+        "parts": {
+          "cell": {
+            "padding": "4pt 6pt 4pt 0",
+            "border-bottom": "0.5pt solid var(--line)"
+          },
+          "header-cell": {
+            "border-bottom": "1pt solid var(--brand)",
+            "color": "var(--muted)",
+            "font-size": "8pt",
+            "font-weight": 700
+          }
+        }
+      }
+    },
+    "classes": {
+      "muted": {
+        "color": "var(--muted)"
+      },
+      "small": {
+        "font-size": "8pt"
+      },
+      "strong": {
+        "font-weight": 700
+      },
+      "tight": {
+        "margin": 0
+      }
+    }
+  },
+  "pages": [
+    {
+      "id": "letter",
+      "size": "A4",
+      "margin": "26mm 20mm 20mm",
+      "header": [
+        {
+          "type": "text",
+          "id": "running-header",
+          "class": [
+            "muted",
+            "small"
+          ],
+          "style": {
+            "margin": "0 0 var(--space-3)",
+            "padding-bottom": "var(--space-1)",
+            "border-bottom": "0.5pt solid var(--line)"
+          },
+          "content": "Planned works in {{ data.main.works.street }} — page {{ page.number }}"
+        }
+      ],
+      "footer": [
+        {
+          "type": "text",
+          "id": "page-footer",
+          "class": [
+            "muted",
+            "small",
+            "tight"
+          ],
+          "style": {
+            "padding-top": "var(--space-1)",
+            "border-top": "0.5pt solid var(--line)"
+          },
+          "content": "Larkmere Water  ·  ABN 12 345 678 901  ·  larkmere.example  ·  Faults and emergencies 1300 975 708  ·  Interpreter service 1300 975 710"
+        }
+      ],
+      "variants": {
+        "first": {
+          "margin": "40mm 20mm 20mm",
+          "header": [
+            {
+              "type": "box",
+              "id": "letterhead",
+              "style": {
+                "margin-bottom": "8mm",
+                "padding-bottom": "var(--space-2)",
+                "border-bottom": "1.5pt solid var(--brand)",
+                "display": "flex",
+                "justify-content": "space-between",
+                "align-items": "flex-end"
+              },
+              "children": [
+                {
+                  "type": "box",
+                  "id": "letterhead-brand",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "wordmark",
+                      "class": [
+                        "tight"
+                      ],
+                      "style": {
+                        "color": "var(--brand)",
+                        "font-size": "22pt",
+                        "font-weight": 700,
+                        "line-height": 1.1
+                      },
+                      "content": "Larkmere Water"
+                    },
+                    {
+                      "type": "text",
+                      "id": "tagline",
+                      "class": [
+                        "muted",
+                        "tight"
+                      ],
+                      "style": {
+                        "font-size": "9pt"
+                      },
+                      "content": "Water and wastewater for the Larkmere region"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "letterhead-contacts",
+                  "class": [
+                    "muted",
+                    "tight"
+                  ],
+                  "style": {
+                    "font-size": "8pt",
+                    "line-height": 1.4,
+                    "text-align": "right"
+                  },
+                  "content": [
+                    "40 Weir Street, Larkmere QLD 4999",
+                    {
+                      "type": "br"
+                    },
+                    "PO Box 100, Larkmere QLD 4999",
+                    {
+                      "type": "br"
+                    },
+                    "1300 975 707  ·  customercare@larkmere.example",
+                    {
+                      "type": "br"
+                    },
+                    "larkmere.example  ·  ABN 12 345 678 901"
+                  ]
+                }
+              ],
+              "meta": {
+                "label": "Letterhead"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "body": [
+    {
+      "type": "frame",
+      "id": "address-window",
+      "style": {
+        "height": "34mm"
+      },
+      "children": [
+        {
+          "type": "text",
+          "id": "return-address",
+          "class": [
+            "muted",
+            "tight"
+          ],
+          "style": {
+            "width": "90mm",
+            "font-size": "6.5pt",
+            "top": 0,
+            "left": 0
+          },
+          "content": "If undeliverable, return to PO Box 100, Larkmere QLD 4999"
+        },
+        {
+          "type": "box",
+          "id": "recipient",
+          "style": {
+            "width": "85mm",
+            "top": "5mm",
+            "left": 0
+          },
+          "children": [
+            {
+              "type": "text",
+              "id": "recipient-name",
+              "class": [
+                "tight"
+              ],
+              "content": "{{ data.main.recipient.name }}"
+            },
+            {
+              "type": "repeat",
+              "id": "recipient-address",
+              "source": "data.main.recipient.addressLines",
+              "as": "line",
+              "detail": [
+                {
+                  "type": "text",
+                  "id": "address-line",
+                  "class": [
+                    "tight"
+                  ],
+                  "content": "{{ line }}"
+                }
+              ]
+            }
+          ],
+          "meta": {
+            "label": "Recipient address",
+            "description": "Starts 20 mm from the left edge and 45 mm from the top, inside the window of a DL envelope."
+          }
+        },
+        {
+          "type": "text",
+          "id": "letter-facts",
+          "class": [
+            "tight"
+          ],
+          "style": {
+            "width": "60mm",
+            "text-align": "right",
+            "top": "5mm",
+            "right": 0
+          },
+          "content": [
+            "{{ Format(data.main.letter.date, 'd MMMM y') }}",
+            {
+              "type": "br"
+            },
+            {
+              "type": "span",
+              "content": "Our reference {{ data.main.letter.reference }}",
+              "class": [
+                "muted",
+                "small"
+              ]
+            }
+          ]
+        }
+      ],
+      "meta": {
+        "label": "Address window",
+        "description": "Fixed height, so the letter text starts in the same place whatever the address length."
+      }
+    },
+    {
+      "type": "heading",
+      "id": "subject",
+      "style": {
+        "margin": "0 0 10pt",
+        "color": "var(--ink)",
+        "font-size": "13pt"
+      },
+      "level": 1,
+      "content": "Planned water main works in {{ data.main.works.street }}, {{ data.main.works.suburb }}"
+    },
+    {
+      "type": "text",
+      "id": "salutation",
+      "content": "Dear {{ data.main.letter.salutation }},"
+    },
+    {
+      "type": "text",
+      "id": "intro",
+      "content": [
+        "We are writing to let you know that Larkmere Water will replace the water main in {{ data.main.works.street }} from ",
+        {
+          "type": "span",
+          "content": "{{ Format(data.main.works.start, 'EEEE d MMMM') }}",
+          "class": [
+            "strong"
+          ]
+        },
+        " to ",
+        {
+          "type": "span",
+          "content": "{{ Format(data.main.works.end, 'EEEE d MMMM y') }}",
+          "class": [
+            "strong"
+          ]
+        },
+        ", weather permitting. We will lay {{ data.main.works.length }} metres of new pipe to give your street a more reliable supply and fewer breaks in the years ahead."
+      ]
+    },
+    {
+      "type": "text",
+      "id": "hours",
+      "content": "Our crews will work {{ data.main.works.days }}, {{ data.main.works.hours }}. Most of the work happens from the road edge and footpath. You will be able to reach your property throughout, although driveway access may be held up for short periods while we work outside it."
+    },
+    {
+      "type": "heading",
+      "id": "schedule-heading",
+      "level": 2,
+      "content": "What will happen and when"
+    },
+    {
+      "type": "table",
+      "id": "table-schedule",
+      "source": "data.main.schedule",
+      "as": "s",
+      "columns": [
+        {
+          "id": "col-stage",
+          "width": "3.4fr",
+          "header": "Stage",
+          "class": [
+            "strong"
+          ],
+          "cell": "{{ s.stage }}"
+        },
+        {
+          "id": "col-dates",
+          "width": "2.2fr",
+          "header": "Dates",
+          "cell": "{{ Format(s.from, 'd MMM') }} – {{ Format(s.to, 'd MMM') }}"
+        },
+        {
+          "id": "col-detail",
+          "width": "6.6fr",
+          "header": "What to expect",
+          "cell": "{{ s.detail }}"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "id": "supply-heading",
+      "level": 2,
+      "content": "Your water supply"
+    },
+    {
+      "type": "text",
+      "id": "supply",
+      "content": "When we connect your property to the new main, your water will be off for up to {{ data.main.works.outageHours }} hours. We will leave a card in your letterbox at least 48 hours before, with the date and time. If someone in your home relies on water for a medical reason, please let us know so we can plan around them."
+    },
+    {
+      "type": "heading",
+      "id": "contact-heading",
+      "level": 2,
+      "content": "Questions"
+    },
+    {
+      "type": "text",
+      "id": "contact",
+      "content": [
+        "If you have any questions about the works, please contact {{ data.main.contact.name }}, {{ data.main.contact.title }}, on ",
+        {
+          "type": "span",
+          "content": "{{ data.main.contact.phone }}",
+          "class": [
+            "strong"
+          ]
+        },
+        {
+          "type": "span",
+          "content": " or {{ data.main.contact.mobile }}",
+          "if": "!IsBlank(data.main.contact.mobile)"
+        },
+        ", or email {{ data.main.contact.email }}, quoting reference {{ data.main.letter.reference }}. For faults and emergencies at any time, call 1300 975 708."
+      ]
+    },
+    {
+      "type": "text",
+      "id": "thanks",
+      "content": "Thank you for your patience while we upgrade the network in your street."
+    },
+    {
+      "type": "box",
+      "id": "signature",
+      "style": {
+        "margin-top": "var(--space-2)",
+        "break-inside": "avoid"
+      },
+      "children": [
+        {
+          "type": "text",
+          "id": "sign-off",
+          "style": {
+            "margin-bottom": "12mm"
+          },
+          "content": "Yours sincerely,"
+        },
+        {
+          "type": "text",
+          "id": "signatory-name",
+          "class": [
+            "strong",
+            "tight"
+          ],
+          "content": "{{ data.main.signatory.name }}"
+        },
+        {
+          "type": "text",
+          "id": "signatory-title",
+          "class": [
+            "tight"
+          ],
+          "content": "{{ data.main.signatory.title }}"
+        },
+        {
+          "type": "text",
+          "id": "signatory-company",
+          "class": [
+            "tight"
+          ],
+          "content": "Larkmere Water"
+        }
+      ],
+      "meta": {
+        "label": "Signature block"
+      }
+    }
+  ],
+  "outputs": {
+    "pdf": {
+      "standard": "PDF/UA-1"
+    }
+  },
+  "tests": [
+    {
+      "name": "sample letter fits on one page with the address in the window",
+      "data": {
+        "main": "samples/main.json"
+      },
+      "expect": [
+        "pages.size() == 1",
+        "diagnostics.all(d, d.severity != 'error')",
+        "pages[0].variant == 'first'",
+        "visible('letterhead') && !visible('running-header')",
+        "node('recipient').x > 55.0 && node('recipient').x < 58.0",
+        "node('recipient').y > 126.0 && node('recipient').y < 130.0",
+        "text('salutation') == 'Dear Mr and Mrs Castellano,'",
+        "text('subject') == 'Planned water main works in Kestrel Street, Weirton Heights'",
+        "nodes('address-line').size() == 2",
+        "node('signature').page == 1"
+      ],
+      "snapshot": true
+    },
+    {
+      "name": "a long schedule runs on to a second page",
+      "data": {
+        "main": "tests/long-schedule.json"
+      },
+      "expect": [
+        "pages.size() == 2",
+        "diagnostics.all(d, d.severity != 'error')",
+        "pages[0].variant == 'first' && pages[1].variant == null",
+        "nodes('letterhead').size() == 1 && node('letterhead').page == 1",
+        "nodes('running-header').size() == 1",
+        "text('running-header') == 'Planned works in Sandpiper Parade — page 2'",
+        "nodes('table-schedule').size() == 1",
+        "node('signature').page == 2 && nodes('signature').size() == 1",
+        "nodes('address-line').size() == 3"
+      ]
+    },
+    {
+      "name": "a single-line address keeps the letter in place",
+      "data": {
+        "main": "tests/single-line-address.json"
+      },
+      "expect": [
+        "pages.size() == 1",
+        "diagnostics.all(d, d.severity != 'error')",
+        "nodes('address-line').size() == 1",
+        "text('address-line') == '3/88 Reedvale Road, REEDVALE QLD 4993'",
+        "node('recipient').y > 126.0 && node('recipient').y < 130.0",
+        "node('subject').y > 209.0 && node('subject').y < 211.0",
+        "text('salutation') == 'Dear Resident,'"
+      ]
+    }
+  ]
+}

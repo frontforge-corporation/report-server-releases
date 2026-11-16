@@ -1,0 +1,1208 @@
+{
+  "$schema": "https://reportforge.dev/schema/rfml/0.1.json",
+  "rfml": "0.1",
+  "id": "account-statement",
+  "meta": {
+    "title": "Statement of account",
+    "description": "A business customer's statement of account across several properties. It lists every bill and payment with a running balance that carries across pages, and shows the opening and closing balances and what is owing by age.",
+    "locale": "en-AU",
+    "currency": "AUD",
+    "tags": [
+      "example",
+      "statement",
+      "accounts",
+      "utilities"
+    ]
+  },
+  "data": {
+    "main": {
+      "schema": {
+        "$ref": "schemas/main.json"
+      },
+      "sample": "samples/main.json",
+      "description": "One customer's account over one statement period."
+    }
+  },
+  "vars": {
+    "opening": "data.main.statement.openingBalance",
+    "lines": "[{'date': data.main.statement.periodStart, 'kind': 'opening', 'reference': '', 'description': 'Opening balance', 'amount': 0}] + data.main.transactions",
+    "debits": "Sum(data.main.transactions.filter(t, t.amount > 0).map(t, t.amount))",
+    "credits": "-Sum(data.main.transactions.filter(t, t.amount < 0).map(t, t.amount))",
+    "closing": "vars.opening + vars.debits - vars.credits",
+    "open": "data.main.transactions.filter(t, Coalesce(t.outstanding, 0) != 0)",
+    "agedCurrent": "Sum(vars.open.filter(t, DateDiff(t.date, data.main.statement.date, 'day') < 30).map(t, t.outstanding))",
+    "aged30": "Sum(vars.open.filter(t, DateDiff(t.date, data.main.statement.date, 'day') >= 30 && DateDiff(t.date, data.main.statement.date, 'day') < 60).map(t, t.outstanding))",
+    "aged60": "Sum(vars.open.filter(t, DateDiff(t.date, data.main.statement.date, 'day') >= 60 && DateDiff(t.date, data.main.statement.date, 'day') < 90).map(t, t.outstanding))",
+    "aged90": "Sum(vars.open.filter(t, DateDiff(t.date, data.main.statement.date, 'day') >= 90).map(t, t.outstanding))",
+    "owing": "vars.agedCurrent + vars.aged30 + vars.aged60 + vars.aged90",
+    "overdue": "vars.aged30 + vars.aged60 + vars.aged90",
+    "unapplied": "vars.closing - vars.owing",
+    "billed": "Sum(data.main.transactions.filter(t, t.kind == 'bill').map(t, t.amount))"
+  },
+  "styles": {
+    "tokens": {
+      "brand": "#0073AF",
+      "ink": "#231F20",
+      "muted": "#4E6A75",
+      "line": "#D5E4EA",
+      "panel": "#E8F4FB",
+      "negative": "#B42318",
+      "positive": "#1F7A4D",
+      "accent": "#1A9E8F",
+      "space-1": "3pt",
+      "space-2": "6pt",
+      "space-3": "12pt",
+      "chart-1": "#0073AF",
+      "chart-2": "#1A9E8F",
+      "chart-3": "#8FB8D0",
+      "chart-4": "#4E6A75"
+    },
+    "defaults": {
+      "document": {
+        "color": "var(--ink)",
+        "font-family": "Arimo",
+        "font-size": "8.5pt",
+        "line-height": 1.35
+      },
+      "heading": {
+        "margin": "var(--space-3) 0 var(--space-2)",
+        "color": "var(--brand)",
+        "font-size": "12pt",
+        "font-weight": 700
+      },
+      "table": {
+        "width": "100%",
+        "font-size": "8pt",
+        "border-collapse": "collapse",
+        "parts": {
+          "cell": {
+            "padding": "2.5pt 4pt",
+            "border-bottom": "0.5pt solid var(--line)"
+          },
+          "header-cell": {
+            "border-bottom": "0.75pt solid var(--brand)",
+            "color": "var(--muted)",
+            "font-weight": 700
+          },
+          "footer-cell": {
+            "border-top": "0.75pt solid var(--ink)",
+            "border-bottom": 0,
+            "font-weight": 700
+          },
+          "continued-header": {
+            "color": "var(--muted)",
+            "font-style": "italic"
+          }
+        }
+      }
+    },
+    "classes": {
+      "wordmark": {
+        "color": "var(--brand)",
+        "font-size": "20pt",
+        "font-weight": 700,
+        "line-height": 1.1
+      },
+      "muted": {
+        "color": "var(--muted)"
+      },
+      "small": {
+        "font-size": "7.5pt"
+      },
+      "strong": {
+        "font-weight": 700
+      },
+      "num": {
+        "font-variant-numeric": "tabular-nums",
+        "text-align": "right",
+        "white-space": "nowrap"
+      },
+      "kicker": {
+        "margin": "0 0 var(--space-1)",
+        "color": "var(--brand)",
+        "font-size": "7.5pt",
+        "font-weight": 700,
+        "letter-spacing": "0.4pt",
+        "text-transform": "uppercase"
+      },
+      "facts": {
+        "margin-top": "var(--space-3)",
+        "padding-top": "var(--space-2)",
+        "border-top": "0.75pt solid var(--line)",
+        "column-gap": "var(--space-2)",
+        "display": "grid",
+        "row-gap": "2pt",
+        "grid-template-columns": "2fr 3fr"
+      },
+      "panel": {
+        "padding": "var(--space-2) var(--space-3)",
+        "border-radius": "3pt",
+        "background-color": "var(--panel)",
+        "break-inside": "avoid"
+      },
+      "figure": {
+        "padding": "var(--space-2) var(--space-3)",
+        "border-left": "2pt solid var(--accent)"
+      },
+      "figure-value": {
+        "font-size": "13pt",
+        "font-weight": 700,
+        "font-variant-numeric": "tabular-nums",
+        "line-height": 1.25
+      }
+    }
+  },
+  "pages": [
+    {
+      "id": "a4",
+      "size": "A4",
+      "margin": "12mm 14mm 16mm",
+      "footerDistance": "8mm",
+      "header": [
+        {
+          "type": "box",
+          "id": "running-header",
+          "style": {
+            "margin-bottom": "var(--space-3)",
+            "padding-bottom": "var(--space-1)",
+            "border-bottom": "0.75pt solid var(--brand)",
+            "display": "flex",
+            "justify-content": "space-between",
+            "align-items": "baseline"
+          },
+          "children": [
+            {
+              "type": "text",
+              "id": "running-brand",
+              "class": [
+                "strong"
+              ],
+              "style": {
+                "color": "var(--brand)",
+                "font-size": "11pt"
+              },
+              "content": "Larkmere Water"
+            },
+            {
+              "type": "text",
+              "id": "running-title",
+              "class": [
+                "muted"
+              ],
+              "content": "Statement of account (continued) · {{ data.main.customer.name }} · Account {{ data.main.account.number }}"
+            }
+          ]
+        }
+      ],
+      "footer": [
+        {
+          "type": "box",
+          "id": "page-footer",
+          "class": [
+            "muted",
+            "small"
+          ],
+          "style": {
+            "display": "flex",
+            "justify-content": "space-between"
+          },
+          "children": [
+            {
+              "type": "text",
+              "id": "footer-company",
+              "content": "Larkmere Water · ABN 12 345 678 901 · accounts@larkmere.example · (07) 5550 0123"
+            },
+            {
+              "type": "text",
+              "id": "footer-page",
+              "content": "Statement {{ data.main.statement.number }} · Page {{ page.number }} of {{ page.count }}"
+            }
+          ]
+        }
+      ],
+      "variants": {
+        "first": {
+          "header": []
+        }
+      }
+    }
+  ],
+  "body": [
+    {
+      "type": "box",
+      "id": "masthead",
+      "style": {
+        "column-gap": "18pt",
+        "display": "grid",
+        "grid-template-columns": "1fr 1fr"
+      },
+      "children": [
+        {
+          "type": "box",
+          "id": "sender",
+          "children": [
+            {
+              "type": "text",
+              "id": "wordmark",
+              "class": [
+                "wordmark"
+              ],
+              "content": "Larkmere Water"
+            },
+            {
+              "type": "text",
+              "id": "sender-address",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "PO Box 100, Larkmere QLD 4999 · larkmere.example"
+            },
+            {
+              "type": "text",
+              "id": "customer-name",
+              "class": [
+                "strong"
+              ],
+              "style": {
+                "margin-top": "14mm"
+              },
+              "content": "{{ Upper(data.main.customer.name) }}"
+            },
+            {
+              "type": "text",
+              "id": "customer-attention",
+              "if": "!IsBlank(data.main.customer.attention)",
+              "content": "Attention: {{ data.main.customer.attention }}"
+            },
+            {
+              "type": "repeat",
+              "id": "customer-address",
+              "source": "data.main.customer.addressLines",
+              "as": "line",
+              "detail": [
+                {
+                  "type": "text",
+                  "id": "address-line",
+                  "content": "{{ line }}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "statement-head",
+          "children": [
+            {
+              "type": "heading",
+              "id": "title",
+              "style": {
+                "margin": 0,
+                "font-size": "20pt",
+                "line-height": 1.1
+              },
+              "level": 1,
+              "content": "Statement of account"
+            },
+            {
+              "type": "text",
+              "id": "subtitle",
+              "class": [
+                "muted"
+              ],
+              "content": "{{ Format(data.main.statement.periodStart, 'd MMMM y') }} to {{ Format(data.main.statement.date, 'd MMMM y') }}"
+            },
+            {
+              "type": "box",
+              "id": "facts",
+              "class": [
+                "facts"
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "account-label",
+                  "class": [
+                    "muted"
+                  ],
+                  "content": "Account number"
+                },
+                {
+                  "type": "text",
+                  "id": "account-value",
+                  "class": [
+                    "strong"
+                  ],
+                  "content": "{{ data.main.account.number }}"
+                },
+                {
+                  "type": "text",
+                  "id": "number-label",
+                  "class": [
+                    "muted"
+                  ],
+                  "content": "Statement number"
+                },
+                {
+                  "type": "text",
+                  "id": "number-value",
+                  "content": "{{ data.main.statement.number }}"
+                },
+                {
+                  "type": "text",
+                  "id": "date-label",
+                  "class": [
+                    "muted"
+                  ],
+                  "content": "Balances as at"
+                },
+                {
+                  "type": "text",
+                  "id": "date-value",
+                  "content": "{{ Format(data.main.statement.date, 'd MMMM y') }}"
+                },
+                {
+                  "type": "text",
+                  "id": "issued-label",
+                  "class": [
+                    "muted"
+                  ],
+                  "content": "Issue date"
+                },
+                {
+                  "type": "text",
+                  "id": "issued-value",
+                  "content": "{{ Format(data.main.statement.issueDate, 'd MMMM y') }}"
+                },
+                {
+                  "type": "text",
+                  "id": "properties-label",
+                  "class": [
+                    "muted"
+                  ],
+                  "content": "Properties"
+                },
+                {
+                  "type": "text",
+                  "id": "properties-value",
+                  "content": "{{ data.main.sites.size() }} on this account"
+                },
+                {
+                  "type": "text",
+                  "id": "manager-label",
+                  "if": "!IsBlank(data.main.account.manager)",
+                  "class": [
+                    "muted"
+                  ],
+                  "content": "Account manager"
+                },
+                {
+                  "type": "text",
+                  "id": "manager-value",
+                  "if": "!IsBlank(data.main.account.manager)",
+                  "content": "{{ data.main.account.manager }}, (07) 5550 0123"
+                }
+              ],
+              "meta": {
+                "label": "Statement facts"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "box",
+      "id": "balances",
+      "style": {
+        "margin-top": "8mm",
+        "column-gap": "var(--space-3)",
+        "display": "grid",
+        "grid-template-columns": "1fr 1fr 1fr 1.2fr",
+        "break-inside": "avoid"
+      },
+      "children": [
+        {
+          "type": "box",
+          "id": "opening",
+          "class": [
+            "figure"
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "opening-label",
+              "class": [
+                "muted"
+              ],
+              "content": "Opening balance"
+            },
+            {
+              "type": "text",
+              "id": "opening-value",
+              "class": [
+                "figure-value"
+              ],
+              "content": "{{ Format(vars.opening, 'currency') }}"
+            },
+            {
+              "type": "text",
+              "id": "opening-note",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "on {{ Format(data.main.statement.periodStart, 'd MMM y') }}"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "debits",
+          "class": [
+            "figure"
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "debits-label",
+              "class": [
+                "muted"
+              ],
+              "content": "Bills and charges"
+            },
+            {
+              "type": "text",
+              "id": "debits-value",
+              "class": [
+                "figure-value"
+              ],
+              "content": "+ {{ Format(vars.debits, 'currency') }}"
+            },
+            {
+              "type": "text",
+              "id": "debits-note",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "{{ data.main.transactions.filter(t, t.amount > 0).size() }} bills and charges"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "credits",
+          "class": [
+            "figure"
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "credits-label",
+              "class": [
+                "muted"
+              ],
+              "content": "Payments and credits"
+            },
+            {
+              "type": "text",
+              "id": "credits-value",
+              "class": [
+                "figure-value"
+              ],
+              "content": "− {{ Format(vars.credits, 'currency') }}"
+            },
+            {
+              "type": "text",
+              "id": "credits-note",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "{{ data.main.transactions.filter(t, t.amount < 0).size() }} payments and credits"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "closing",
+          "style": {
+            "padding": "var(--space-2) var(--space-3)",
+            "border-radius": "3pt",
+            "background-color": "var(--brand)",
+            "color": "#FFFFFF"
+          },
+          "children": [
+            {
+              "type": "text",
+              "id": "closing-label",
+              "content": "{{ If(vars.closing < 0, 'Closing balance, in credit', 'Closing balance') }}"
+            },
+            {
+              "type": "text",
+              "id": "closing-value",
+              "class": [
+                "figure-value"
+              ],
+              "style": {
+                "font-size": "16pt"
+              },
+              "content": "{{ Format(Abs(vars.closing), 'currency') }}{{ If(vars.closing < 0, ' CR', '') }}"
+            },
+            {
+              "type": "text",
+              "id": "closing-note",
+              "class": [
+                "small"
+              ],
+              "content": "{{ If(vars.closing > 0, 'Due by ' + Format(data.main.statement.dueDate, 'd MMMM y'), 'Nothing to pay') }}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "id": "ageing-heading",
+      "style": {
+        "margin-top": "7mm"
+      },
+      "level": 2,
+      "content": "What you owe, by age"
+    },
+    {
+      "type": "table",
+      "id": "table-ageing",
+      "columns": [
+        {
+          "id": "age-col-current",
+          "width": "1fr",
+          "class": [
+            "num"
+          ]
+        },
+        {
+          "id": "age-col-30",
+          "width": "1fr",
+          "class": [
+            "num"
+          ]
+        },
+        {
+          "id": "age-col-60",
+          "width": "1fr",
+          "class": [
+            "num"
+          ]
+        },
+        {
+          "id": "age-col-90",
+          "width": "1fr",
+          "class": [
+            "num"
+          ]
+        },
+        {
+          "id": "age-col-total",
+          "width": "1fr",
+          "class": [
+            "num"
+          ]
+        }
+      ],
+      "header": [
+        {
+          "id": "ageing-header",
+          "cells": [
+            {
+              "content": "Current"
+            },
+            {
+              "content": "30 to 59 days"
+            },
+            {
+              "content": "60 to 89 days"
+            },
+            {
+              "content": "90 days and over"
+            },
+            {
+              "content": "Total owing"
+            }
+          ]
+        }
+      ],
+      "rows": [
+        {
+          "id": "ageing-row",
+          "style": {
+            "font-size": "10pt"
+          },
+          "cells": [
+            {
+              "content": "{{ Format(vars.agedCurrent, 'currency') }}"
+            },
+            {
+              "rules": [
+                {
+                  "if": "vars.aged30 > 0",
+                  "style": {
+                    "color": "var(--negative)",
+                    "font-weight": 700
+                  }
+                }
+              ],
+              "content": "{{ Format(vars.aged30, 'currency') }}"
+            },
+            {
+              "rules": [
+                {
+                  "if": "vars.aged60 > 0",
+                  "style": {
+                    "color": "var(--negative)",
+                    "font-weight": 700
+                  }
+                }
+              ],
+              "content": "{{ Format(vars.aged60, 'currency') }}"
+            },
+            {
+              "rules": [
+                {
+                  "if": "vars.aged90 > 0",
+                  "style": {
+                    "color": "var(--negative)",
+                    "font-weight": 700
+                  }
+                }
+              ],
+              "content": "{{ Format(vars.aged90, 'currency') }}"
+            },
+            {
+              "style": {
+                "background-color": "var(--panel)",
+                "font-weight": 700
+              },
+              "content": "{{ Format(vars.owing, 'currency') }}"
+            }
+          ]
+        }
+      ],
+      "meta": {
+        "label": "Ageing summary",
+        "description": "Unpaid bills and charges by how long ago they were issued, as at the statement date."
+      }
+    },
+    {
+      "type": "box",
+      "id": "overdue-callout",
+      "if": "vars.overdue > 0",
+      "class": [
+        "panel"
+      ],
+      "style": {
+        "margin-top": "var(--space-2)",
+        "border-left": "3pt solid var(--negative)"
+      },
+      "children": [
+        {
+          "type": "text",
+          "id": "overdue-text",
+          "content": [
+            {
+              "type": "span",
+              "content": "{{ Format(vars.overdue, 'currency') }} is overdue.",
+              "style": {
+                "color": "var(--negative)"
+              },
+              "class": [
+                "strong"
+              ]
+            },
+            " Please pay it now. If you're querying a bill, call your account manager on (07) 5550 0123 so we can put it on hold while we look into it. Interest of 8% a year applies to overdue amounts."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "unapplied-note",
+      "if": "vars.unapplied < 0",
+      "class": [
+        "panel"
+      ],
+      "style": {
+        "margin-top": "var(--space-2)"
+      },
+      "content": "You have {{ Format(-vars.unapplied, 'currency') }} in unapplied credit. We'll apply it to your next bills, or call us to have it refunded."
+    },
+    {
+      "type": "heading",
+      "id": "transactions-heading",
+      "style": {
+        "margin-top": "7mm"
+      },
+      "level": 2,
+      "content": "Transactions"
+    },
+    {
+      "type": "table",
+      "id": "table-transactions",
+      "rules": [
+        {
+          "if": "t.kind == 'opening'",
+          "style": {
+            "parts": {
+              "row": {
+                "background-color": "var(--panel)",
+                "font-weight": 700
+              }
+            }
+          }
+        }
+      ],
+      "source": "vars.lines",
+      "as": "t",
+      "vars": {
+        "balance": "vars.opening + RunningSum(t.amount)"
+      },
+      "columns": [
+        {
+          "id": "col-date",
+          "width": "1.25fr",
+          "header": "Date",
+          "cell": "{{ Format(t.date, 'd MMM y') }}"
+        },
+        {
+          "id": "col-reference",
+          "width": "1.25fr",
+          "header": "Reference",
+          "cell": "{{ t.reference }}"
+        },
+        {
+          "id": "col-site",
+          "width": "1.6fr",
+          "header": "Property",
+          "cell": "{{ Coalesce(t.site, '') }}"
+        },
+        {
+          "id": "col-description",
+          "width": "3fr",
+          "header": "Description",
+          "rules": [
+            {
+              "if": "t.kind == 'interest'",
+              "style": {
+                "color": "var(--negative)"
+              }
+            }
+          ],
+          "cell": "{{ t.description }}",
+          "footer": "Closing balance at {{ Format(data.main.statement.date, 'd MMM y') }}"
+        },
+        {
+          "id": "col-debit",
+          "width": "1.4fr",
+          "header": "Debit",
+          "class": [
+            "num"
+          ],
+          "cell": "{{ If(t.amount > 0, Format(t.amount, 'currency'), '') }}",
+          "footer": "{{ Format(vars.debits, 'currency') }}"
+        },
+        {
+          "id": "col-credit",
+          "width": "1.4fr",
+          "header": "Credit",
+          "class": [
+            "num"
+          ],
+          "rules": [
+            {
+              "if": "t.amount < 0",
+              "style": {
+                "color": "var(--positive)"
+              }
+            }
+          ],
+          "cell": "{{ If(t.amount < 0, Format(-t.amount, 'currency'), '') }}",
+          "footer": "{{ Format(vars.credits, 'currency') }}"
+        },
+        {
+          "id": "col-balance",
+          "width": "1.5fr",
+          "header": "Balance",
+          "class": [
+            "num",
+            "strong"
+          ],
+          "cell": "{{ Format(Abs(vars.balance), 'currency') }}{{ If(vars.balance < 0, ' CR', '') }}",
+          "footer": "{{ Format(Abs(vars.closing), 'currency') }}{{ If(vars.closing < 0, ' CR', '') }}"
+        }
+      ],
+      "continuationHeader": [
+        {
+          "id": "brought-forward",
+          "cells": [
+            {
+              "colspan": 6,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "brought-forward-label",
+                  "content": "Continued from page {{ page.number - 1 }} · balance brought forward"
+                }
+              ]
+            },
+            {
+              "class": [
+                "num",
+                "strong"
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "brought-forward-balance",
+                  "content": "{{ Format(vars.opening + Sum(fragment.rowsBefore.map(r, r.amount)), 'currency') }}"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "continuationFooter": [
+        {
+          "id": "carried-forward",
+          "style": {
+            "color": "var(--muted)",
+            "font-style": "italic"
+          },
+          "cells": [
+            {
+              "colspan": 6,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "carried-forward-label",
+                  "content": "Continued on page {{ page.number + 1 }} · balance carried forward"
+                }
+              ]
+            },
+            {
+              "class": [
+                "num",
+                "strong"
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "carried-forward-balance",
+                  "content": "{{ Format(vars.opening + Sum(fragment.rowsBefore.map(r, r.amount)) + Sum(fragment.rows.map(r, r.amount)), 'currency') }}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "box",
+      "id": "closing-summary",
+      "style": {
+        "margin-top": "7mm",
+        "column-gap": "var(--space-3)",
+        "display": "grid",
+        "grid-template-columns": "2fr 1fr",
+        "break-inside": "avoid"
+      },
+      "children": [
+        {
+          "type": "box",
+          "id": "sites-col",
+          "children": [
+            {
+              "type": "heading",
+              "id": "sites-heading",
+              "style": {
+                "margin-top": 0
+              },
+              "level": 2,
+              "content": "By property"
+            },
+            {
+              "type": "table",
+              "id": "table-sites",
+              "source": "data.main.sites",
+              "as": "s",
+              "vars": {
+                "siteBilled": "Sum(data.main.transactions.filter(t, Coalesce(t.site, '') == s.name && t.kind == 'bill').map(t, t.amount))",
+                "siteOwed": "Sum(data.main.transactions.filter(t, Coalesce(t.site, '') == s.name).map(t, Coalesce(t.outstanding, 0)))"
+              },
+              "columns": [
+                {
+                  "id": "col-site-name",
+                  "width": "2fr",
+                  "header": "Property",
+                  "class": [
+                    "strong"
+                  ],
+                  "cell": "{{ s.name }}",
+                  "footer": "All properties"
+                },
+                {
+                  "id": "col-site-address",
+                  "width": "3fr",
+                  "header": "Address",
+                  "class": [
+                    "muted"
+                  ],
+                  "cell": [
+                    {
+                      "type": "span",
+                      "content": "{{ s.address }}",
+                      "class": [
+                        "small"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "col-site-billed",
+                  "width": "1.6fr",
+                  "header": "Billed",
+                  "class": [
+                    "num"
+                  ],
+                  "cell": "{{ Format(vars.siteBilled, 'currency') }}",
+                  "footer": "{{ Format(vars.billed, 'currency') }}"
+                },
+                {
+                  "id": "col-site-owed",
+                  "width": "1.6fr",
+                  "header": "Unpaid",
+                  "class": [
+                    "num"
+                  ],
+                  "rules": [
+                    {
+                      "if": "Coalesce(vars.siteOwed, 0) > 0",
+                      "style": {
+                        "font-weight": 700
+                      }
+                    }
+                  ],
+                  "cell": "{{ Format(vars.siteOwed, 'currency') }}",
+                  "footer": "{{ Format(vars.owing, 'currency') }}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "how-to-pay",
+          "children": [
+            {
+              "type": "heading",
+              "id": "pay-heading",
+              "style": {
+                "margin-top": 0
+              },
+              "level": 2,
+              "content": "How to pay"
+            },
+            {
+              "type": "box",
+              "id": "pay-panel",
+              "class": [
+                "panel"
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "pay-reference-label",
+                  "class": [
+                    "kicker"
+                  ],
+                  "content": "Payment reference"
+                },
+                {
+                  "type": "text",
+                  "id": "pay-reference",
+                  "class": [
+                    "strong"
+                  ],
+                  "style": {
+                    "font-size": "13pt",
+                    "letter-spacing": "0.5pt"
+                  },
+                  "content": "{{ data.main.account.paymentReference }}"
+                },
+                {
+                  "type": "text",
+                  "id": "pay-online",
+                  "style": {
+                    "margin-top": "var(--space-2)"
+                  },
+                  "content": [
+                    {
+                      "type": "span",
+                      "content": "Online",
+                      "class": [
+                        "strong"
+                      ]
+                    },
+                    " at larkmere.example/pay"
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "pay-phone",
+                  "content": [
+                    {
+                      "type": "span",
+                      "content": "By phone",
+                      "class": [
+                        "strong"
+                      ]
+                    },
+                    " on 1300 975 709, any time"
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "pay-debit",
+                  "content": [
+                    {
+                      "type": "span",
+                      "content": "Direct debit",
+                      "class": [
+                        "strong"
+                      ]
+                    },
+                    ": ask your account manager"
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "pay-person",
+                  "content": [
+                    {
+                      "type": "span",
+                      "content": "In person",
+                      "class": [
+                        "strong"
+                      ]
+                    },
+                    " at 40 Weir Street, Larkmere"
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "pay-remit",
+                  "class": [
+                    "muted",
+                    "small"
+                  ],
+                  "style": {
+                    "margin-top": "var(--space-2)"
+                  },
+                  "content": "Paying several bills at once? Email a remittance advice to accounts@larkmere.example so we can match your payment to each bill."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "outputs": {
+    "pdf": {
+      "standard": "PDF/UA-1"
+    },
+    "xlsx": {
+      "sheets": [
+        {
+          "name": "Transactions",
+          "from": "table-transactions",
+          "freeze": "A2"
+        }
+      ]
+    }
+  },
+  "tests": [
+    {
+      "name": "sample statement runs over two pages with a running balance",
+      "data": {
+        "main": "samples/main.json"
+      },
+      "expect": [
+        "pages.size() == 2",
+        "diagnostics.all(d, d.severity != 'error')",
+        "text('closing-value') == '$18,684.14'",
+        "nodes('age-col-total').exists(b, b.text == '$18,684.14')",
+        "nodes('age-col-90').exists(b, b.text == '$2,144.76')",
+        "visible('overdue-callout')",
+        "!visible('unapplied-note')",
+        "nodes('running-header').size() == pages.size() - 1",
+        "nodes('carried-forward-label').size() == pages.size() - 1",
+        "text('carried-forward-balance') == '$20,300.34'",
+        "node('brought-forward-label').page == 2",
+        "text('brought-forward-balance') == '$20,300.34'",
+        "nodes('footer-page').map(b, b.text) == ['Statement ST-2609-0412 · Page 1 of 2', 'Statement ST-2609-0412 · Page 2 of 2']",
+        "node('closing-summary').page == pages.size()"
+      ],
+      "snapshot": true
+    },
+    {
+      "name": "a quiet month fits on one page",
+      "data": {
+        "main": "tests/quiet-month.json"
+      },
+      "expect": [
+        "pages.size() == 1",
+        "diagnostics.all(d, d.severity != 'error')",
+        "!visible('running-header')",
+        "!visible('carried-forward-label')",
+        "!visible('brought-forward-label')",
+        "!visible('overdue-callout')",
+        "text('closing-value') == '$277.85'",
+        "text('footer-page') == 'Statement ST-2609-0577 · Page 1 of 1'"
+      ]
+    },
+    {
+      "name": "a long statement carries its balance across every page",
+      "data": {
+        "main": "tests/long-statement.json"
+      },
+      "expect": [
+        "pages.size() >= 3",
+        "diagnostics.all(d, d.severity != 'error')",
+        "nodes('running-header').size() == pages.size() - 1",
+        "nodes('carried-forward-label').size() == pages.size() - 1",
+        "nodes('brought-forward-label').size() == pages.size() - 1",
+        "nodes('brought-forward-balance').map(b, b.text) == nodes('carried-forward-balance').map(b, b.text)",
+        "nodes('footer-page').size() == pages.size()",
+        "node('closing-summary').page == pages.size()",
+        "text('closing-value') == '$13,251.55'"
+      ]
+    },
+    {
+      "name": "an account in credit has nothing to pay",
+      "data": {
+        "main": "tests/in-credit.json"
+      },
+      "expect": [
+        "diagnostics.all(d, d.severity != 'error')",
+        "text('closing-label') == 'Closing balance, in credit'",
+        "text('closing-value') == '$500.00 CR'",
+        "text('closing-note') == 'Nothing to pay'",
+        "visible('unapplied-note')",
+        "!visible('overdue-callout')",
+        "nodes('age-col-total').exists(b, b.text == '$0.00')"
+      ]
+    }
+  ]
+}

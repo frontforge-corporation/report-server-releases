@@ -1,0 +1,902 @@
+{
+  "$schema": "https://reportforge.dev/schema/rfml/0.1.json",
+  "rfml": "0.1",
+  "id": "backflow-certificate",
+  "meta": {
+    "title": "Backflow test certificate",
+    "description": "Larkmere Water's certificate that a backflow prevention device was tested, one landscape A4 page per device. Each shows the property, device, result and next test or re-test date, signature lines, and a QR code to verify it.",
+    "locale": "en-AU",
+    "currency": "AUD",
+    "tags": [
+      "example",
+      "certificate",
+      "compliance",
+      "water"
+    ]
+  },
+  "data": {
+    "main": {
+      "schema": {
+        "$ref": "schemas/main.json"
+      },
+      "sample": "samples/main.json",
+      "description": "The backflow device tests to certify, one certificate each."
+    }
+  },
+  "styles": {
+    "tokens": {
+      "brand": "#0073AF",
+      "ink": "#231F20",
+      "muted": "#4E6A75",
+      "line": "#D5E4EA",
+      "panel": "#E8F4FB",
+      "negative": "#B42318",
+      "positive": "#1F7A4D",
+      "accent": "#1A9E8F",
+      "space-1": "3pt",
+      "space-2": "6pt",
+      "space-3": "12pt"
+    },
+    "defaults": {
+      "document": {
+        "color": "var(--ink)",
+        "font-family": "Arimo",
+        "font-size": "9pt",
+        "line-height": 1.35
+      },
+      "heading": {
+        "margin": "var(--space-2) 0 var(--space-3)",
+        "color": "var(--brand)",
+        "font-size": "25pt",
+        "font-weight": 700,
+        "text-align": "center"
+      }
+    },
+    "classes": {
+      "wordmark": {
+        "color": "var(--brand)",
+        "font-size": "15pt",
+        "font-weight": 700,
+        "text-align": "center"
+      },
+      "program": {
+        "margin-top": "2pt",
+        "color": "var(--muted)",
+        "font-size": "7.5pt",
+        "font-weight": 700,
+        "letter-spacing": "1.5pt",
+        "text-align": "center",
+        "text-transform": "uppercase"
+      },
+      "statement": {
+        "max-width": "190mm",
+        "margin": "0 auto",
+        "font-size": "10.5pt",
+        "line-height": 1.45,
+        "text-align": "center"
+      },
+      "result": {
+        "margin-top": "var(--space-3)",
+        "padding": "4pt 20pt",
+        "border": "1.5pt solid var(--positive)",
+        "border-radius": "3pt",
+        "color": "var(--positive)",
+        "font-size": "13pt",
+        "font-weight": 700,
+        "letter-spacing": "2pt",
+        "text-transform": "uppercase"
+      },
+      "failed": {
+        "border-color": "var(--negative)",
+        "color": "var(--negative)"
+      },
+      "detail": {
+        "padding-top": "var(--space-2)",
+        "border-top": "1.5pt solid var(--brand)"
+      },
+      "kicker": {
+        "margin-bottom": "var(--space-2)",
+        "color": "var(--brand)",
+        "font-size": "7.5pt",
+        "font-weight": 700,
+        "letter-spacing": "0.6pt",
+        "text-transform": "uppercase"
+      },
+      "facts": {
+        "column-gap": "var(--space-2)",
+        "display": "grid",
+        "row-gap": "3pt",
+        "grid-template-columns": "24mm 1fr"
+      },
+      "label": {
+        "color": "var(--muted)"
+      },
+      "value": {
+        "font-weight": 700
+      },
+      "signature": {
+        "padding-top": "var(--space-1)",
+        "border-top": "0.75pt solid var(--ink)"
+      },
+      "small": {
+        "font-size": "7.5pt"
+      },
+      "muted": {
+        "color": "var(--muted)"
+      },
+      "corner": {
+        "width": "4mm",
+        "height": "4mm",
+        "border": "1pt solid #FFFFFF",
+        "background-color": "var(--brand)",
+        "rotate": "45deg"
+      },
+      "nowrap": {
+        "white-space": "nowrap"
+      }
+    }
+  },
+  "pages": [
+    {
+      "id": "landscape",
+      "size": "A4",
+      "orientation": "landscape",
+      "margin": "20mm 24mm 21mm",
+      "footerDistance": "13mm",
+      "footer": [
+        {
+          "type": "text",
+          "id": "footer-issuer",
+          "class": [
+            "muted",
+            "small"
+          ],
+          "style": {
+            "text-align": "center"
+          },
+          "content": "Larkmere Water  ·  ABN 12 345 678 901  ·  PO Box 100, Larkmere QLD 4999  ·  1300 975 707  ·  customercare@larkmere.example  ·  larkmere.example"
+        }
+      ],
+      "background": [
+        {
+          "type": "box",
+          "id": "border-outer",
+          "style": {
+            "border": "2.5pt solid var(--brand)",
+            "top": "7mm",
+            "right": "7mm",
+            "bottom": "7mm",
+            "left": "7mm"
+          }
+        },
+        {
+          "type": "box",
+          "id": "border-inner",
+          "style": {
+            "border": "0.75pt solid var(--accent)",
+            "top": "10mm",
+            "right": "10mm",
+            "bottom": "10mm",
+            "left": "10mm"
+          }
+        },
+        {
+          "type": "box",
+          "id": "corner-top-left",
+          "class": [
+            "corner"
+          ],
+          "style": {
+            "top": "5.4mm",
+            "left": "5.4mm"
+          }
+        },
+        {
+          "type": "box",
+          "id": "corner-top-right",
+          "class": [
+            "corner"
+          ],
+          "style": {
+            "top": "5.4mm",
+            "right": "5.4mm"
+          }
+        },
+        {
+          "type": "box",
+          "id": "corner-bottom-left",
+          "class": [
+            "corner"
+          ],
+          "style": {
+            "bottom": "5.4mm",
+            "left": "5.4mm"
+          }
+        },
+        {
+          "type": "box",
+          "id": "corner-bottom-right",
+          "class": [
+            "corner"
+          ],
+          "style": {
+            "right": "5.4mm",
+            "bottom": "5.4mm"
+          }
+        }
+      ]
+    }
+  ],
+  "body": [
+    {
+      "type": "repeat",
+      "id": "certificates",
+      "source": "data.main.tests",
+      "as": "test",
+      "detail": [
+        {
+          "type": "box",
+          "id": "certificate",
+          "style": {
+            "min-height": "165mm",
+            "display": "flex",
+            "flex-direction": "column"
+          },
+          "children": [
+            {
+              "type": "text",
+              "id": "cert-wordmark",
+              "class": [
+                "wordmark"
+              ],
+              "content": "Larkmere Water"
+            },
+            {
+              "type": "text",
+              "id": "cert-program",
+              "class": [
+                "program"
+              ],
+              "content": "Backflow prevention program"
+            },
+            {
+              "type": "heading",
+              "id": "cert-title",
+              "level": 1,
+              "content": "Certificate of backflow device testing"
+            },
+            {
+              "type": "text",
+              "id": "cert-statement",
+              "class": [
+                "statement"
+              ],
+              "content": [
+                "This certificate records that the backflow prevention device described below was tested by a licensed tester on ",
+                {
+                  "type": "span",
+                  "content": "{{ Format(test.testDate, 'd MMMM y') }}",
+                  "class": [
+                    "nowrap"
+                  ]
+                },
+                " and ",
+                {
+                  "type": "span",
+                  "content": "passed its annual test.",
+                  "if": "test.passed"
+                },
+                {
+                  "type": "span",
+                  "content": [
+                    "did not pass. It must be repaired and tested again by ",
+                    {
+                      "type": "span",
+                      "content": "{{ Format(test.retestBy, 'd MMMM y') }}",
+                      "class": [
+                        "nowrap"
+                      ]
+                    },
+                    "."
+                  ],
+                  "if": "!test.passed"
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "id": "result-row",
+              "style": {
+                "display": "flex",
+                "justify-content": "center"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "id": "result",
+                  "class": [
+                    "result"
+                  ],
+                  "rules": [
+                    {
+                      "if": "!test.passed",
+                      "class": [
+                        "failed"
+                      ]
+                    }
+                  ],
+                  "content": "{{ If(test.passed, 'Passed', 'Not passed') }}"
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "id": "details",
+              "style": {
+                "margin-top": "9mm",
+                "column-gap": "10mm",
+                "display": "grid",
+                "grid-template-columns": "1fr 1.25fr 1fr"
+              },
+              "children": [
+                {
+                  "type": "box",
+                  "id": "property",
+                  "class": [
+                    "detail"
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "property-title",
+                      "class": [
+                        "kicker"
+                      ],
+                      "content": "Property"
+                    },
+                    {
+                      "type": "box",
+                      "id": "property-facts",
+                      "class": [
+                        "facts"
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "owner-label",
+                          "class": [
+                            "label"
+                          ],
+                          "content": "Owner"
+                        },
+                        {
+                          "type": "text",
+                          "id": "owner-value",
+                          "class": [
+                            "value"
+                          ],
+                          "content": "{{ test.property.owner }}"
+                        },
+                        {
+                          "type": "text",
+                          "id": "address-label",
+                          "class": [
+                            "label"
+                          ],
+                          "content": "Address"
+                        },
+                        {
+                          "type": "text",
+                          "id": "address-value",
+                          "class": [
+                            "value"
+                          ],
+                          "content": [
+                            "{{ test.property.address }}",
+                            {
+                              "type": "br"
+                            },
+                            "{{ test.property.locality }}"
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "account-label",
+                          "if": "has(test.property.account)",
+                          "class": [
+                            "label"
+                          ],
+                          "content": "Water account"
+                        },
+                        {
+                          "type": "text",
+                          "id": "account-value",
+                          "if": "has(test.property.account)",
+                          "class": [
+                            "value"
+                          ],
+                          "content": "{{ test.property.account }}"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "box",
+                  "id": "device",
+                  "class": [
+                    "detail"
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "device-title",
+                      "class": [
+                        "kicker"
+                      ],
+                      "content": "Device"
+                    },
+                    {
+                      "type": "box",
+                      "id": "device-facts",
+                      "class": [
+                        "facts"
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "type-label",
+                          "class": [
+                            "label"
+                          ],
+                          "content": "Type"
+                        },
+                        {
+                          "type": "text",
+                          "id": "type-value",
+                          "class": [
+                            "value"
+                          ],
+                          "content": "{{ test.device.type }}"
+                        },
+                        {
+                          "type": "text",
+                          "id": "model-label",
+                          "class": [
+                            "label"
+                          ],
+                          "content": "Make and model"
+                        },
+                        {
+                          "type": "text",
+                          "id": "model-value",
+                          "class": [
+                            "value"
+                          ],
+                          "content": "{{ test.device.make }} {{ test.device.model }}"
+                        },
+                        {
+                          "type": "text",
+                          "id": "size-label",
+                          "class": [
+                            "label"
+                          ],
+                          "content": "Size"
+                        },
+                        {
+                          "type": "text",
+                          "id": "size-value",
+                          "class": [
+                            "value"
+                          ],
+                          "content": "{{ test.device.size }}"
+                        },
+                        {
+                          "type": "text",
+                          "id": "serial-label",
+                          "class": [
+                            "label"
+                          ],
+                          "content": "Serial number"
+                        },
+                        {
+                          "type": "text",
+                          "id": "serial-value",
+                          "class": [
+                            "value"
+                          ],
+                          "content": "{{ test.device.serial }}"
+                        },
+                        {
+                          "type": "text",
+                          "id": "location-label",
+                          "if": "has(test.device.location)",
+                          "class": [
+                            "label"
+                          ],
+                          "content": "Location"
+                        },
+                        {
+                          "type": "text",
+                          "id": "location-value",
+                          "if": "has(test.device.location)",
+                          "class": [
+                            "value"
+                          ],
+                          "content": "{{ test.device.location }}"
+                        },
+                        {
+                          "type": "text",
+                          "id": "hazard-label",
+                          "if": "has(test.device.hazard)",
+                          "class": [
+                            "label"
+                          ],
+                          "content": "Hazard rating"
+                        },
+                        {
+                          "type": "text",
+                          "id": "hazard-value",
+                          "if": "has(test.device.hazard)",
+                          "class": [
+                            "value"
+                          ],
+                          "content": "{{ test.device.hazard }}"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "box",
+                  "id": "testing",
+                  "class": [
+                    "detail"
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "testing-title",
+                      "class": [
+                        "kicker"
+                      ],
+                      "content": "Test"
+                    },
+                    {
+                      "type": "box",
+                      "id": "testing-facts",
+                      "class": [
+                        "facts"
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "date-label",
+                          "class": [
+                            "label"
+                          ],
+                          "content": "Test date"
+                        },
+                        {
+                          "type": "text",
+                          "id": "date-value",
+                          "class": [
+                            "value"
+                          ],
+                          "content": "{{ Format(test.testDate, 'd MMM y') }}"
+                        },
+                        {
+                          "type": "text",
+                          "id": "outcome-label",
+                          "class": [
+                            "label"
+                          ],
+                          "content": "Result"
+                        },
+                        {
+                          "type": "text",
+                          "id": "outcome-value",
+                          "class": [
+                            "value"
+                          ],
+                          "style": {
+                            "color": "var(--positive)"
+                          },
+                          "rules": [
+                            {
+                              "if": "!test.passed",
+                              "style": {
+                                "color": "var(--negative)"
+                              }
+                            }
+                          ],
+                          "content": "{{ If(test.passed, 'Passed', 'Not passed') }}"
+                        },
+                        {
+                          "type": "text",
+                          "id": "next-label",
+                          "if": "test.passed",
+                          "class": [
+                            "label"
+                          ],
+                          "content": "Next test due"
+                        },
+                        {
+                          "type": "text",
+                          "id": "next-value",
+                          "if": "test.passed",
+                          "class": [
+                            "value"
+                          ],
+                          "content": "{{ Format(test.nextTestDue, 'd MMM y') }}"
+                        },
+                        {
+                          "type": "text",
+                          "id": "retest-label",
+                          "if": "!test.passed",
+                          "class": [
+                            "label"
+                          ],
+                          "content": "Re-test by"
+                        },
+                        {
+                          "type": "text",
+                          "id": "retest-value",
+                          "if": "!test.passed",
+                          "class": [
+                            "value"
+                          ],
+                          "style": {
+                            "color": "var(--negative)"
+                          },
+                          "content": "{{ Format(test.retestBy, 'd MMM y') }}"
+                        },
+                        {
+                          "type": "text",
+                          "id": "number-label",
+                          "class": [
+                            "label"
+                          ],
+                          "content": "Certificate"
+                        },
+                        {
+                          "type": "text",
+                          "id": "number-value",
+                          "class": [
+                            "value"
+                          ],
+                          "content": "{{ test.certificateNumber }}"
+                        },
+                        {
+                          "type": "text",
+                          "id": "issued-label",
+                          "class": [
+                            "label"
+                          ],
+                          "content": "Issued"
+                        },
+                        {
+                          "type": "text",
+                          "id": "issued-value",
+                          "class": [
+                            "value"
+                          ],
+                          "content": "{{ Format(data.main.issueDate, 'd MMM y') }}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "finding",
+              "if": "!test.passed && has(test.finding)",
+              "style": {
+                "margin-top": "var(--space-3)",
+                "padding": "var(--space-2) var(--space-3)",
+                "border-left": "2pt solid var(--negative)",
+                "background-color": "var(--panel)"
+              },
+              "content": [
+                {
+                  "type": "span",
+                  "content": "Finding ",
+                  "style": {
+                    "color": "var(--negative)",
+                    "font-weight": 700
+                  }
+                },
+                "{{ test.finding }}"
+              ]
+            },
+            {
+              "type": "box",
+              "id": "signatures",
+              "style": {
+                "margin-top": "auto",
+                "padding-top": "12mm",
+                "column-gap": "12mm",
+                "display": "grid",
+                "align-items": "end",
+                "grid-template-columns": "1fr 1fr 66mm"
+              },
+              "children": [
+                {
+                  "type": "box",
+                  "id": "sign-tester",
+                  "class": [
+                    "signature"
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "tester-name",
+                      "class": [
+                        "value"
+                      ],
+                      "content": "{{ test.tester.name }}"
+                    },
+                    {
+                      "type": "text",
+                      "id": "tester-licence",
+                      "class": [
+                        "muted"
+                      ],
+                      "content": "Licensed backflow tester, licence {{ test.tester.licence }}"
+                    },
+                    {
+                      "type": "text",
+                      "id": "tester-business",
+                      "if": "has(test.tester.business)",
+                      "class": [
+                        "muted"
+                      ],
+                      "content": "{{ test.tester.business }}"
+                    }
+                  ]
+                },
+                {
+                  "type": "box",
+                  "id": "sign-officer",
+                  "class": [
+                    "signature"
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "officer-name",
+                      "class": [
+                        "value"
+                      ],
+                      "content": "{{ data.main.complianceOfficer.name }}"
+                    },
+                    {
+                      "type": "text",
+                      "id": "officer-position",
+                      "class": [
+                        "muted"
+                      ],
+                      "content": "{{ data.main.complianceOfficer.position }}"
+                    },
+                    {
+                      "type": "text",
+                      "id": "officer-company",
+                      "class": [
+                        "muted"
+                      ],
+                      "content": "Larkmere Water"
+                    }
+                  ]
+                },
+                {
+                  "type": "box",
+                  "id": "verify",
+                  "style": {
+                    "display": "flex",
+                    "align-items": "center",
+                    "gap": "var(--space-3)"
+                  },
+                  "children": [
+                    {
+                      "type": "barcode",
+                      "id": "verify-code",
+                      "style": {
+                        "width": "22mm",
+                        "height": "22mm"
+                      },
+                      "symbology": "qr",
+                      "value": "'https://larkmere.example/verify/' + test.certificateNumber",
+                      "errorCorrection": "M"
+                    },
+                    {
+                      "type": "text",
+                      "id": "verify-text",
+                      "class": [
+                        "small"
+                      ],
+                      "content": [
+                        {
+                          "type": "span",
+                          "content": "Certificate {{ test.certificateNumber }}",
+                          "class": [
+                            "value"
+                          ]
+                        },
+                        {
+                          "type": "br"
+                        },
+                        {
+                          "type": "span",
+                          "content": "Scan the code, or visit larkmere.example/verify, to check this certificate is genuine.",
+                          "class": [
+                            "muted"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "separator": [
+        {
+          "type": "pagebreak",
+          "id": "next-certificate"
+        }
+      ]
+    }
+  ],
+  "tests": [
+    {
+      "name": "sample is three certificates, one per page",
+      "data": {
+        "main": "samples/main.json"
+      },
+      "expect": [
+        "pages.size() == 3",
+        "diagnostics.all(d, d.severity != 'error')",
+        "nodes('certificate').map(n, n.page) == [1, 2, 3]",
+        "text('result') == 'PASSED'",
+        "nodes('retest-value').map(n, n.page) == [3]",
+        "nodes('verify-code').size() == 3"
+      ],
+      "snapshot": true
+    },
+    {
+      "name": "a failed test shows not passed and a re-test date",
+      "data": {
+        "main": "tests/failed.json"
+      },
+      "expect": [
+        "pages.size() == 1",
+        "diagnostics.all(d, d.severity != 'error')",
+        "text('result') == 'NOT PASSED'",
+        "text('outcome-value') == 'Not passed'",
+        "text('retest-value') == '18 Nov 2026'",
+        "!visible('next-value')",
+        "text('cert-statement').endsWith('did not pass. It must be repaired and tested again by 18 November 2026.')",
+        "text('finding') == 'Finding The second check valve did not close tight.'",
+        "!visible('account-value') && !visible('location-value') && !visible('tester-business')"
+      ]
+    },
+    {
+      "name": "long details still fit one certificate per page",
+      "data": {
+        "main": "tests/long-details.json"
+      },
+      "expect": [
+        "pages.size() == 2",
+        "diagnostics.all(d, d.severity != 'error' && d.severity != 'warning')",
+        "nodes('signatures').map(n, n.page) == [1, 2]",
+        "nodes('verify-code').map(n, n.page) == [1, 2]",
+        "visible('finding')",
+        "nodes('next-value').map(n, n.page) == [2]"
+      ]
+    }
+  ]
+}

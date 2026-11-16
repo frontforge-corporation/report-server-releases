@@ -1,0 +1,12 @@
+{
+  "examples": [
+    "water-bill",
+    "account-statement",
+    "works-invoice",
+    "customer-letter",
+    "operations-dashboard",
+    "meter-readings",
+    "backflow-certificate",
+    "parts-label"
+  ]
+}

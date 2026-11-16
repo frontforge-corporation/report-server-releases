@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Quarterly water bill",
+  "description": "One residential property's water and wastewater bill for one quarter.",
+  "type": "object",
+  "required": ["customer", "account", "bill", "property", "payments", "meters", "charges", "usage"],
+  "additionalProperties": false,
+  "properties": {
+    "customer": {
+      "type": "object",
+      "required": ["name", "addressLines"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string", "title": "Customer" },
+        "addressLines": { "type": "array", "title": "Postal address", "items": { "type": "string" } }
+      }
+    },
+    "account": {
+      "type": "object",
+      "required": ["number", "paymentReference"],
+      "additionalProperties": false,
+      "properties": {
+        "number": { "type": "string", "title": "Account number" },
+        "paymentReference": { "type": "string", "title": "Payment reference", "description": "Digits only; it is also the payment slip's barcode." }
+      }
+    },
+    "bill": {
+      "type": "object",
+      "required": ["number", "issueDate", "dueDate", "periodStart", "periodEnd", "previousBalance"],
+      "additionalProperties": false,
+      "properties": {
+        "number": { "type": "string", "title": "Bill number" },
+        "issueDate": { "type": "string", "format": "date", "title": "Issue date" },
+        "dueDate": { "type": "string", "format": "date", "title": "Due date" },
+        "periodStart": { "type": "string", "format": "date", "title": "Billing period start" },
+        "periodEnd": { "type": "string", "format": "date", "title": "Billing period end" },
+        "nextReadDate": { "type": "string", "format": "date", "title": "Next meter reading" },
+        "previousBalance": { "type": "number", "title": "Previous bill", "description": "The total due on the last bill." },
+        "wastewaterShare": { "type": "number", "title": "Wastewater share", "description": "Share of water use charged as wastewater, such as 0.85 for 85%." }
+      }
+    },
+    "property": {
+      "type": "object",
+      "required": ["address"],
+      "additionalProperties": false,
+      "properties": {
+        "address": { "type": "string", "title": "Property address" },
+        "lotPlan": { "type": "string", "title": "Lot and plan" }
+      }
+    },
+    "payments": {
+      "type": "array",
+      "title": "Payments since the last bill",
+      "items": {
+        "type": "object",
+        "required": ["date", "method", "amount"],
+        "additionalProperties": false,
+        "properties": {
+          "date": { "type": "string", "format": "date", "title": "Date" },
+          "method": { "type": "string", "title": "Method" },
+          "amount": { "type": "number", "title": "Amount", "description": "Positive: the amount received." }
+        }
+      }
+    },
+    "adjustments": {
+      "type": "array",
+      "title": "Adjustments since the last bill",
+      "items": {
+        "type": "object",
+        "required": ["date", "description", "amount"],
+        "additionalProperties": false,
+        "properties": {
+          "date": { "type": "string", "format": "date", "title": "Date" },
+          "description": { "type": "string", "title": "Description" },
+          "amount": { "type": "number", "title": "Amount", "description": "Interest is positive, a credit negative." }
+        }
+      }
+    },
+    "meters": {
+      "type": "array",
+      "title": "Water meters",
+      "items": {
+        "type": "object",
+        "required": ["number", "size", "previousDate", "previousReading", "currentDate", "currentReading", "readType"],
+        "additionalProperties": false,
+        "properties": {
+          "number": { "type": "string", "title": "Meter number" },
+          "size": { "type": "string", "title": "Meter size" },
+          "previousDate": { "type": "string", "format": "date", "title": "Previous reading date" },
+          "previousReading": { "type": "integer", "title": "Previous reading (kL)" },
+          "currentDate": { "type": "string", "format": "date", "title": "Current reading date" },
+          "currentReading": { "type": "integer", "title": "Current reading (kL)" },
+          "readType": { "type": "string", "enum": ["Actual", "Estimated"], "title": "Read type" }
+        }
+      }
+    },
+    "charges": {
+      "type": "array",
+      "title": "New charges",
+      "items": {
+        "type": "object",
+        "required": ["service", "kind", "description", "quantity", "unit", "rate", "amount"],
+        "additionalProperties": false,
+        "properties": {
+          "service": { "type": "string", "enum": ["Water", "Wastewater"], "title": "Service" },
+          "kind": { "type": "string", "enum": ["access", "usage"], "title": "Kind", "description": "A fixed access charge, or a charge for what was used." },
+          "description": { "type": "string", "title": "Charge" },
+          "quantity": { "type": "number", "title": "Quantity" },
+          "unit": { "type": "string", "enum": ["days", "kL"], "title": "Unit" },
+          "rate": { "type": "number", "title": "Rate per unit" },
+          "amount": { "type": "number", "title": "Amount" }
+        }
+      }
+    },
+    "usage": {
+      "type": "object",
+      "required": ["regionalLitres", "history"],
+      "additionalProperties": false,
+      "properties": {
+        "regionalLitres": { "type": "integer", "title": "Regional average this quarter (L/day)" },
+        "history": {
+          "type": "array",
+          "title": "Earlier quarters",
+          "description": "Oldest first, up to the quarter before this bill.",
+          "items": {
+            "type": "object",
+            "required": ["readDate", "litres", "regionalLitres"],
+            "additionalProperties": false,
+            "properties": {
+              "readDate": { "type": "string", "format": "date", "title": "Read date" },
+              "litres": { "type": "integer", "title": "Your average daily use (L)" },
+              "regionalLitres": { "type": "integer", "title": "Regional average (L/day)" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

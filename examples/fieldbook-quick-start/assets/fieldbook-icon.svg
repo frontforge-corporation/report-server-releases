@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Made by Frontforge Pty Ltd for the Report Server example gallery, 2026. Licence: CC0 1.0 (public domain dedication), so anyone who copies the example may use it. -->
+<!-- The app icon of Fieldbook, Quillmont Software's made-up site-inspection app: a notebook with a tick. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96">
+  <rect width="96" height="96" rx="22" fill="#1F6F5C"/>
+  <path d="M0 52 L96 34 V74 A22 22 0 0 1 74 96 H22 A22 22 0 0 1 0 74 Z" fill="#185A4B"/>
+  <path d="M31 19 H66 A6 6 0 0 1 72 25 V71 A6 6 0 0 1 66 77 H31 Z" fill="#FFFFFF"/>
+  <rect x="24" y="19" width="10" height="58" rx="3" fill="#F2A541"/>
+  <rect x="41" y="30" width="23" height="4" rx="2" fill="#BFD6CE"/>
+  <rect x="41" y="39" width="16" height="4" rx="2" fill="#BFD6CE"/>
+  <path d="M42 57 L49 64 L63 48" fill="none" stroke="#1F6F5C" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

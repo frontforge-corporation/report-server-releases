@@ -1,0 +1,1818 @@
+{
+  "$schema": "https://docs.frontforge.com/schema/rfml/0.1.json",
+  "rfml": "0.1",
+  "id": "water-bill",
+  "meta": {
+    "title": "Water bill",
+    "description": "A quarterly residential water and wastewater bill. It shows an account summary, usage charts against the regional average, meter readings and charges by service, with a tear-off payment slip at the foot of the last page.",
+    "locale": "en-AU",
+    "currency": "AUD",
+    "tags": [
+      "example",
+      "bill",
+      "utilities",
+      "water"
+    ]
+  },
+  "data": {
+    "main": {
+      "schema": {
+        "$ref": "schemas/main.json"
+      },
+      "sample": "samples/main.json",
+      "description": "One property's bill for one quarter."
+    }
+  },
+  "vars": {
+    "days": "DateDiff(data.main.bill.periodStart, data.main.bill.periodEnd, 'day') + 1",
+    "usageKl": "Sum(data.main.meters.map(m, m.currentReading - m.previousReading))",
+    "dailyLitres": "Round(vars.usageKl * 1000 / vars.days, 0)",
+    "lastYearLitres": "First(data.main.usage.history.filter(h, DateDiff(h.readDate, data.main.bill.periodEnd, 'day') > 330 && DateDiff(h.readDate, data.main.bill.periodEnd, 'day') < 400).map(h, h.litres))",
+    "change": "If(IsBlank(vars.lastYearLitres), null, (vars.dailyLitres - vars.lastYearLitres) / vars.lastYearLitres)",
+    "history": "data.main.usage.history + [{'readDate': data.main.bill.periodEnd, 'litres': vars.dailyLitres, 'regionalLitres': data.main.usage.regionalLitres}]",
+    "paid": "Sum(data.main.payments.map(p, p.amount))",
+    "adjusted": "Sum(Coalesce(data.main.adjustments, []).map(a, a.amount))",
+    "carried": "data.main.bill.previousBalance - vars.paid + vars.adjusted",
+    "activity": "[{'date': null, 'description': 'Your last bill', 'amount': data.main.bill.previousBalance}] + data.main.payments.map(p, {'date': p.date, 'description': p.method + ' payment, thank you', 'amount': -p.amount}) + Coalesce(data.main.adjustments, [])",
+    "newCharges": "Sum(data.main.charges.map(c, c.amount))",
+    "totalDue": "vars.carried + vars.newCharges",
+    "costPerDay": "vars.newCharges / vars.days",
+    "split": "[{'label': 'Water usage', 'amount': Sum(data.main.charges.filter(c, c.service == 'Water' && c.kind == 'usage').map(c, c.amount))}, {'label': 'Water access', 'amount': Sum(data.main.charges.filter(c, c.service == 'Water' && c.kind == 'access').map(c, c.amount))}, {'label': 'Wastewater usage', 'amount': Sum(data.main.charges.filter(c, c.service == 'Wastewater' && c.kind == 'usage').map(c, c.amount))}, {'label': 'Wastewater access', 'amount': Sum(data.main.charges.filter(c, c.service == 'Wastewater' && c.kind == 'access').map(c, c.amount))}]",
+    "usageShare": "If(vars.newCharges > 0, (vars.split[0].amount + vars.split[2].amount) / vars.newCharges, 0)"
+  },
+  "styles": {
+    "tokens": {
+      "brand": "#0073AF",
+      "ink": "#231F20",
+      "muted": "#4E6A75",
+      "line": "#D5E4EA",
+      "panel": "#E8F4FB",
+      "negative": "#B42318",
+      "positive": "#1F7A4D",
+      "accent": "#1A9E8F",
+      "space-1": "3pt",
+      "space-2": "6pt",
+      "space-3": "12pt",
+      "chart-1": "#0073AF",
+      "chart-2": "#1A9E8F",
+      "chart-3": "#8FB8D0",
+      "chart-4": "#4E6A75"
+    },
+    "defaults": {
+      "document": {
+        "color": "var(--ink)",
+        "font-family": "Arimo",
+        "font-size": "8.5pt",
+        "line-height": 1.35
+      },
+      "heading": {
+        "margin": "var(--space-3) 0 var(--space-2)",
+        "color": "var(--brand)",
+        "font-size": "12pt",
+        "font-weight": 700
+      },
+      "table": {
+        "width": "100%",
+        "font-size": "8pt",
+        "border-collapse": "collapse",
+        "parts": {
+          "cell": {
+            "padding": "2.5pt 4pt",
+            "border-bottom": "0.5pt solid var(--line)"
+          },
+          "header-cell": {
+            "border-bottom": "0.75pt solid var(--brand)",
+            "color": "var(--muted)",
+            "font-weight": 700
+          },
+          "footer-cell": {
+            "border-top": "0.75pt solid var(--ink)",
+            "border-bottom": 0,
+            "font-weight": 700
+          },
+          "group-header": {
+            "padding-top": "var(--space-2)",
+            "color": "var(--brand)",
+            "font-weight": 700
+          },
+          "group-footer": {
+            "font-weight": 700
+          }
+        }
+      }
+    },
+    "classes": {
+      "wordmark": {
+        "color": "var(--brand)",
+        "font-size": "20pt",
+        "font-weight": 700,
+        "line-height": 1.1
+      },
+      "brand": {
+        "color": "var(--brand)"
+      },
+      "muted": {
+        "color": "var(--muted)"
+      },
+      "small": {
+        "font-size": "7.5pt"
+      },
+      "strong": {
+        "font-weight": 700
+      },
+      "num": {
+        "font-variant-numeric": "tabular-nums",
+        "text-align": "right"
+      },
+      "kicker": {
+        "margin": "0 0 var(--space-1)",
+        "color": "var(--brand)",
+        "font-size": "7.5pt",
+        "font-weight": 700,
+        "letter-spacing": "0.4pt",
+        "text-transform": "uppercase"
+      },
+      "facts": {
+        "margin-top": "var(--space-3)",
+        "padding-top": "var(--space-2)",
+        "border-top": "0.75pt solid var(--line)",
+        "column-gap": "var(--space-2)",
+        "display": "grid",
+        "row-gap": "2pt",
+        "grid-template-columns": "2fr 3fr"
+      },
+      "panel": {
+        "padding": "var(--space-3)",
+        "border-radius": "3pt",
+        "background-color": "var(--panel)",
+        "break-inside": "avoid"
+      },
+      "line-item": {
+        "padding": "2pt 0",
+        "display": "flex",
+        "justify-content": "space-between",
+        "gap": "var(--space-2)"
+      },
+      "metric": {
+        "padding": "var(--space-1) var(--space-2)",
+        "border-left": "2pt solid var(--accent)"
+      },
+      "metric-value": {
+        "font-size": "14pt",
+        "font-weight": 700,
+        "line-height": 1.2
+      },
+      "chart-title": {
+        "margin-bottom": "var(--space-1)",
+        "font-weight": 700
+      },
+      "notice-title": {
+        "margin": "0 0 var(--space-1)",
+        "color": "var(--brand)",
+        "font-size": "9pt",
+        "font-weight": 700
+      }
+    }
+  },
+  "components": {
+    "payment-slip": {
+      "description": "Tear-off payment slip: who is paying, the amount and due date, and a Code 128 barcode of the payment reference.",
+      "props": {
+        "type": "object",
+        "required": [
+          "name",
+          "account",
+          "reference",
+          "amount",
+          "dueDate"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Customer name"
+          },
+          "account": {
+            "type": "string",
+            "description": "Account number"
+          },
+          "property": {
+            "type": "string",
+            "description": "Property address"
+          },
+          "reference": {
+            "type": "string",
+            "description": "Payment reference, digits only"
+          },
+          "amount": {
+            "type": "number",
+            "description": "Amount to pay"
+          },
+          "dueDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Due date"
+          }
+        }
+      },
+      "template": [
+        {
+          "type": "frame",
+          "id": "slip-frame",
+          "style": {
+            "height": "46mm",
+            "padding-top": "5mm",
+            "border-top": "1pt dashed var(--muted)"
+          },
+          "children": [
+            {
+              "type": "text",
+              "id": "slip-brand",
+              "style": {
+                "width": "80mm",
+                "color": "var(--brand)",
+                "font-size": "12pt",
+                "font-weight": 700,
+                "top": 0,
+                "left": 0
+              },
+              "content": "Larkmere Water"
+            },
+            {
+              "type": "text",
+              "id": "slip-title",
+              "class": [
+                "kicker"
+              ],
+              "style": {
+                "width": "80mm",
+                "top": "6mm",
+                "left": 0
+              },
+              "content": "Payment slip"
+            },
+            {
+              "type": "text",
+              "id": "slip-customer",
+              "style": {
+                "width": "85mm",
+                "top": "12mm",
+                "left": 0
+              },
+              "content": [
+                {
+                  "type": "span",
+                  "content": "{{ props.name }}",
+                  "class": [
+                    "strong"
+                  ]
+                },
+                {
+                  "type": "br"
+                },
+                "{{ props.property }}",
+                {
+                  "type": "br"
+                },
+                "Account {{ props.account }}"
+              ]
+            },
+            {
+              "type": "text",
+              "id": "slip-ref",
+              "class": [
+                "small"
+              ],
+              "style": {
+                "width": "85mm",
+                "top": "28mm",
+                "left": 0
+              },
+              "content": [
+                "Pay online at larkmere.example/pay or by phone on 1300 975 709 using payment reference ",
+                {
+                  "type": "span",
+                  "content": "{{ props.reference }}",
+                  "class": [
+                    "strong"
+                  ]
+                },
+                "."
+              ]
+            },
+            {
+              "type": "text",
+              "id": "slip-amount-label",
+              "class": [
+                "muted"
+              ],
+              "style": {
+                "width": "40mm",
+                "top": 0,
+                "left": "95mm"
+              },
+              "content": [
+                "Amount due",
+                {
+                  "type": "br"
+                },
+                "Due date"
+              ]
+            },
+            {
+              "type": "text",
+              "id": "slip-amount",
+              "class": [
+                "num",
+                "strong"
+              ],
+              "style": {
+                "width": "50mm",
+                "top": 0,
+                "right": 0
+              },
+              "content": [
+                "{{ Format(props.amount, 'currency') }}",
+                {
+                  "type": "br"
+                },
+                "{{ Format(props.dueDate, 'd MMM y') }}"
+              ]
+            },
+            {
+              "type": "text",
+              "id": "slip-paid",
+              "class": [
+                "muted"
+              ],
+              "style": {
+                "padding-bottom": "1pt",
+                "border-bottom": "0.5pt solid var(--muted)",
+                "top": "11mm",
+                "right": 0,
+                "left": "95mm"
+              },
+              "content": "Amount paid  $"
+            },
+            {
+              "type": "barcode",
+              "id": "slip-barcode",
+              "style": {
+                "width": "70mm",
+                "height": "17mm",
+                "top": "19mm",
+                "right": 0
+              },
+              "symbology": "code128",
+              "value": "props.reference",
+              "showText": true
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "pages": [
+    {
+      "id": "a4",
+      "size": "A4",
+      "margin": "12mm 14mm 16mm",
+      "footerDistance": "8mm",
+      "footer": [
+        {
+          "type": "box",
+          "id": "page-footer",
+          "class": [
+            "muted",
+            "small"
+          ],
+          "style": {
+            "display": "flex",
+            "justify-content": "space-between"
+          },
+          "children": [
+            {
+              "type": "text",
+              "id": "footer-company",
+              "content": "Larkmere Water · ABN 12 345 678 901 · Faults and emergencies 1300 975 708, 24 hours"
+            },
+            {
+              "type": "text",
+              "id": "footer-page",
+              "content": "Page {{ page.number }} of {{ page.count }}"
+            }
+          ]
+        }
+      ],
+      "variants": {
+        "last": {
+          "margin": "12mm 14mm 102mm",
+          "footer": [
+            {
+              "type": "box",
+              "id": "pay",
+              "children": [
+                {
+                  "type": "heading",
+                  "id": "pay-title",
+                  "style": {
+                    "margin": "0 0 var(--space-2)"
+                  },
+                  "level": 2,
+                  "content": "Ways to pay"
+                },
+                {
+                  "type": "box",
+                  "id": "pay-options",
+                  "style": {
+                    "column-gap": "var(--space-3)",
+                    "display": "grid",
+                    "grid-template-columns": "1fr 1fr 1fr 1fr"
+                  },
+                  "children": [
+                    {
+                      "type": "box",
+                      "id": "pay-online",
+                      "class": [
+                        "metric"
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "pay-online-title",
+                          "class": [
+                            "strong"
+                          ],
+                          "content": "Pay online"
+                        },
+                        {
+                          "type": "text",
+                          "id": "pay-online-body",
+                          "class": [
+                            "small"
+                          ],
+                          "content": "Visit larkmere.example/pay and enter your payment reference."
+                        }
+                      ]
+                    },
+                    {
+                      "type": "box",
+                      "id": "pay-phone",
+                      "class": [
+                        "metric"
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "pay-phone-title",
+                          "class": [
+                            "strong"
+                          ],
+                          "content": "Pay by phone"
+                        },
+                        {
+                          "type": "text",
+                          "id": "pay-phone-body",
+                          "class": [
+                            "small"
+                          ],
+                          "content": "Call 1300 975 709, any time, with your card and payment reference."
+                        }
+                      ]
+                    },
+                    {
+                      "type": "box",
+                      "id": "pay-debit",
+                      "class": [
+                        "metric"
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "pay-debit-title",
+                          "class": [
+                            "strong"
+                          ],
+                          "content": "Direct debit"
+                        },
+                        {
+                          "type": "text",
+                          "id": "pay-debit-body",
+                          "class": [
+                            "small"
+                          ],
+                          "content": "Pay each bill on its due date, or in smaller fortnightly amounts. Set it up online."
+                        }
+                      ]
+                    },
+                    {
+                      "type": "box",
+                      "id": "pay-person",
+                      "class": [
+                        "metric"
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "pay-person-title",
+                          "class": [
+                            "strong"
+                          ],
+                          "content": "In person"
+                        },
+                        {
+                          "type": "text",
+                          "id": "pay-person-body",
+                          "class": [
+                            "small"
+                          ],
+                          "content": "At our office, 40 Weir Street, Larkmere, 8.30am to 4.30pm weekdays. Bring this slip."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "slip-cut",
+                  "class": [
+                    "muted",
+                    "small"
+                  ],
+                  "style": {
+                    "margin": "7mm 0 1pt",
+                    "text-align": "right"
+                  },
+                  "content": "Detach and return this slip with your payment"
+                },
+                {
+                  "type": "use",
+                  "id": "slip",
+                  "component": "payment-slip",
+                  "props": {
+                    "name": "data.main.customer.name",
+                    "account": "data.main.account.number",
+                    "property": "data.main.property.address",
+                    "reference": "data.main.account.paymentReference",
+                    "amount": "If(vars.totalDue > 0, vars.totalDue, 0)",
+                    "dueDate": "data.main.bill.dueDate"
+                  },
+                  "meta": {
+                    "locked": [
+                      "component",
+                      "props"
+                    ]
+                  }
+                },
+                {
+                  "type": "box",
+                  "id": "last-footer",
+                  "class": [
+                    "muted",
+                    "small"
+                  ],
+                  "style": {
+                    "margin-top": "var(--space-2)",
+                    "display": "flex",
+                    "justify-content": "space-between"
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "last-footer-company",
+                      "content": "Larkmere Water · ABN 12 345 678 901 · PO Box 100, Larkmere QLD 4999"
+                    },
+                    {
+                      "type": "text",
+                      "id": "last-footer-page",
+                      "content": "Page {{ page.number }} of {{ page.count }}"
+                    }
+                  ]
+                }
+              ],
+              "meta": {
+                "label": "Ways to pay and payment slip",
+                "description": "The last page's footer, so the slip lands at the foot of the final page however long the bill runs."
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "body": [
+    {
+      "type": "box",
+      "id": "masthead",
+      "style": {
+        "column-gap": "18pt",
+        "display": "grid",
+        "grid-template-columns": "1fr 1fr"
+      },
+      "children": [
+        {
+          "type": "box",
+          "id": "sender",
+          "children": [
+            {
+              "type": "text",
+              "id": "wordmark",
+              "class": [
+                "wordmark"
+              ],
+              "content": "Larkmere Water"
+            },
+            {
+              "type": "text",
+              "id": "sender-address",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "PO Box 100, Larkmere QLD 4999 · larkmere.example"
+            },
+            {
+              "type": "text",
+              "id": "customer-name",
+              "class": [
+                "strong"
+              ],
+              "style": {
+                "margin-top": "14mm"
+              },
+              "content": "{{ Upper(data.main.customer.name) }}"
+            },
+            {
+              "type": "repeat",
+              "id": "customer-address",
+              "source": "data.main.customer.addressLines",
+              "as": "line",
+              "detail": [
+                {
+                  "type": "text",
+                  "id": "address-line",
+                  "content": "{{ line }}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "bill-head",
+          "children": [
+            {
+              "type": "heading",
+              "id": "title",
+              "style": {
+                "margin": 0,
+                "font-size": "20pt",
+                "line-height": 1.1
+              },
+              "level": 1,
+              "content": "Your water bill"
+            },
+            {
+              "type": "text",
+              "id": "subtitle",
+              "class": [
+                "muted"
+              ],
+              "content": "Water and wastewater for {{ Format(data.main.bill.periodStart, 'd MMMM') }} to {{ Format(data.main.bill.periodEnd, 'd MMMM y') }}"
+            },
+            {
+              "type": "box",
+              "id": "facts",
+              "class": [
+                "facts"
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "account-label",
+                  "class": [
+                    "muted"
+                  ],
+                  "content": "Account number"
+                },
+                {
+                  "type": "text",
+                  "id": "account-value",
+                  "class": [
+                    "strong"
+                  ],
+                  "content": "{{ data.main.account.number }}"
+                },
+                {
+                  "type": "text",
+                  "id": "bill-label",
+                  "class": [
+                    "muted"
+                  ],
+                  "content": "Bill number"
+                },
+                {
+                  "type": "text",
+                  "id": "bill-value",
+                  "content": "{{ data.main.bill.number }}"
+                },
+                {
+                  "type": "text",
+                  "id": "property-label",
+                  "class": [
+                    "muted"
+                  ],
+                  "content": "Property"
+                },
+                {
+                  "type": "text",
+                  "id": "property-value",
+                  "content": "{{ data.main.property.address }}"
+                },
+                {
+                  "type": "text",
+                  "id": "period-label",
+                  "class": [
+                    "muted"
+                  ],
+                  "content": "Billing period"
+                },
+                {
+                  "type": "text",
+                  "id": "period-value",
+                  "content": "{{ Format(data.main.bill.periodStart, 'd MMM y') }} to {{ Format(data.main.bill.periodEnd, 'd MMM y') }} ({{ vars.days }} days)"
+                },
+                {
+                  "type": "text",
+                  "id": "issued-label",
+                  "class": [
+                    "muted"
+                  ],
+                  "content": "Issue date"
+                },
+                {
+                  "type": "text",
+                  "id": "issued-value",
+                  "content": "{{ Format(data.main.bill.issueDate, 'd MMMM y') }}"
+                },
+                {
+                  "type": "text",
+                  "id": "next-read-label",
+                  "if": "!IsBlank(data.main.bill.nextReadDate)",
+                  "class": [
+                    "muted"
+                  ],
+                  "content": "Next meter reading"
+                },
+                {
+                  "type": "text",
+                  "id": "next-read-value",
+                  "if": "!IsBlank(data.main.bill.nextReadDate)",
+                  "content": "About {{ Format(data.main.bill.nextReadDate, 'd MMMM y') }}"
+                }
+              ],
+              "meta": {
+                "label": "Bill facts"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "box",
+      "id": "summary",
+      "style": {
+        "margin-top": "8mm",
+        "column-gap": "var(--space-3)",
+        "display": "grid",
+        "grid-template-columns": "1fr 1fr",
+        "break-inside": "avoid"
+      },
+      "children": [
+        {
+          "type": "box",
+          "id": "account-summary",
+          "class": [
+            "panel"
+          ],
+          "children": [
+            {
+              "type": "heading",
+              "id": "summary-title",
+              "class": [
+                "kicker"
+              ],
+              "level": 2,
+              "content": "Account summary"
+            },
+            {
+              "type": "box",
+              "id": "line-previous",
+              "class": [
+                "line-item"
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "previous-label",
+                  "content": "Your last bill"
+                },
+                {
+                  "type": "text",
+                  "id": "previous-value",
+                  "class": [
+                    "num"
+                  ],
+                  "content": "{{ Format(data.main.bill.previousBalance, 'currency') }}"
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "id": "line-paid",
+              "class": [
+                "line-item"
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "paid-label",
+                  "content": "Payments received"
+                },
+                {
+                  "type": "text",
+                  "id": "paid-value",
+                  "class": [
+                    "num"
+                  ],
+                  "content": "{{ Format(-vars.paid, 'currency') }}"
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "id": "line-adjusted",
+              "if": "vars.adjusted != 0",
+              "class": [
+                "line-item"
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "adjusted-label",
+                  "content": "Interest and adjustments"
+                },
+                {
+                  "type": "text",
+                  "id": "adjusted-value",
+                  "class": [
+                    "num"
+                  ],
+                  "content": "{{ Format(vars.adjusted, 'currency') }}"
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "id": "line-carried",
+              "class": [
+                "line-item"
+              ],
+              "style": {
+                "border-top": "0.5pt solid var(--line)"
+              },
+              "rules": [
+                {
+                  "if": "vars.carried > 0",
+                  "style": {
+                    "color": "var(--negative)",
+                    "font-weight": 700
+                  }
+                }
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "carried-label",
+                  "content": "{{ If(vars.carried > 0, 'Overdue, please pay now', 'Balance carried forward') }}"
+                },
+                {
+                  "type": "text",
+                  "id": "carried-value",
+                  "class": [
+                    "num"
+                  ],
+                  "content": "{{ Format(vars.carried, 'currency') }}"
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "id": "line-new",
+              "class": [
+                "line-item"
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "new-label",
+                  "content": "New charges this quarter"
+                },
+                {
+                  "type": "text",
+                  "id": "new-value",
+                  "class": [
+                    "num"
+                  ],
+                  "content": "{{ Format(vars.newCharges, 'currency') }}"
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "id": "line-total",
+              "class": [
+                "line-item"
+              ],
+              "style": {
+                "margin-top": "var(--space-1)",
+                "padding-top": "var(--space-1)",
+                "border-top": "1pt solid var(--brand)",
+                "font-size": "10pt",
+                "font-weight": 700
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "id": "total-label",
+                  "content": "{{ If(vars.totalDue < 0, 'Your account is in credit', 'Total due') }}"
+                },
+                {
+                  "type": "text",
+                  "id": "total-value",
+                  "class": [
+                    "num"
+                  ],
+                  "content": "{{ Format(Abs(vars.totalDue), 'currency') }}{{ If(vars.totalDue < 0, ' CR', '') }}"
+                }
+              ]
+            }
+          ],
+          "meta": {
+            "label": "Account summary"
+          }
+        },
+        {
+          "type": "box",
+          "id": "due-card",
+          "style": {
+            "padding": "var(--space-3)",
+            "border-radius": "3pt",
+            "background-color": "var(--brand)",
+            "color": "#FFFFFF"
+          },
+          "children": [
+            {
+              "type": "text",
+              "id": "due-kicker",
+              "class": [
+                "kicker"
+              ],
+              "style": {
+                "color": "#FFFFFF"
+              },
+              "content": "{{ If(vars.totalDue > 0, 'Amount to pay', 'Nothing to pay') }}"
+            },
+            {
+              "type": "text",
+              "id": "text-total-due",
+              "style": {
+                "font-size": "26pt",
+                "font-weight": 700,
+                "line-height": 1.15
+              },
+              "content": "{{ Format(If(vars.totalDue > 0, vars.totalDue, 0), 'currency') }}"
+            },
+            {
+              "type": "text",
+              "id": "due-date",
+              "if": "vars.totalDue > 0",
+              "style": {
+                "font-size": "10pt",
+                "font-weight": 700
+              },
+              "content": "Please pay by {{ Format(data.main.bill.dueDate, 'EEEE d MMMM y') }}"
+            },
+            {
+              "type": "text",
+              "id": "due-credit",
+              "if": "vars.totalDue <= 0",
+              "style": {
+                "font-size": "10pt",
+                "font-weight": 700
+              },
+              "content": "Your credit of {{ Format(Abs(vars.totalDue), 'currency') }} goes towards your next bill."
+            },
+            {
+              "type": "text",
+              "id": "due-overdue",
+              "if": "vars.carried > 0",
+              "style": {
+                "margin-top": "var(--space-1)"
+              },
+              "content": "This includes {{ Format(vars.carried, 'currency') }} that was due on your last bill."
+            },
+            {
+              "type": "text",
+              "id": "due-reference",
+              "style": {
+                "margin-top": "var(--space-2)",
+                "padding-top": "var(--space-2)",
+                "border-top": "0.5pt solid #FFFFFF"
+              },
+              "content": [
+                "Payment reference ",
+                {
+                  "type": "span",
+                  "content": "{{ data.main.account.paymentReference }}",
+                  "class": [
+                    "strong"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "due-debit",
+              "class": [
+                "small"
+              ],
+              "content": "On direct debit? There's nothing to do: we'll take the amount on the due date."
+            }
+          ],
+          "meta": {
+            "label": "Amount to pay"
+          }
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "id": "usage-heading",
+      "style": {
+        "margin-top": "7mm"
+      },
+      "level": 2,
+      "content": "Your water use"
+    },
+    {
+      "type": "box",
+      "id": "metrics",
+      "style": {
+        "column-gap": "var(--space-3)",
+        "display": "grid",
+        "grid-template-columns": "1fr 1fr 1fr 1fr"
+      },
+      "children": [
+        {
+          "type": "box",
+          "id": "metric-daily",
+          "class": [
+            "metric"
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "metric-daily-label",
+              "class": [
+                "muted"
+              ],
+              "content": "Your average daily use"
+            },
+            {
+              "type": "text",
+              "id": "metric-daily-value",
+              "class": [
+                "metric-value"
+              ],
+              "content": "{{ Format(vars.dailyLitres, 'number:0') }} L"
+            },
+            {
+              "type": "text",
+              "id": "metric-daily-note",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "{{ Format(vars.usageKl, 'number:0') }} kL over {{ vars.days }} days"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "metric-year",
+          "class": [
+            "metric"
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "metric-year-label",
+              "class": [
+                "muted"
+              ],
+              "content": "Same quarter last year"
+            },
+            {
+              "type": "text",
+              "id": "metric-year-value",
+              "class": [
+                "metric-value"
+              ],
+              "content": "{{ If(IsBlank(vars.lastYearLitres), '–', Format(vars.lastYearLitres, 'number:0') + ' L') }}"
+            },
+            {
+              "type": "text",
+              "id": "metric-year-change",
+              "if": "!IsBlank(vars.change)",
+              "class": [
+                "small",
+                "strong"
+              ],
+              "style": {
+                "color": "var(--positive)"
+              },
+              "rules": [
+                {
+                  "if": "vars.change > 0",
+                  "style": {
+                    "color": "var(--negative)"
+                  }
+                }
+              ],
+              "content": "{{ If(vars.change > 0, 'Up', 'Down') }} {{ Format(Abs(vars.change), 'percent:1') }} on last year"
+            },
+            {
+              "type": "text",
+              "id": "metric-year-none",
+              "if": "IsBlank(vars.change)",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "Not enough history yet"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "metric-region",
+          "class": [
+            "metric"
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "metric-region-label",
+              "class": [
+                "muted"
+              ],
+              "content": "Regional average"
+            },
+            {
+              "type": "text",
+              "id": "metric-region-value",
+              "class": [
+                "metric-value"
+              ],
+              "content": "{{ Format(data.main.usage.regionalLitres, 'number:0') }} L"
+            },
+            {
+              "type": "text",
+              "id": "metric-region-note",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "per home, per day, this quarter"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "metric-cost",
+          "class": [
+            "metric"
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "metric-cost-label",
+              "class": [
+                "muted"
+              ],
+              "content": "New charges per day"
+            },
+            {
+              "type": "text",
+              "id": "metric-cost-value",
+              "class": [
+                "metric-value"
+              ],
+              "content": "{{ Format(vars.costPerDay, 'currency') }}"
+            },
+            {
+              "type": "text",
+              "id": "metric-cost-note",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "{{ Format(vars.usageShare, 'percent:0') }} depends on your use"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "box",
+      "id": "charts",
+      "style": {
+        "margin-top": "var(--space-3)",
+        "column-gap": "var(--space-3)",
+        "display": "grid",
+        "grid-template-columns": "1fr 1fr",
+        "break-inside": "avoid"
+      },
+      "children": [
+        {
+          "type": "box",
+          "id": "history-col",
+          "children": [
+            {
+              "type": "text",
+              "id": "history-title",
+              "class": [
+                "chart-title"
+              ],
+              "content": "Average daily use by quarter, in litres"
+            },
+            {
+              "type": "chart",
+              "id": "chart-history",
+              "style": {
+                "height": "52mm"
+              },
+              "source": "vars.history",
+              "as": "h",
+              "kind": "combo",
+              "category": "Format(h.readDate, 'MMM yy')",
+              "series": [
+                {
+                  "id": "yours",
+                  "name": "Your home",
+                  "value": "h.litres",
+                  "kind": "column",
+                  "color": "var(--chart-1)"
+                },
+                {
+                  "id": "regional",
+                  "name": "Regional average",
+                  "value": "h.regionalLitres",
+                  "kind": "line",
+                  "color": "var(--chart-2)"
+                }
+              ],
+              "axes": {
+                "y": {
+                  "format": "number:0",
+                  "min": 0,
+                  "gridlines": true
+                }
+              },
+              "legend": {
+                "position": "bottom"
+              },
+              "alt": "Your home's average daily water use for the last {{ vars.history.size() }} quarters, ending at {{ Format(vars.dailyLitres, 'number:0') }} litres a day this quarter, against a regional average of {{ Format(data.main.usage.regionalLitres, 'number:0') }} litres.",
+              "meta": {
+                "description": "Your average daily use per quarter as columns, the regional average as a line; oldest quarter first."
+              }
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "split-col",
+          "children": [
+            {
+              "type": "text",
+              "id": "split-title",
+              "class": [
+                "chart-title"
+              ],
+              "content": "Where your new charges go"
+            },
+            {
+              "type": "chart",
+              "id": "chart-split",
+              "style": {
+                "height": "52mm"
+              },
+              "source": "vars.split",
+              "as": "s",
+              "kind": "donut",
+              "category": "s.label + '  ' + Format(s.amount, 'currency')",
+              "series": [
+                {
+                  "id": "amount",
+                  "name": "Amount",
+                  "value": "s.amount"
+                }
+              ],
+              "legend": {
+                "position": "bottom"
+              },
+              "alt": "New charges of {{ Format(vars.newCharges, 'currency') }}: water usage {{ Format(vars.split[0].amount, 'currency') }}, water access {{ Format(vars.split[1].amount, 'currency') }}, wastewater usage {{ Format(vars.split[2].amount, 'currency') }} and wastewater access {{ Format(vars.split[3].amount, 'currency') }}.",
+              "meta": {
+                "description": "New charges split into usage and fixed access charges for each service."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "id": "news-heading",
+      "style": {
+        "margin-top": "7mm"
+      },
+      "level": 2,
+      "content": "News and help"
+    },
+    {
+      "type": "box",
+      "id": "notices",
+      "style": {
+        "column-gap": "var(--space-3)",
+        "display": "grid",
+        "grid-template-columns": "1fr 1fr 1fr"
+      },
+      "children": [
+        {
+          "type": "box",
+          "id": "notice-prices",
+          "class": [
+            "panel"
+          ],
+          "style": {
+            "min-height": "25.5mm"
+          },
+          "children": [
+            {
+              "type": "heading",
+              "id": "notice-prices-title",
+              "class": [
+                "notice-title"
+              ],
+              "level": 3,
+              "content": "New prices from 1 July"
+            },
+            {
+              "type": "text",
+              "id": "notice-prices-body",
+              "content": "Access charges rose 1.8% on 1 July 2026, in line with the regional price path. Usage prices stay the same as last year, so using less still saves you the most."
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "notice-leaks",
+          "class": [
+            "panel"
+          ],
+          "style": {
+            "min-height": "25.5mm"
+          },
+          "children": [
+            {
+              "type": "heading",
+              "id": "notice-leaks-title",
+              "class": [
+                "notice-title"
+              ],
+              "level": 3,
+              "content": "Check for hidden leaks"
+            },
+            {
+              "type": "text",
+              "id": "notice-leaks-body",
+              "content": "Turn off every tap and watch your meter for 15 minutes. If the dial moves, you may have a leak. A plumber's report can earn you a leak allowance."
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "notice-help",
+          "class": [
+            "panel"
+          ],
+          "style": {
+            "min-height": "25.5mm"
+          },
+          "children": [
+            {
+              "type": "heading",
+              "id": "notice-help-title",
+              "class": [
+                "notice-title"
+              ],
+              "level": 3,
+              "content": "Help when you need it"
+            },
+            {
+              "type": "text",
+              "id": "notice-help-body",
+              "content": "Finding it hard to pay? Call us on 1300 975 707 before the due date. We can set up a payment plan that suits you."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pagebreak",
+      "id": "break-details"
+    },
+    {
+      "type": "heading",
+      "id": "details-heading",
+      "style": {
+        "margin-top": 0,
+        "font-size": "14pt"
+      },
+      "level": 2,
+      "content": "Your bill in detail"
+    },
+    {
+      "type": "text",
+      "id": "details-property",
+      "class": [
+        "muted"
+      ],
+      "content": "{{ data.main.property.address }}{{ If(IsBlank(data.main.property.lotPlan), '', ' · ' + data.main.property.lotPlan) }} · Account {{ data.main.account.number }}"
+    },
+    {
+      "type": "heading",
+      "id": "meters-heading",
+      "class": [
+        "kicker"
+      ],
+      "style": {
+        "margin-top": "var(--space-3)"
+      },
+      "level": 3,
+      "content": "Meter readings"
+    },
+    {
+      "type": "table",
+      "id": "table-meters",
+      "source": "data.main.meters",
+      "as": "m",
+      "vars": {
+        "kl": "m.currentReading - m.previousReading",
+        "meterDays": "DateDiff(m.previousDate, m.currentDate, 'day')"
+      },
+      "columns": [
+        {
+          "id": "col-meter",
+          "width": "3fr",
+          "header": "Meter",
+          "cell": "{{ m.number }} ({{ m.size }})",
+          "footer": "Total"
+        },
+        {
+          "id": "col-previous",
+          "width": "3fr",
+          "header": "Previous reading",
+          "cell": "{{ Format(m.previousReading, 'number:0') }} kL on {{ Format(m.previousDate, 'd MMM y') }}"
+        },
+        {
+          "id": "col-current",
+          "width": "3fr",
+          "header": "This reading",
+          "cell": "{{ Format(m.currentReading, 'number:0') }} kL on {{ Format(m.currentDate, 'd MMM y') }}"
+        },
+        {
+          "id": "col-type",
+          "width": "2fr",
+          "header": "Read type",
+          "cell": "{{ m.readType }}"
+        },
+        {
+          "id": "col-kl",
+          "width": "2fr",
+          "header": "Used",
+          "class": [
+            "num"
+          ],
+          "cell": "{{ Format(vars.kl, 'number:0') }} kL",
+          "footer": "{{ Format(vars.usageKl, 'number:0') }} kL"
+        },
+        {
+          "id": "col-daily",
+          "width": "2fr",
+          "header": "Per day",
+          "class": [
+            "num"
+          ],
+          "cell": "{{ Format(vars.kl * 1000 / vars.meterDays, 'number:0') }} L",
+          "footer": "{{ Format(vars.dailyLitres, 'number:0') }} L"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "wastewater-note",
+      "if": "!IsBlank(data.main.bill.wastewaterShare)",
+      "class": [
+        "muted",
+        "small"
+      ],
+      "style": {
+        "margin-top": "var(--space-1)"
+      },
+      "content": "Wastewater usage is charged on {{ Format(data.main.bill.wastewaterShare, 'percent:0') }} of your water use, {{ Format(vars.usageKl * data.main.bill.wastewaterShare, 'number:2') }} kL, as some water goes on the garden rather than down the drain. 1 kilolitre (kL) is 1,000 litres."
+    },
+    {
+      "type": "heading",
+      "id": "activity-heading",
+      "class": [
+        "kicker"
+      ],
+      "style": {
+        "margin-top": "var(--space-3)"
+      },
+      "level": 3,
+      "content": "Since your last bill"
+    },
+    {
+      "type": "table",
+      "id": "table-activity",
+      "source": "vars.activity",
+      "as": "a",
+      "columns": [
+        {
+          "id": "col-activity-date",
+          "width": "1fr",
+          "header": "Date",
+          "cell": "{{ If(IsBlank(a.date), '', Format(a.date, 'd MMM y')) }}"
+        },
+        {
+          "id": "col-activity-item",
+          "width": "4fr",
+          "header": "Description",
+          "cell": "{{ a.description }}",
+          "footer": "Balance carried forward"
+        },
+        {
+          "id": "col-activity-amount",
+          "width": "1fr",
+          "header": "Amount",
+          "class": [
+            "num"
+          ],
+          "cell": "{{ Format(a.amount, 'currency') }}",
+          "footer": "{{ Format(vars.carried, 'currency') }}"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "id": "charges-heading",
+      "class": [
+        "kicker"
+      ],
+      "style": {
+        "margin-top": "var(--space-3)"
+      },
+      "level": 3,
+      "content": "New charges, {{ Format(data.main.bill.periodStart, 'd MMM') }} to {{ Format(data.main.bill.periodEnd, 'd MMM y') }}"
+    },
+    {
+      "type": "table",
+      "id": "table-charges",
+      "source": "data.main.charges",
+      "as": "c",
+      "groups": [
+        {
+          "id": "by-service",
+          "by": "c.service",
+          "sort": {
+            "by": "Switch(group.key, 'Water', 1, 'Wastewater', 2, 3)"
+          },
+          "keepTogether": true,
+          "header": [
+            {
+              "type": "text",
+              "id": "service-name",
+              "content": "{{ group.key }}"
+            }
+          ],
+          "footer": [
+            {
+              "id": "service-subtotal",
+              "cells": [
+                {
+                  "colspan": 3,
+                  "content": "{{ group.key }} subtotal"
+                },
+                {
+                  "class": [
+                    "num"
+                  ],
+                  "content": "{{ Format(Sum(group.rows.map(r, r.amount)), 'currency') }}"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "columns": [
+        {
+          "id": "col-charge",
+          "width": "6fr",
+          "header": "Charge",
+          "cell": "{{ c.description }}",
+          "footer": "Total new charges"
+        },
+        {
+          "id": "col-quantity",
+          "width": "2fr",
+          "header": "Quantity",
+          "class": [
+            "num"
+          ],
+          "cell": "{{ Format(c.quantity, 'number') }} {{ c.unit }}"
+        },
+        {
+          "id": "col-rate",
+          "width": "2fr",
+          "header": "Rate",
+          "class": [
+            "num"
+          ],
+          "cell": "${{ Format(c.rate, '#,##0.000') }} / {{ Switch(c.unit, 'days', 'day', c.unit) }}"
+        },
+        {
+          "id": "col-amount",
+          "width": "2fr",
+          "header": "Amount",
+          "class": [
+            "num"
+          ],
+          "cell": "{{ Format(c.amount, 'currency') }}",
+          "footer": "{{ Format(Sum(region.rows.map(r, r.amount)), 'currency') }}"
+        }
+      ],
+      "empty": [
+        {
+          "type": "text",
+          "id": "no-charges",
+          "class": [
+            "muted"
+          ],
+          "content": "No new charges this quarter."
+        }
+      ]
+    },
+    {
+      "type": "box",
+      "id": "total-line",
+      "class": [
+        "line-item"
+      ],
+      "style": {
+        "margin-top": "var(--space-3)",
+        "padding": "var(--space-2) var(--space-3)",
+        "border-radius": "3pt",
+        "background-color": "var(--panel)",
+        "color": "var(--brand)",
+        "font-size": "11pt",
+        "font-weight": 700
+      },
+      "children": [
+        {
+          "type": "text",
+          "id": "total-line-label",
+          "content": "{{ If(vars.totalDue < 0, 'Credit balance', 'Total due by ' + Format(data.main.bill.dueDate, 'd MMMM y')) }}"
+        },
+        {
+          "type": "text",
+          "id": "total-line-value",
+          "class": [
+            "num"
+          ],
+          "content": "{{ Format(Abs(vars.totalDue), 'currency') }}{{ If(vars.totalDue < 0, ' CR', '') }}"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "interest-note",
+      "if": "vars.carried > 0",
+      "class": [
+        "small"
+      ],
+      "style": {
+        "margin-top": "var(--space-1)",
+        "color": "var(--negative)"
+      },
+      "content": "Interest of 8% a year, compounding daily, is charged on the overdue {{ Format(vars.carried, 'currency') }} until it is paid."
+    }
+  ],
+  "outputs": {
+    "pdf": {
+      "standard": "PDF/UA-1"
+    },
+    "xlsx": {
+      "sheets": [
+        {
+          "name": "Charges",
+          "from": "table-charges",
+          "freeze": "A2"
+        }
+      ]
+    }
+  },
+  "tests": [
+    {
+      "name": "sample bill is two pages with the slip on the last",
+      "data": {
+        "main": "samples/main.json"
+      },
+      "expect": [
+        "pages.size() == 2",
+        "diagnostics.all(d, d.severity != 'error')",
+        "pages[1].variant == 'last'",
+        "node('slip/slip-frame').page == pages.size()",
+        "text('text-total-due') == '$622.41'",
+        "text('total-line-value') == '$622.41'",
+        "text('metric-daily-value') == '522 L'",
+        "text('metric-year-change') == 'Down 4.7% on last year'",
+        "!visible('due-overdue')",
+        "visible('chart-history')"
+      ],
+      "snapshot": true
+    },
+    {
+      "name": "an overdue balance is called out",
+      "data": {
+        "main": "tests/overdue.json"
+      },
+      "expect": [
+        "diagnostics.all(d, d.severity != 'error')",
+        "text('carried-label') == 'Overdue, please pay now'",
+        "text('carried-value') == '$150.06'",
+        "visible('line-adjusted')",
+        "visible('due-overdue')",
+        "visible('interest-note')",
+        "text('text-total-due') == '$772.47'",
+        "text('slip/slip-amount').startsWith('$772.47')",
+        "node('slip/slip-frame').page == pages.size()"
+      ]
+    },
+    {
+      "name": "a first bill has no history to compare",
+      "data": {
+        "main": "tests/first-bill.json"
+      },
+      "expect": [
+        "pages.size() == 2",
+        "diagnostics.all(d, d.severity != 'error')",
+        "text('metric-year-value') == '–'",
+        "visible('metric-year-none')",
+        "!visible('metric-year-change')",
+        "!visible('next-read-label')",
+        "!visible('line-adjusted')",
+        "visible('chart-history')",
+        "text('text-total-due') == '$622.41'"
+      ]
+    },
+    {
+      "name": "a bill in credit has nothing to pay",
+      "data": {
+        "main": "tests/in-credit.json"
+      },
+      "expect": [
+        "diagnostics.all(d, d.severity != 'error')",
+        "text('due-kicker') == 'NOTHING TO PAY'",
+        "text('text-total-due') == '$0.00'",
+        "visible('due-credit')",
+        "!visible('due-date')",
+        "text('total-value') == '$77.59 CR'",
+        "text('total-line-label') == 'Credit balance'",
+        "text('slip/slip-amount').startsWith('$0.00')"
+      ]
+    }
+  ]
+}

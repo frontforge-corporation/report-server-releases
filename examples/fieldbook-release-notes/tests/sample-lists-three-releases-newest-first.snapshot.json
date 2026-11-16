@@ -1,0 +1,17 @@
+{
+  "test": "sample lists three releases newest first",
+  "pages": [
+    {
+      "page": 1,
+      "sha256": "208a880c11df8d40b895476d0d6b513b56113de0ef3561cb07fd84cf9043174a"
+    },
+    {
+      "page": 2,
+      "sha256": "6e930ceb952faeb3ee93b2c6141969c969cb27b7e33697dd70e22cac08fd26fa"
+    },
+    {
+      "page": 3,
+      "sha256": "55c37a4f8b85f9f40f5010fa5690420275351fdd019ed551e3608920f3ce65d4"
+    }
+  ]
+}

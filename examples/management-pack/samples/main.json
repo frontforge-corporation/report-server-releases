@@ -1,0 +1,1929 @@
+{
+  "issued": "2026-10-08",
+  "preparedBy": "Corin Halvey, Chief Financial Officer",
+  "targets": {
+    "utilisation": 0.75,
+    "pipelineCoverMonths": 2.5,
+    "onTrackShare": 0.8
+  },
+  "regions": [
+    {
+      "name": "Metro",
+      "lead": "Maren Tolliver",
+      "office": "Wenmoor"
+    },
+    {
+      "name": "Coastal",
+      "lead": "Isaak Ferrold",
+      "office": "Saltry Point"
+    },
+    {
+      "name": "Northern",
+      "lead": "Nadia Quenby",
+      "office": "Corranby"
+    },
+    {
+      "name": "Inland",
+      "lead": "Rhys Okonte",
+      "office": "Fallowmere"
+    }
+  ],
+  "regionMonths": [
+    {
+      "month": "2025-10-01",
+      "region": "Metro",
+      "budget": 820000,
+      "headcount": 38,
+      "availableHours": 6354,
+      "billableHours": 4962
+    },
+    {
+      "month": "2025-10-01",
+      "region": "Coastal",
+      "budget": 540000,
+      "headcount": 26,
+      "availableHours": 4347,
+      "billableHours": 3269
+    },
+    {
+      "month": "2025-10-01",
+      "region": "Northern",
+      "budget": 380000,
+      "headcount": 18,
+      "availableHours": 3010,
+      "billableHours": 2300
+    },
+    {
+      "month": "2025-10-01",
+      "region": "Inland",
+      "budget": 300000,
+      "headcount": 14,
+      "availableHours": 2341,
+      "billableHours": 1742
+    },
+    {
+      "month": "2025-11-01",
+      "region": "Metro",
+      "budget": 823300,
+      "headcount": 38,
+      "availableHours": 5776,
+      "billableHours": 4482
+    },
+    {
+      "month": "2025-11-01",
+      "region": "Coastal",
+      "budget": 542150,
+      "headcount": 26,
+      "availableHours": 3952,
+      "billableHours": 3004
+    },
+    {
+      "month": "2025-11-01",
+      "region": "Northern",
+      "budget": 381500,
+      "headcount": 18,
+      "availableHours": 2736,
+      "billableHours": 2074
+    },
+    {
+      "month": "2025-11-01",
+      "region": "Inland",
+      "budget": 301200,
+      "headcount": 14,
+      "availableHours": 2128,
+      "billableHours": 1573
+    },
+    {
+      "month": "2025-12-01",
+      "region": "Metro",
+      "budget": 710850,
+      "headcount": 38,
+      "availableHours": 4910,
+      "billableHours": 3643
+    },
+    {
+      "month": "2025-12-01",
+      "region": "Coastal",
+      "budget": 468100,
+      "headcount": 26,
+      "availableHours": 3359,
+      "billableHours": 2422
+    },
+    {
+      "month": "2025-12-01",
+      "region": "Northern",
+      "budget": 329400,
+      "headcount": 18,
+      "availableHours": 2326,
+      "billableHours": 1700
+    },
+    {
+      "month": "2025-12-01",
+      "region": "Inland",
+      "budget": 260050,
+      "headcount": 14,
+      "availableHours": 1809,
+      "billableHours": 1270
+    },
+    {
+      "month": "2026-01-01",
+      "region": "Metro",
+      "budget": 597500,
+      "headcount": 38,
+      "availableHours": 4621,
+      "billableHours": 2962
+    },
+    {
+      "month": "2026-01-01",
+      "region": "Coastal",
+      "budget": 393450,
+      "headcount": 26,
+      "availableHours": 3162,
+      "billableHours": 1967
+    },
+    {
+      "month": "2026-01-01",
+      "region": "Northern",
+      "budget": 276900,
+      "headcount": 18,
+      "availableHours": 2189,
+      "billableHours": 1386
+    },
+    {
+      "month": "2026-01-01",
+      "region": "Inland",
+      "budget": 218600,
+      "headcount": 14,
+      "availableHours": 1702,
+      "billableHours": 1040
+    },
+    {
+      "month": "2026-02-01",
+      "region": "Metro",
+      "budget": 833100,
+      "headcount": 38,
+      "availableHours": 5776,
+      "billableHours": 4442
+    },
+    {
+      "month": "2026-02-01",
+      "region": "Coastal",
+      "budget": 548650,
+      "headcount": 26,
+      "availableHours": 3952,
+      "billableHours": 2956
+    },
+    {
+      "month": "2026-02-01",
+      "region": "Northern",
+      "budget": 386100,
+      "headcount": 18,
+      "availableHours": 2736,
+      "billableHours": 2055
+    },
+    {
+      "month": "2026-02-01",
+      "region": "Inland",
+      "budget": 304800,
+      "headcount": 14,
+      "availableHours": 2128,
+      "billableHours": 1558
+    },
+    {
+      "month": "2026-03-01",
+      "region": "Metro",
+      "budget": 836400,
+      "headcount": 38,
+      "availableHours": 6354,
+      "billableHours": 5007
+    },
+    {
+      "month": "2026-03-01",
+      "region": "Coastal",
+      "budget": 550800,
+      "headcount": 26,
+      "availableHours": 4347,
+      "billableHours": 3291
+    },
+    {
+      "month": "2026-03-01",
+      "region": "Northern",
+      "budget": 387600,
+      "headcount": 18,
+      "availableHours": 3010,
+      "billableHours": 2306
+    },
+    {
+      "month": "2026-03-01",
+      "region": "Inland",
+      "budget": 306000,
+      "headcount": 14,
+      "availableHours": 2341,
+      "billableHours": 1735
+    },
+    {
+      "month": "2026-04-01",
+      "region": "Metro",
+      "budget": 839700,
+      "headcount": 38,
+      "availableHours": 5487,
+      "billableHours": 4236
+    },
+    {
+      "month": "2026-04-01",
+      "region": "Coastal",
+      "budget": 552950,
+      "headcount": 26,
+      "availableHours": 3754,
+      "billableHours": 2782
+    },
+    {
+      "month": "2026-04-01",
+      "region": "Northern",
+      "budget": 389100,
+      "headcount": 18,
+      "availableHours": 2599,
+      "billableHours": 1973
+    },
+    {
+      "month": "2026-04-01",
+      "region": "Inland",
+      "budget": 307200,
+      "headcount": 14,
+      "availableHours": 2022,
+      "billableHours": 1474
+    },
+    {
+      "month": "2026-05-01",
+      "region": "Metro",
+      "budget": 842950,
+      "headcount": 38,
+      "availableHours": 6065,
+      "billableHours": 4725
+    },
+    {
+      "month": "2026-05-01",
+      "region": "Coastal",
+      "budget": 555100,
+      "headcount": 26,
+      "availableHours": 4150,
+      "billableHours": 3067
+    },
+    {
+      "month": "2026-05-01",
+      "region": "Northern",
+      "budget": 390650,
+      "headcount": 18,
+      "availableHours": 2873,
+      "billableHours": 2189
+    },
+    {
+      "month": "2026-05-01",
+      "region": "Inland",
+      "budget": 308400,
+      "headcount": 14,
+      "availableHours": 2234,
+      "billableHours": 1633
+    },
+    {
+      "month": "2026-06-01",
+      "region": "Metro",
+      "budget": 846250,
+      "headcount": 38,
+      "availableHours": 6065,
+      "billableHours": 4755
+    },
+    {
+      "month": "2026-06-01",
+      "region": "Coastal",
+      "budget": 557300,
+      "headcount": 26,
+      "availableHours": 4150,
+      "billableHours": 3104
+    },
+    {
+      "month": "2026-06-01",
+      "region": "Northern",
+      "budget": 392150,
+      "headcount": 18,
+      "availableHours": 2873,
+      "billableHours": 2212
+    },
+    {
+      "month": "2026-06-01",
+      "region": "Inland",
+      "budget": 309600,
+      "headcount": 14,
+      "availableHours": 2234,
+      "billableHours": 1613
+    },
+    {
+      "month": "2026-07-01",
+      "region": "Metro",
+      "budget": 890500,
+      "headcount": 39,
+      "availableHours": 6817,
+      "billableHours": 5256
+    },
+    {
+      "month": "2026-07-01",
+      "region": "Coastal",
+      "budget": 586450,
+      "headcount": 27,
+      "availableHours": 4720,
+      "billableHours": 3474
+    },
+    {
+      "month": "2026-07-01",
+      "region": "Northern",
+      "budget": 412700,
+      "headcount": 18,
+      "availableHours": 3146,
+      "billableHours": 2385
+    },
+    {
+      "month": "2026-07-01",
+      "region": "Inland",
+      "budget": 325800,
+      "headcount": 14,
+      "availableHours": 2447,
+      "billableHours": 1759
+    },
+    {
+      "month": "2026-08-01",
+      "region": "Metro",
+      "budget": 893800,
+      "headcount": 39,
+      "availableHours": 6224,
+      "billableHours": 4848
+    },
+    {
+      "month": "2026-08-01",
+      "region": "Coastal",
+      "budget": 588600,
+      "headcount": 27,
+      "availableHours": 4309,
+      "billableHours": 3206
+    },
+    {
+      "month": "2026-08-01",
+      "region": "Northern",
+      "budget": 414200,
+      "headcount": 18,
+      "availableHours": 2873,
+      "billableHours": 2201
+    },
+    {
+      "month": "2026-08-01",
+      "region": "Inland",
+      "budget": 327000,
+      "headcount": 14,
+      "availableHours": 2234,
+      "billableHours": 1595
+    },
+    {
+      "month": "2026-09-01",
+      "region": "Metro",
+      "budget": 897100,
+      "headcount": 39,
+      "availableHours": 6521,
+      "billableHours": 5139
+    },
+    {
+      "month": "2026-09-01",
+      "region": "Coastal",
+      "budget": 590750,
+      "headcount": 27,
+      "availableHours": 4514,
+      "billableHours": 3300
+    },
+    {
+      "month": "2026-09-01",
+      "region": "Northern",
+      "budget": 415700,
+      "headcount": 18,
+      "availableHours": 3010,
+      "billableHours": 2327
+    },
+    {
+      "month": "2026-09-01",
+      "region": "Inland",
+      "budget": 328200,
+      "headcount": 14,
+      "availableHours": 2341,
+      "billableHours": 1643
+    }
+  ],
+  "fees": [
+    {
+      "month": "2025-10-01",
+      "region": "Metro",
+      "serviceLine": "Structural",
+      "amount": 337900
+    },
+    {
+      "month": "2025-10-01",
+      "region": "Metro",
+      "serviceLine": "Civil",
+      "amount": 262800
+    },
+    {
+      "month": "2025-10-01",
+      "region": "Metro",
+      "serviceLine": "Geotechnical",
+      "amount": 119900
+    },
+    {
+      "month": "2025-10-01",
+      "region": "Metro",
+      "serviceLine": "Environmental",
+      "amount": 110650
+    },
+    {
+      "month": "2025-10-01",
+      "region": "Coastal",
+      "serviceLine": "Structural",
+      "amount": 142250
+    },
+    {
+      "month": "2025-10-01",
+      "region": "Coastal",
+      "serviceLine": "Civil",
+      "amount": 207550
+    },
+    {
+      "month": "2025-10-01",
+      "region": "Coastal",
+      "serviceLine": "Geotechnical",
+      "amount": 79150
+    },
+    {
+      "month": "2025-10-01",
+      "region": "Coastal",
+      "serviceLine": "Environmental",
+      "amount": 95350
+    },
+    {
+      "month": "2025-10-01",
+      "region": "Northern",
+      "serviceLine": "Structural",
+      "amount": 94400
+    },
+    {
+      "month": "2025-10-01",
+      "region": "Northern",
+      "serviceLine": "Civil",
+      "amount": 140350
+    },
+    {
+      "month": "2025-10-01",
+      "region": "Northern",
+      "serviceLine": "Geotechnical",
+      "amount": 74150
+    },
+    {
+      "month": "2025-10-01",
+      "region": "Northern",
+      "serviceLine": "Environmental",
+      "amount": 78850
+    },
+    {
+      "month": "2025-10-01",
+      "region": "Inland",
+      "serviceLine": "Structural",
+      "amount": 70700
+    },
+    {
+      "month": "2025-10-01",
+      "region": "Inland",
+      "serviceLine": "Civil",
+      "amount": 117900
+    },
+    {
+      "month": "2025-10-01",
+      "region": "Inland",
+      "serviceLine": "Geotechnical",
+      "amount": 57150
+    },
+    {
+      "month": "2025-10-01",
+      "region": "Inland",
+      "serviceLine": "Environmental",
+      "amount": 52300
+    },
+    {
+      "month": "2025-11-01",
+      "region": "Metro",
+      "serviceLine": "Structural",
+      "amount": 339250
+    },
+    {
+      "month": "2025-11-01",
+      "region": "Metro",
+      "serviceLine": "Civil",
+      "amount": 274100
+    },
+    {
+      "month": "2025-11-01",
+      "region": "Metro",
+      "serviceLine": "Geotechnical",
+      "amount": 121800
+    },
+    {
+      "month": "2025-11-01",
+      "region": "Metro",
+      "serviceLine": "Environmental",
+      "amount": 114400
+    },
+    {
+      "month": "2025-11-01",
+      "region": "Coastal",
+      "serviceLine": "Structural",
+      "amount": 149950
+    },
+    {
+      "month": "2025-11-01",
+      "region": "Coastal",
+      "serviceLine": "Civil",
+      "amount": 212850
+    },
+    {
+      "month": "2025-11-01",
+      "region": "Coastal",
+      "serviceLine": "Geotechnical",
+      "amount": 83400
+    },
+    {
+      "month": "2025-11-01",
+      "region": "Coastal",
+      "serviceLine": "Environmental",
+      "amount": 97800
+    },
+    {
+      "month": "2025-11-01",
+      "region": "Northern",
+      "serviceLine": "Structural",
+      "amount": 90150
+    },
+    {
+      "month": "2025-11-01",
+      "region": "Northern",
+      "serviceLine": "Civil",
+      "amount": 137600
+    },
+    {
+      "month": "2025-11-01",
+      "region": "Northern",
+      "serviceLine": "Geotechnical",
+      "amount": 70750
+    },
+    {
+      "month": "2025-11-01",
+      "region": "Northern",
+      "serviceLine": "Environmental",
+      "amount": 78300
+    },
+    {
+      "month": "2025-11-01",
+      "region": "Inland",
+      "serviceLine": "Structural",
+      "amount": 73800
+    },
+    {
+      "month": "2025-11-01",
+      "region": "Inland",
+      "serviceLine": "Civil",
+      "amount": 118450
+    },
+    {
+      "month": "2025-11-01",
+      "region": "Inland",
+      "serviceLine": "Geotechnical",
+      "amount": 59000
+    },
+    {
+      "month": "2025-11-01",
+      "region": "Inland",
+      "serviceLine": "Environmental",
+      "amount": 52350
+    },
+    {
+      "month": "2025-12-01",
+      "region": "Metro",
+      "serviceLine": "Structural",
+      "amount": 282900
+    },
+    {
+      "month": "2025-12-01",
+      "region": "Metro",
+      "serviceLine": "Civil",
+      "amount": 222600
+    },
+    {
+      "month": "2025-12-01",
+      "region": "Metro",
+      "serviceLine": "Geotechnical",
+      "amount": 101600
+    },
+    {
+      "month": "2025-12-01",
+      "region": "Metro",
+      "serviceLine": "Environmental",
+      "amount": 92900
+    },
+    {
+      "month": "2025-12-01",
+      "region": "Coastal",
+      "serviceLine": "Structural",
+      "amount": 128300
+    },
+    {
+      "month": "2025-12-01",
+      "region": "Coastal",
+      "serviceLine": "Civil",
+      "amount": 186900
+    },
+    {
+      "month": "2025-12-01",
+      "region": "Coastal",
+      "serviceLine": "Geotechnical",
+      "amount": 71300
+    },
+    {
+      "month": "2025-12-01",
+      "region": "Coastal",
+      "serviceLine": "Environmental",
+      "amount": 87000
+    },
+    {
+      "month": "2025-12-01",
+      "region": "Northern",
+      "serviceLine": "Structural",
+      "amount": 83350
+    },
+    {
+      "month": "2025-12-01",
+      "region": "Northern",
+      "serviceLine": "Civil",
+      "amount": 122500
+    },
+    {
+      "month": "2025-12-01",
+      "region": "Northern",
+      "serviceLine": "Geotechnical",
+      "amount": 64700
+    },
+    {
+      "month": "2025-12-01",
+      "region": "Northern",
+      "serviceLine": "Environmental",
+      "amount": 69450
+    },
+    {
+      "month": "2025-12-01",
+      "region": "Inland",
+      "serviceLine": "Structural",
+      "amount": 59600
+    },
+    {
+      "month": "2025-12-01",
+      "region": "Inland",
+      "serviceLine": "Civil",
+      "amount": 99550
+    },
+    {
+      "month": "2025-12-01",
+      "region": "Inland",
+      "serviceLine": "Geotechnical",
+      "amount": 48200
+    },
+    {
+      "month": "2025-12-01",
+      "region": "Inland",
+      "serviceLine": "Environmental",
+      "amount": 43600
+    },
+    {
+      "month": "2026-01-01",
+      "region": "Metro",
+      "serviceLine": "Structural",
+      "amount": 247650
+    },
+    {
+      "month": "2026-01-01",
+      "region": "Metro",
+      "serviceLine": "Civil",
+      "amount": 199900
+    },
+    {
+      "month": "2026-01-01",
+      "region": "Metro",
+      "serviceLine": "Geotechnical",
+      "amount": 88800
+    },
+    {
+      "month": "2026-01-01",
+      "region": "Metro",
+      "serviceLine": "Environmental",
+      "amount": 84500
+    },
+    {
+      "month": "2026-01-01",
+      "region": "Coastal",
+      "serviceLine": "Structural",
+      "amount": 106200
+    },
+    {
+      "month": "2026-01-01",
+      "region": "Coastal",
+      "serviceLine": "Civil",
+      "amount": 148900
+    },
+    {
+      "month": "2026-01-01",
+      "region": "Coastal",
+      "serviceLine": "Geotechnical",
+      "amount": 58350
+    },
+    {
+      "month": "2026-01-01",
+      "region": "Coastal",
+      "serviceLine": "Environmental",
+      "amount": 69050
+    },
+    {
+      "month": "2026-01-01",
+      "region": "Northern",
+      "serviceLine": "Structural",
+      "amount": 67100
+    },
+    {
+      "month": "2026-01-01",
+      "region": "Northern",
+      "serviceLine": "Civil",
+      "amount": 102450
+    },
+    {
+      "month": "2026-01-01",
+      "region": "Northern",
+      "serviceLine": "Geotechnical",
+      "amount": 52700
+    },
+    {
+      "month": "2026-01-01",
+      "region": "Northern",
+      "serviceLine": "Environmental",
+      "amount": 57550
+    },
+    {
+      "month": "2026-01-01",
+      "region": "Inland",
+      "serviceLine": "Structural",
+      "amount": 53450
+    },
+    {
+      "month": "2026-01-01",
+      "region": "Inland",
+      "serviceLine": "Civil",
+      "amount": 86850
+    },
+    {
+      "month": "2026-01-01",
+      "region": "Inland",
+      "serviceLine": "Geotechnical",
+      "amount": 43250
+    },
+    {
+      "month": "2026-01-01",
+      "region": "Inland",
+      "serviceLine": "Environmental",
+      "amount": 38050
+    },
+    {
+      "month": "2026-02-01",
+      "region": "Metro",
+      "serviceLine": "Structural",
+      "amount": 341300
+    },
+    {
+      "month": "2026-02-01",
+      "region": "Metro",
+      "serviceLine": "Civil",
+      "amount": 265400
+    },
+    {
+      "month": "2026-02-01",
+      "region": "Metro",
+      "serviceLine": "Geotechnical",
+      "amount": 121100
+    },
+    {
+      "month": "2026-02-01",
+      "region": "Metro",
+      "serviceLine": "Environmental",
+      "amount": 111750
+    },
+    {
+      "month": "2026-02-01",
+      "region": "Coastal",
+      "serviceLine": "Structural",
+      "amount": 153400
+    },
+    {
+      "month": "2026-02-01",
+      "region": "Coastal",
+      "serviceLine": "Civil",
+      "amount": 223600
+    },
+    {
+      "month": "2026-02-01",
+      "region": "Coastal",
+      "serviceLine": "Geotechnical",
+      "amount": 85300
+    },
+    {
+      "month": "2026-02-01",
+      "region": "Coastal",
+      "serviceLine": "Environmental",
+      "amount": 102750
+    },
+    {
+      "month": "2026-02-01",
+      "region": "Northern",
+      "serviceLine": "Structural",
+      "amount": 92000
+    },
+    {
+      "month": "2026-02-01",
+      "region": "Northern",
+      "serviceLine": "Civil",
+      "amount": 136700
+    },
+    {
+      "month": "2026-02-01",
+      "region": "Northern",
+      "serviceLine": "Geotechnical",
+      "amount": 72250
+    },
+    {
+      "month": "2026-02-01",
+      "region": "Northern",
+      "serviceLine": "Environmental",
+      "amount": 76800
+    },
+    {
+      "month": "2026-02-01",
+      "region": "Inland",
+      "serviceLine": "Structural",
+      "amount": 71450
+    },
+    {
+      "month": "2026-02-01",
+      "region": "Inland",
+      "serviceLine": "Civil",
+      "amount": 119150
+    },
+    {
+      "month": "2026-02-01",
+      "region": "Inland",
+      "serviceLine": "Geotechnical",
+      "amount": 57750
+    },
+    {
+      "month": "2026-02-01",
+      "region": "Inland",
+      "serviceLine": "Environmental",
+      "amount": 52900
+    },
+    {
+      "month": "2026-03-01",
+      "region": "Metro",
+      "serviceLine": "Structural",
+      "amount": 341650
+    },
+    {
+      "month": "2026-03-01",
+      "region": "Metro",
+      "serviceLine": "Civil",
+      "amount": 276050
+    },
+    {
+      "month": "2026-03-01",
+      "region": "Metro",
+      "serviceLine": "Geotechnical",
+      "amount": 122650
+    },
+    {
+      "month": "2026-03-01",
+      "region": "Metro",
+      "serviceLine": "Environmental",
+      "amount": 115250
+    },
+    {
+      "month": "2026-03-01",
+      "region": "Coastal",
+      "serviceLine": "Structural",
+      "amount": 150500
+    },
+    {
+      "month": "2026-03-01",
+      "region": "Coastal",
+      "serviceLine": "Civil",
+      "amount": 213650
+    },
+    {
+      "month": "2026-03-01",
+      "region": "Coastal",
+      "serviceLine": "Geotechnical",
+      "amount": 83700
+    },
+    {
+      "month": "2026-03-01",
+      "region": "Coastal",
+      "serviceLine": "Environmental",
+      "amount": 98150
+    },
+    {
+      "month": "2026-03-01",
+      "region": "Northern",
+      "serviceLine": "Structural",
+      "amount": 94300
+    },
+    {
+      "month": "2026-03-01",
+      "region": "Northern",
+      "serviceLine": "Civil",
+      "amount": 143850
+    },
+    {
+      "month": "2026-03-01",
+      "region": "Northern",
+      "serviceLine": "Geotechnical",
+      "amount": 74050
+    },
+    {
+      "month": "2026-03-01",
+      "region": "Northern",
+      "serviceLine": "Environmental",
+      "amount": 81850
+    },
+    {
+      "month": "2026-03-01",
+      "region": "Inland",
+      "serviceLine": "Structural",
+      "amount": 72200
+    },
+    {
+      "month": "2026-03-01",
+      "region": "Inland",
+      "serviceLine": "Civil",
+      "amount": 115800
+    },
+    {
+      "month": "2026-03-01",
+      "region": "Inland",
+      "serviceLine": "Geotechnical",
+      "amount": 57700
+    },
+    {
+      "month": "2026-03-01",
+      "region": "Inland",
+      "serviceLine": "Environmental",
+      "amount": 51200
+    },
+    {
+      "month": "2026-04-01",
+      "region": "Metro",
+      "serviceLine": "Structural",
+      "amount": 338600
+    },
+    {
+      "month": "2026-04-01",
+      "region": "Metro",
+      "serviceLine": "Civil",
+      "amount": 266400
+    },
+    {
+      "month": "2026-04-01",
+      "region": "Metro",
+      "serviceLine": "Geotechnical",
+      "amount": 121550
+    },
+    {
+      "month": "2026-04-01",
+      "region": "Metro",
+      "serviceLine": "Environmental",
+      "amount": 111200
+    },
+    {
+      "month": "2026-04-01",
+      "region": "Coastal",
+      "serviceLine": "Structural",
+      "amount": 152600
+    },
+    {
+      "month": "2026-04-01",
+      "region": "Coastal",
+      "serviceLine": "Civil",
+      "amount": 222300
+    },
+    {
+      "month": "2026-04-01",
+      "region": "Coastal",
+      "serviceLine": "Geotechnical",
+      "amount": 84800
+    },
+    {
+      "month": "2026-04-01",
+      "region": "Coastal",
+      "serviceLine": "Environmental",
+      "amount": 103450
+    },
+    {
+      "month": "2026-04-01",
+      "region": "Northern",
+      "serviceLine": "Structural",
+      "amount": 97600
+    },
+    {
+      "month": "2026-04-01",
+      "region": "Northern",
+      "serviceLine": "Civil",
+      "amount": 143450
+    },
+    {
+      "month": "2026-04-01",
+      "region": "Northern",
+      "serviceLine": "Geotechnical",
+      "amount": 75800
+    },
+    {
+      "month": "2026-04-01",
+      "region": "Northern",
+      "serviceLine": "Environmental",
+      "amount": 81300
+    },
+    {
+      "month": "2026-04-01",
+      "region": "Inland",
+      "serviceLine": "Structural",
+      "amount": 73450
+    },
+    {
+      "month": "2026-04-01",
+      "region": "Inland",
+      "serviceLine": "Civil",
+      "amount": 122500
+    },
+    {
+      "month": "2026-04-01",
+      "region": "Inland",
+      "serviceLine": "Geotechnical",
+      "amount": 59400
+    },
+    {
+      "month": "2026-04-01",
+      "region": "Inland",
+      "serviceLine": "Environmental",
+      "amount": 53650
+    },
+    {
+      "month": "2026-05-01",
+      "region": "Metro",
+      "serviceLine": "Structural",
+      "amount": 340600
+    },
+    {
+      "month": "2026-05-01",
+      "region": "Metro",
+      "serviceLine": "Civil",
+      "amount": 275000
+    },
+    {
+      "month": "2026-05-01",
+      "region": "Metro",
+      "serviceLine": "Geotechnical",
+      "amount": 122150
+    },
+    {
+      "month": "2026-05-01",
+      "region": "Metro",
+      "serviceLine": "Environmental",
+      "amount": 116250
+    },
+    {
+      "month": "2026-05-01",
+      "region": "Coastal",
+      "serviceLine": "Structural",
+      "amount": 151100
+    },
+    {
+      "month": "2026-05-01",
+      "region": "Coastal",
+      "serviceLine": "Civil",
+      "amount": 211850
+    },
+    {
+      "month": "2026-05-01",
+      "region": "Coastal",
+      "serviceLine": "Geotechnical",
+      "amount": 83050
+    },
+    {
+      "month": "2026-05-01",
+      "region": "Coastal",
+      "serviceLine": "Environmental",
+      "amount": 98250
+    },
+    {
+      "month": "2026-05-01",
+      "region": "Northern",
+      "serviceLine": "Structural",
+      "amount": 94100
+    },
+    {
+      "month": "2026-05-01",
+      "region": "Northern",
+      "serviceLine": "Civil",
+      "amount": 143700
+    },
+    {
+      "month": "2026-05-01",
+      "region": "Northern",
+      "serviceLine": "Geotechnical",
+      "amount": 73950
+    },
+    {
+      "month": "2026-05-01",
+      "region": "Northern",
+      "serviceLine": "Environmental",
+      "amount": 80750
+    },
+    {
+      "month": "2026-05-01",
+      "region": "Inland",
+      "serviceLine": "Structural",
+      "amount": 73200
+    },
+    {
+      "month": "2026-05-01",
+      "region": "Inland",
+      "serviceLine": "Civil",
+      "amount": 118900
+    },
+    {
+      "month": "2026-05-01",
+      "region": "Inland",
+      "serviceLine": "Geotechnical",
+      "amount": 59200
+    },
+    {
+      "month": "2026-05-01",
+      "region": "Inland",
+      "serviceLine": "Environmental",
+      "amount": 52050
+    },
+    {
+      "month": "2026-06-01",
+      "region": "Metro",
+      "serviceLine": "Structural",
+      "amount": 356250
+    },
+    {
+      "month": "2026-06-01",
+      "region": "Metro",
+      "serviceLine": "Civil",
+      "amount": 277150
+    },
+    {
+      "month": "2026-06-01",
+      "region": "Metro",
+      "serviceLine": "Geotechnical",
+      "amount": 126400
+    },
+    {
+      "month": "2026-06-01",
+      "region": "Metro",
+      "serviceLine": "Environmental",
+      "amount": 116700
+    },
+    {
+      "month": "2026-06-01",
+      "region": "Coastal",
+      "serviceLine": "Structural",
+      "amount": 153050
+    },
+    {
+      "month": "2026-06-01",
+      "region": "Coastal",
+      "serviceLine": "Civil",
+      "amount": 223150
+    },
+    {
+      "month": "2026-06-01",
+      "region": "Coastal",
+      "serviceLine": "Geotechnical",
+      "amount": 85150
+    },
+    {
+      "month": "2026-06-01",
+      "region": "Coastal",
+      "serviceLine": "Environmental",
+      "amount": 102550
+    },
+    {
+      "month": "2026-06-01",
+      "region": "Northern",
+      "serviceLine": "Structural",
+      "amount": 94950
+    },
+    {
+      "month": "2026-06-01",
+      "region": "Northern",
+      "serviceLine": "Civil",
+      "amount": 141150
+    },
+    {
+      "month": "2026-06-01",
+      "region": "Northern",
+      "serviceLine": "Geotechnical",
+      "amount": 74600
+    },
+    {
+      "month": "2026-06-01",
+      "region": "Northern",
+      "serviceLine": "Environmental",
+      "amount": 79300
+    },
+    {
+      "month": "2026-06-01",
+      "region": "Inland",
+      "serviceLine": "Structural",
+      "amount": 71200
+    },
+    {
+      "month": "2026-06-01",
+      "region": "Inland",
+      "serviceLine": "Civil",
+      "amount": 118750
+    },
+    {
+      "month": "2026-06-01",
+      "region": "Inland",
+      "serviceLine": "Geotechnical",
+      "amount": 57500
+    },
+    {
+      "month": "2026-06-01",
+      "region": "Inland",
+      "serviceLine": "Environmental",
+      "amount": 52700
+    },
+    {
+      "month": "2026-07-01",
+      "region": "Metro",
+      "serviceLine": "Structural",
+      "amount": 351950
+    },
+    {
+      "month": "2026-07-01",
+      "region": "Metro",
+      "serviceLine": "Civil",
+      "amount": 284550
+    },
+    {
+      "month": "2026-07-01",
+      "region": "Metro",
+      "serviceLine": "Geotechnical",
+      "amount": 126350
+    },
+    {
+      "month": "2026-07-01",
+      "region": "Metro",
+      "serviceLine": "Environmental",
+      "amount": 118750
+    },
+    {
+      "month": "2026-07-01",
+      "region": "Coastal",
+      "serviceLine": "Structural",
+      "amount": 165700
+    },
+    {
+      "month": "2026-07-01",
+      "region": "Coastal",
+      "serviceLine": "Civil",
+      "amount": 235300
+    },
+    {
+      "month": "2026-07-01",
+      "region": "Coastal",
+      "serviceLine": "Geotechnical",
+      "amount": 92150
+    },
+    {
+      "month": "2026-07-01",
+      "region": "Coastal",
+      "serviceLine": "Environmental",
+      "amount": 108150
+    },
+    {
+      "month": "2026-07-01",
+      "region": "Northern",
+      "serviceLine": "Structural",
+      "amount": 100100
+    },
+    {
+      "month": "2026-07-01",
+      "region": "Northern",
+      "serviceLine": "Civil",
+      "amount": 152700
+    },
+    {
+      "month": "2026-07-01",
+      "region": "Northern",
+      "serviceLine": "Geotechnical",
+      "amount": 78600
+    },
+    {
+      "month": "2026-07-01",
+      "region": "Northern",
+      "serviceLine": "Environmental",
+      "amount": 86900
+    },
+    {
+      "month": "2026-07-01",
+      "region": "Inland",
+      "serviceLine": "Structural",
+      "amount": 77400
+    },
+    {
+      "month": "2026-07-01",
+      "region": "Inland",
+      "serviceLine": "Civil",
+      "amount": 124200
+    },
+    {
+      "month": "2026-07-01",
+      "region": "Inland",
+      "serviceLine": "Geotechnical",
+      "amount": 61850
+    },
+    {
+      "month": "2026-07-01",
+      "region": "Inland",
+      "serviceLine": "Environmental",
+      "amount": 54900
+    },
+    {
+      "month": "2026-08-01",
+      "region": "Metro",
+      "serviceLine": "Structural",
+      "amount": 367950
+    },
+    {
+      "month": "2026-08-01",
+      "region": "Metro",
+      "serviceLine": "Civil",
+      "amount": 289600
+    },
+    {
+      "month": "2026-08-01",
+      "region": "Metro",
+      "serviceLine": "Geotechnical",
+      "amount": 132100
+    },
+    {
+      "month": "2026-08-01",
+      "region": "Metro",
+      "serviceLine": "Environmental",
+      "amount": 120850
+    },
+    {
+      "month": "2026-08-01",
+      "region": "Coastal",
+      "serviceLine": "Structural",
+      "amount": 159200
+    },
+    {
+      "month": "2026-08-01",
+      "region": "Coastal",
+      "serviceLine": "Civil",
+      "amount": 232000
+    },
+    {
+      "month": "2026-08-01",
+      "region": "Coastal",
+      "serviceLine": "Geotechnical",
+      "amount": 88500
+    },
+    {
+      "month": "2026-08-01",
+      "region": "Coastal",
+      "serviceLine": "Environmental",
+      "amount": 108000
+    },
+    {
+      "month": "2026-08-01",
+      "region": "Northern",
+      "serviceLine": "Structural",
+      "amount": 104600
+    },
+    {
+      "month": "2026-08-01",
+      "region": "Northern",
+      "serviceLine": "Civil",
+      "amount": 153750
+    },
+    {
+      "month": "2026-08-01",
+      "region": "Northern",
+      "serviceLine": "Geotechnical",
+      "amount": 81250
+    },
+    {
+      "month": "2026-08-01",
+      "region": "Northern",
+      "serviceLine": "Environmental",
+      "amount": 87150
+    },
+    {
+      "month": "2026-08-01",
+      "region": "Inland",
+      "serviceLine": "Structural",
+      "amount": 74850
+    },
+    {
+      "month": "2026-08-01",
+      "region": "Inland",
+      "serviceLine": "Civil",
+      "amount": 125000
+    },
+    {
+      "month": "2026-08-01",
+      "region": "Inland",
+      "serviceLine": "Geotechnical",
+      "amount": 60550
+    },
+    {
+      "month": "2026-08-01",
+      "region": "Inland",
+      "serviceLine": "Environmental",
+      "amount": 54750
+    },
+    {
+      "month": "2026-09-01",
+      "region": "Metro",
+      "serviceLine": "Structural",
+      "amount": 373650
+    },
+    {
+      "month": "2026-09-01",
+      "region": "Metro",
+      "serviceLine": "Civil",
+      "amount": 301550
+    },
+    {
+      "month": "2026-09-01",
+      "region": "Metro",
+      "serviceLine": "Geotechnical",
+      "amount": 134000
+    },
+    {
+      "month": "2026-09-01",
+      "region": "Metro",
+      "serviceLine": "Environmental",
+      "amount": 127450
+    },
+    {
+      "month": "2026-09-01",
+      "region": "Coastal",
+      "serviceLine": "Structural",
+      "amount": 167250
+    },
+    {
+      "month": "2026-09-01",
+      "region": "Coastal",
+      "serviceLine": "Civil",
+      "amount": 234700
+    },
+    {
+      "month": "2026-09-01",
+      "region": "Coastal",
+      "serviceLine": "Geotechnical",
+      "amount": 91950
+    },
+    {
+      "month": "2026-09-01",
+      "region": "Coastal",
+      "serviceLine": "Environmental",
+      "amount": 108800
+    },
+    {
+      "month": "2026-09-01",
+      "region": "Northern",
+      "serviceLine": "Structural",
+      "amount": 101650
+    },
+    {
+      "month": "2026-09-01",
+      "region": "Northern",
+      "serviceLine": "Civil",
+      "amount": 155200
+    },
+    {
+      "month": "2026-09-01",
+      "region": "Northern",
+      "serviceLine": "Geotechnical",
+      "amount": 79850
+    },
+    {
+      "month": "2026-09-01",
+      "region": "Northern",
+      "serviceLine": "Environmental",
+      "amount": 87200
+    },
+    {
+      "month": "2026-09-01",
+      "region": "Inland",
+      "serviceLine": "Structural",
+      "amount": 75050
+    },
+    {
+      "month": "2026-09-01",
+      "region": "Inland",
+      "serviceLine": "Civil",
+      "amount": 121850
+    },
+    {
+      "month": "2026-09-01",
+      "region": "Inland",
+      "serviceLine": "Geotechnical",
+      "amount": 60700
+    },
+    {
+      "month": "2026-09-01",
+      "region": "Inland",
+      "serviceLine": "Environmental",
+      "amount": 53350
+    }
+  ],
+  "projects": [
+    {
+      "code": "OP-2296",
+      "name": "Station Street car park deck",
+      "client": "Wendaro Developments",
+      "region": "Metro",
+      "serviceLine": "Structural",
+      "manager": "Tomas Velde",
+      "contractValue": 742000,
+      "invoicedToDate": 668000,
+      "percentComplete": 92,
+      "status": "On track",
+      "note": "Final inspection booked for 14 October; retention release due in December."
+    },
+    {
+      "code": "OP-2304",
+      "name": "Canal Road pump station",
+      "client": "Tamberlyn Water",
+      "region": "Metro",
+      "serviceLine": "Civil",
+      "manager": "Maren Tolliver",
+      "contractValue": 1180000,
+      "invoicedToDate": 436000,
+      "percentComplete": 38,
+      "status": "At risk",
+      "note": "Pump supplier's lead time has grown to 22 weeks; we have asked the client to approve an alternative."
+    },
+    {
+      "code": "OP-2309",
+      "name": "Kestrava Rail depot slab",
+      "client": "Kestrava Rail",
+      "region": "Metro",
+      "serviceLine": "Structural",
+      "manager": "Ada Rennick",
+      "contractValue": 655000,
+      "invoicedToDate": 287000,
+      "percentComplete": 46,
+      "status": "On track",
+      "note": "Slab pours one and two complete; pour three is planned for the week of 19 October."
+    },
+    {
+      "code": "OP-2315",
+      "name": "Old gasworks site assessment",
+      "client": "Orrinvale Shire Council",
+      "region": "Metro",
+      "serviceLine": "Environmental",
+      "manager": "Kiri Haddon",
+      "contractValue": 318000,
+      "invoicedToDate": 251000,
+      "percentComplete": 84,
+      "status": "On track",
+      "note": "Groundwater sampling round three returned within limits; draft report with the council."
+    },
+    {
+      "code": "OP-2311",
+      "name": "Orrinvale Creek footbridge",
+      "client": "Orrinvale Shire Council",
+      "region": "Coastal",
+      "serviceLine": "Structural",
+      "manager": "Ada Rennick",
+      "contractValue": 486000,
+      "invoicedToDate": 312000,
+      "percentComplete": 68,
+      "status": "On track",
+      "note": "Abutment design approved; steelwork shop drawings under review."
+    },
+    {
+      "code": "OP-2318",
+      "name": "Harbour Road seawall renewal",
+      "client": "Dunmorrow Port Authority",
+      "region": "Coastal",
+      "serviceLine": "Civil",
+      "manager": "Isaak Ferrold",
+      "contractValue": 1240000,
+      "invoicedToDate": 448000,
+      "percentComplete": 35,
+      "status": "Late",
+      "note": "Rock armour delivery slipped three weeks; the recovery plan was agreed with the client on 22 September."
+    },
+    {
+      "code": "OP-2322",
+      "name": "Dunes walk boardwalk",
+      "client": "Orrinvale Shire Council",
+      "region": "Coastal",
+      "serviceLine": "Environmental",
+      "manager": "Joel Marrick",
+      "contractValue": 214000,
+      "invoicedToDate": 96000,
+      "percentComplete": 44,
+      "status": "On track",
+      "note": "Vegetation survey finished; permit application lodged."
+    },
+    {
+      "code": "OP-2327",
+      "name": "Hallowfen Hospital car park",
+      "client": "Hallowfen Health",
+      "region": "Coastal",
+      "serviceLine": "Geotechnical",
+      "manager": "Isaak Ferrold",
+      "contractValue": 392000,
+      "invoicedToDate": 271000,
+      "percentComplete": 71,
+      "status": "At risk",
+      "note": "Soft clay found under the north-east corner; extra boreholes are a variation to be approved."
+    },
+    {
+      "code": "OP-2301",
+      "name": "Quarry Lane culvert upgrade",
+      "client": "Corranby Shire Council",
+      "region": "Northern",
+      "serviceLine": "Civil",
+      "manager": "Nadia Quenby",
+      "contractValue": 528000,
+      "invoicedToDate": 401000,
+      "percentComplete": 79,
+      "status": "On track",
+      "note": "Culvert units installed; road reopened two days early."
+    },
+    {
+      "code": "OP-2313",
+      "name": "Northern trunk main survey",
+      "client": "Tamberlyn Water",
+      "region": "Northern",
+      "serviceLine": "Geotechnical",
+      "manager": "Kiri Haddon",
+      "contractValue": 276000,
+      "invoicedToDate": 188000,
+      "percentComplete": 66,
+      "status": "On track",
+      "note": "Thirty of forty-two test pits logged."
+    },
+    {
+      "code": "OP-2325",
+      "name": "Corranby school hall",
+      "client": "Wendaro Developments",
+      "region": "Northern",
+      "serviceLine": "Structural",
+      "manager": "Tomas Velde",
+      "contractValue": 348000,
+      "invoicedToDate": 82000,
+      "percentComplete": 22,
+      "status": "On track",
+      "note": "Concept design accepted; detailed design started."
+    },
+    {
+      "code": "OP-2299",
+      "name": "Tamberlyn reservoir outlet tower",
+      "client": "Tamberlyn Water",
+      "region": "Inland",
+      "serviceLine": "Structural",
+      "manager": "Rhys Okonte",
+      "contractValue": 910000,
+      "invoicedToDate": 702000,
+      "percentComplete": 81,
+      "status": "On track",
+      "note": "Tower shell complete; valve chamber works from November."
+    },
+    {
+      "code": "OP-2316",
+      "name": "Fallowmere bypass drainage",
+      "client": "Kestrava Rail",
+      "region": "Inland",
+      "serviceLine": "Civil",
+      "manager": "Joel Marrick",
+      "contractValue": 604000,
+      "invoicedToDate": 357000,
+      "percentComplete": 57,
+      "status": "On track",
+      "note": "Stage one drains commissioned."
+    },
+    {
+      "code": "OP-2328",
+      "name": "Saleyards catchment study",
+      "client": "Corranby Shire Council",
+      "region": "Inland",
+      "serviceLine": "Environmental",
+      "manager": "Rhys Okonte",
+      "contractValue": 168000,
+      "invoicedToDate": 41000,
+      "percentComplete": 24,
+      "status": "On track",
+      "note": "Rainfall loggers installed at six sites."
+    }
+  ],
+  "pipeline": [
+    {
+      "name": "Harbour Road stage two",
+      "client": "Dunmorrow Port Authority",
+      "region": "Coastal",
+      "serviceLine": "Civil",
+      "stage": "Verbal win",
+      "value": 1460000,
+      "probability": 0.9,
+      "decision": "2026-10-09"
+    },
+    {
+      "name": "Western rail sidings",
+      "client": "Kestrava Rail",
+      "region": "Metro",
+      "serviceLine": "Structural",
+      "stage": "Shortlisted",
+      "value": 2150000,
+      "probability": 0.5,
+      "decision": "2026-11-20"
+    },
+    {
+      "name": "Hallowfen Hospital wing B",
+      "client": "Hallowfen Health",
+      "region": "Coastal",
+      "serviceLine": "Structural",
+      "stage": "Proposal",
+      "value": 1780000,
+      "probability": 0.3,
+      "decision": "2026-12-04"
+    },
+    {
+      "name": "Canal precinct flood study",
+      "client": "Orrinvale Shire Council",
+      "region": "Metro",
+      "serviceLine": "Environmental",
+      "stage": "Shortlisted",
+      "value": 640000,
+      "probability": 0.5,
+      "decision": "2026-10-30"
+    },
+    {
+      "name": "Tamberlyn treatment plant upgrade",
+      "client": "Tamberlyn Water",
+      "region": "Inland",
+      "serviceLine": "Civil",
+      "stage": "Proposal",
+      "value": 2420000,
+      "probability": 0.3,
+      "decision": "2027-01-29"
+    },
+    {
+      "name": "Corranby levee review",
+      "client": "Corranby Shire Council",
+      "region": "Northern",
+      "serviceLine": "Geotechnical",
+      "stage": "Verbal win",
+      "value": 385000,
+      "probability": 0.9,
+      "decision": "2026-10-16"
+    },
+    {
+      "name": "Station Street tower podium",
+      "client": "Wendaro Developments",
+      "region": "Metro",
+      "serviceLine": "Structural",
+      "stage": "Qualifying",
+      "value": 3100000,
+      "probability": 0.1,
+      "decision": "2027-03-12"
+    },
+    {
+      "name": "Coastal path bridges",
+      "client": "Orrinvale Shire Council",
+      "region": "Coastal",
+      "serviceLine": "Structural",
+      "stage": "Shortlisted",
+      "value": 820000,
+      "probability": 0.5,
+      "decision": "2026-11-06"
+    },
+    {
+      "name": "Northern depot hardstand",
+      "client": "Kestrava Rail",
+      "region": "Northern",
+      "serviceLine": "Civil",
+      "stage": "Proposal",
+      "value": 560000,
+      "probability": 0.3,
+      "decision": "2026-12-11"
+    },
+    {
+      "name": "Saleyards stormwater works",
+      "client": "Corranby Shire Council",
+      "region": "Inland",
+      "serviceLine": "Civil",
+      "stage": "Qualifying",
+      "value": 930000,
+      "probability": 0.1,
+      "decision": "2027-02-19"
+    },
+    {
+      "name": "Reservoir dam safety review",
+      "client": "Tamberlyn Water",
+      "region": "Inland",
+      "serviceLine": "Geotechnical",
+      "stage": "Shortlisted",
+      "value": 470000,
+      "probability": 0.5,
+      "decision": "2026-11-27"
+    },
+    {
+      "name": "Old gasworks remediation design",
+      "client": "Orrinvale Shire Council",
+      "region": "Metro",
+      "serviceLine": "Environmental",
+      "stage": "Proposal",
+      "value": 1150000,
+      "probability": 0.3,
+      "decision": "2027-01-15"
+    },
+    {
+      "name": "Corranby school hall stage two",
+      "client": "Wendaro Developments",
+      "region": "Northern",
+      "serviceLine": "Structural",
+      "stage": "Qualifying",
+      "value": 720000,
+      "probability": 0.1,
+      "decision": "2027-02-05"
+    }
+  ],
+  "commentary": [
+    {
+      "month": "2026-09-01",
+      "region": "Metro",
+      "text": "Our best month this year: the Kestrava Rail slab pours ran to plan and Station Street is nearly done. The Canal Road pump station is the one to watch until the client approves the alternative pump."
+    },
+    {
+      "month": "2026-09-01",
+      "region": "Coastal",
+      "text": "Fees came in ahead of budget, but the seawall delay is holding utilisation back while crews wait for rock armour. The Harbour Road stage two win, expected in October, fills the first quarter of next year."
+    },
+    {
+      "month": "2026-09-01",
+      "region": "Northern",
+      "text": "A steady month. The culvert upgrade finished early and the levee review is a verbal win. We start recruiting a graduate geotechnical engineer in October."
+    },
+    {
+      "month": "2026-09-01",
+      "region": "Inland",
+      "text": "Fees were short of budget for the fourth month running: two senior engineers were on leave and the treatment plant proposal took more hours than planned. We expect to be back on budget in November."
+    },
+    {
+      "month": "2026-08-01",
+      "region": "Metro",
+      "text": "Fees ahead of budget, helped by the gasworks sampling round. Two graduates started on 4 August."
+    },
+    {
+      "month": "2026-08-01",
+      "region": "Coastal",
+      "text": "On budget. Abutment design for the footbridge was approved at the first submission."
+    },
+    {
+      "month": "2026-08-01",
+      "region": "Northern",
+      "text": "Ahead of budget; the trunk main survey is a month ahead of programme."
+    },
+    {
+      "month": "2026-08-01",
+      "region": "Inland",
+      "text": "Behind budget while the reservoir tower team worked unbilled hours on a design change, now agreed as a variation."
+    }
+  ]
+}

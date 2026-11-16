@@ -1,0 +1,204 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "One purchase order",
+  "type": "object",
+  "required": [
+    "order",
+    "supplier",
+    "delivery",
+    "lines"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "order": {
+      "type": "object",
+      "title": "Order",
+      "required": [
+        "number",
+        "date",
+        "requiredBy",
+        "status",
+        "requestedBy",
+        "project",
+        "costCentre",
+        "paymentTerms"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "number": {
+          "type": "string",
+          "title": "PO number",
+          "description": "Printed as a Code 128 barcode for scanning at goods receiving"
+        },
+        "date": {
+          "type": "string",
+          "format": "date",
+          "title": "Order date"
+        },
+        "requiredBy": {
+          "type": "string",
+          "format": "date",
+          "title": "Required by"
+        },
+        "status": {
+          "type": "string",
+          "title": "Status",
+          "enum": [
+            "awaiting-approval",
+            "approved"
+          ]
+        },
+        "approvedBy": {
+          "type": "string",
+          "title": "Approved by"
+        },
+        "approvedOn": {
+          "type": "string",
+          "format": "date",
+          "title": "Approved on"
+        },
+        "requestedBy": {
+          "type": "string",
+          "title": "Requested by"
+        },
+        "project": {
+          "type": "string",
+          "title": "Project"
+        },
+        "costCentre": {
+          "type": "string",
+          "title": "Cost centre"
+        },
+        "supplierQuote": {
+          "type": "string",
+          "title": "Supplier's quote"
+        },
+        "paymentTerms": {
+          "type": "string",
+          "title": "Payment terms"
+        }
+      }
+    },
+    "supplier": {
+      "type": "object",
+      "title": "Supplier",
+      "required": [
+        "name",
+        "abn",
+        "addressLines",
+        "contact",
+        "email",
+        "phone",
+        "account"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Name"
+        },
+        "abn": {
+          "type": "string",
+          "title": "ABN"
+        },
+        "addressLines": {
+          "type": "array",
+          "title": "Address",
+          "items": {
+            "type": "string"
+          }
+        },
+        "contact": {
+          "type": "string",
+          "title": "Contact"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "title": "Email"
+        },
+        "phone": {
+          "type": "string",
+          "title": "Phone"
+        },
+        "account": {
+          "type": "string",
+          "title": "Our supplier number"
+        }
+      }
+    },
+    "delivery": {
+      "type": "object",
+      "title": "Delivery",
+      "required": [
+        "site",
+        "addressLines",
+        "contact",
+        "phone"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "site": {
+          "type": "string",
+          "title": "Site"
+        },
+        "addressLines": {
+          "type": "array",
+          "title": "Address",
+          "items": {
+            "type": "string"
+          }
+        },
+        "contact": {
+          "type": "string",
+          "title": "Site contact"
+        },
+        "phone": {
+          "type": "string",
+          "title": "Site contact's phone"
+        },
+        "instructions": {
+          "type": "string",
+          "title": "Delivery instructions"
+        }
+      }
+    },
+    "lines": {
+      "type": "array",
+      "title": "Lines",
+      "items": {
+        "type": "object",
+        "required": [
+          "code",
+          "description",
+          "quantity",
+          "unit",
+          "unitPrice"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Supplier's item code"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "quantity": {
+            "type": "integer",
+            "title": "Quantity"
+          },
+          "unit": {
+            "type": "string",
+            "title": "Unit"
+          },
+          "unitPrice": {
+            "type": "number",
+            "title": "Unit price (excl. GST)"
+          }
+        }
+      }
+    }
+  }
+}

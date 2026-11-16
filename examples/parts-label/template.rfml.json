@@ -1,0 +1,544 @@
+{
+  "$schema": "https://docs.frontforge.com/schema/rfml/0.2.json",
+  "rfml": "0.2",
+  "id": "parts-label",
+  "meta": {
+    "title": "Parts dispatch label",
+    "description": "A 4 × 6 inch shipping label for meters and parts sent from Larkmere Water's depot to a field crew, one page per parcel. Each shows the from and to addresses, parcel n of N, weight and contents, a Code 128 barcode and a DataMatrix code, and a FRAGILE or HANDLE WITH CARE stamp when the parcel needs it.",
+    "locale": "en-AU",
+    "currency": "AUD",
+    "tags": [
+      "example",
+      "label",
+      "logistics",
+      "barcode"
+    ]
+  },
+  "data": {
+    "main": {
+      "schema": {
+        "$ref": "schemas/main.json"
+      },
+      "sample": "samples/main.json",
+      "description": "One consignment from the depot to a field crew, and the parcels it was packed in."
+    }
+  },
+  "vars": {
+    "consignment": "data.main.consignment"
+  },
+  "styles": {
+    "tokens": {
+      "brand": "#0073AF",
+      "ink": "#231F20",
+      "muted": "#4E6A75",
+      "line": "#D5E4EA",
+      "panel": "#E8F4FB",
+      "negative": "#B42318",
+      "positive": "#1F7A4D",
+      "accent": "#1A9E8F",
+      "space-1": "3pt",
+      "space-2": "6pt",
+      "space-3": "12pt"
+    },
+    "defaults": {
+      "document": {
+        "color": "var(--ink)",
+        "font-family": "Arimo",
+        "font-size": "8.5pt",
+        "line-height": 1.25
+      }
+    },
+    "classes": {
+      "wordmark": {
+        "color": "var(--brand)",
+        "font-size": "15pt",
+        "font-weight": 700
+      },
+      "kicker": {
+        "margin-bottom": "2pt",
+        "color": "var(--muted)",
+        "font-size": "6.5pt",
+        "font-weight": 700,
+        "letter-spacing": "0.8pt",
+        "text-transform": "uppercase"
+      },
+      "section": {
+        "padding": "var(--space-2) 0",
+        "border-bottom": "1.5pt solid var(--ink)"
+      },
+      "strong": {
+        "font-weight": 700
+      },
+      "cell": {
+        "padding": "var(--space-1) var(--space-2)"
+      },
+      "cell-value": {
+        "font-size": "15pt",
+        "font-weight": 700,
+        "line-height": 1.1
+      },
+      "stamp": {
+        "width": "78mm",
+        "padding": "1mm 0",
+        "border": "2.5pt solid var(--negative)",
+        "border-radius": "2mm",
+        "color": "var(--negative)",
+        "font-size": "17pt",
+        "font-weight": 700,
+        "letter-spacing": "1pt",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "white-space": "nowrap",
+        "rotate": "-3deg",
+        "opacity": 0.85
+      }
+    }
+  },
+  "pages": [
+    {
+      "id": "label",
+      "size": {
+        "width": "4in",
+        "height": "6in"
+      },
+      "margin": "5mm"
+    }
+  ],
+  "body": [
+    {
+      "type": "repeat",
+      "id": "parcels",
+      "source": "data.main.parcels",
+      "as": "parcel",
+      "detail": [
+        {
+          "type": "box",
+          "id": "parcel-label",
+          "style": {
+            "min-height": "142mm",
+            "display": "flex",
+            "flex-direction": "column"
+          },
+          "children": [
+            {
+              "type": "pagestamp",
+              "id": "handling",
+              "if": "parcel.handling != 'standard'",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "handling-stamp",
+                  "class": [
+                    "stamp"
+                  ],
+                  "style": {
+                    "bottom": "33mm",
+                    "left": "11.8mm"
+                  },
+                  "content": "{{ Switch(parcel.handling, 'fragile', 'Fragile', 'care', 'Handle with care', '') }}"
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "id": "masthead",
+              "style": {
+                "padding-bottom": "var(--space-1)",
+                "border-bottom": "3pt solid var(--ink)",
+                "display": "flex",
+                "justify-content": "space-between",
+                "align-items": "flex-end"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "id": "wordmark",
+                  "class": [
+                    "wordmark"
+                  ],
+                  "content": "Larkmere Water"
+                },
+                {
+                  "type": "box",
+                  "id": "dispatch",
+                  "style": {
+                    "text-align": "right"
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "service",
+                      "class": [
+                        "kicker"
+                      ],
+                      "style": {
+                        "margin-bottom": 0,
+                        "color": "var(--ink)",
+                        "font-size": "7.5pt"
+                      },
+                      "content": "Depot dispatch"
+                    },
+                    {
+                      "type": "text",
+                      "id": "dispatched",
+                      "style": {
+                        "color": "var(--muted)",
+                        "font-size": "7.5pt"
+                      },
+                      "content": "{{ Format(vars.consignment.dispatched, 'd MMM y') }}"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "id": "from",
+              "class": [
+                "section"
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "from-title",
+                  "class": [
+                    "kicker"
+                  ],
+                  "content": "From"
+                },
+                {
+                  "type": "text",
+                  "id": "from-name",
+                  "class": [
+                    "strong"
+                  ],
+                  "style": {
+                    "font-size": "10pt"
+                  },
+                  "content": "{{ vars.consignment.from.name }}"
+                },
+                {
+                  "type": "text",
+                  "id": "from-address",
+                  "content": "{{ Join(vars.consignment.from.addressLines, ', ') }}{{ If(has(vars.consignment.from.phone), '  ·  ' + vars.consignment.from.phone, '') }}"
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "id": "to",
+              "class": [
+                "section"
+              ],
+              "style": {
+                "padding": "var(--space-2) 0 var(--space-3)",
+                "border-bottom-width": "3pt"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "id": "to-title",
+                  "class": [
+                    "kicker"
+                  ],
+                  "content": "To"
+                },
+                {
+                  "type": "text",
+                  "id": "to-crew",
+                  "style": {
+                    "font-size": "17pt",
+                    "font-weight": 700,
+                    "line-height": 1.1
+                  },
+                  "content": "{{ vars.consignment.to.crew }}"
+                },
+                {
+                  "type": "text",
+                  "id": "to-site",
+                  "if": "has(vars.consignment.to.site)",
+                  "style": {
+                    "margin-top": "2pt",
+                    "font-size": "11pt"
+                  },
+                  "content": "{{ vars.consignment.to.site }}"
+                },
+                {
+                  "type": "text",
+                  "id": "to-address",
+                  "style": {
+                    "margin-top": "2pt",
+                    "font-size": "13pt",
+                    "font-weight": 700,
+                    "line-height": 1.2,
+                    "white-space": "pre-line"
+                  },
+                  "content": "{{ Join(vars.consignment.to.addressLines, '\\n') }}"
+                },
+                {
+                  "type": "text",
+                  "id": "to-contact",
+                  "if": "has(vars.consignment.to.contact)",
+                  "style": {
+                    "margin-top": "var(--space-1)"
+                  },
+                  "content": "Attn {{ vars.consignment.to.contact }}{{ If(has(vars.consignment.to.phone), '  ·  ' + vars.consignment.to.phone, '') }}"
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "id": "facts",
+              "style": {
+                "border-bottom": "1.5pt solid var(--ink)",
+                "display": "grid",
+                "grid-template-columns": "1.2fr 1fr 1fr"
+              },
+              "children": [
+                {
+                  "type": "box",
+                  "id": "parcel-count",
+                  "class": [
+                    "cell"
+                  ],
+                  "style": {
+                    "padding-left": 0,
+                    "border-right": "1pt solid var(--ink)"
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "count-title",
+                      "class": [
+                        "kicker"
+                      ],
+                      "content": "Parcel"
+                    },
+                    {
+                      "type": "text",
+                      "id": "count-value",
+                      "class": [
+                        "cell-value"
+                      ],
+                      "content": "{{ item.number }} of {{ region.count }}"
+                    }
+                  ]
+                },
+                {
+                  "type": "box",
+                  "id": "weight",
+                  "class": [
+                    "cell"
+                  ],
+                  "style": {
+                    "border-right": "1pt solid var(--ink)"
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "weight-title",
+                      "class": [
+                        "kicker"
+                      ],
+                      "content": "Weight"
+                    },
+                    {
+                      "type": "text",
+                      "id": "weight-value",
+                      "class": [
+                        "cell-value"
+                      ],
+                      "content": "{{ Format(parcel.weightKg, 'number:1') }} kg"
+                    }
+                  ]
+                },
+                {
+                  "type": "box",
+                  "id": "crew-code",
+                  "class": [
+                    "cell"
+                  ],
+                  "style": {
+                    "padding-right": 0
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "crew-title",
+                      "class": [
+                        "kicker"
+                      ],
+                      "content": "Crew"
+                    },
+                    {
+                      "type": "text",
+                      "id": "crew-value",
+                      "class": [
+                        "cell-value"
+                      ],
+                      "content": "{{ vars.consignment.to.crewCode }}"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "id": "contents",
+              "class": [],
+              "style": {
+                "padding": "var(--space-2) 0"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "id": "contents-title",
+                  "class": [
+                    "kicker"
+                  ],
+                  "content": "Contents"
+                },
+                {
+                  "type": "text",
+                  "id": "contents-value",
+                  "style": {
+                    "font-size": "10pt"
+                  },
+                  "content": "{{ parcel.contents }}"
+                },
+                {
+                  "type": "box",
+                  "id": "references",
+                  "style": {
+                    "margin-top": "var(--space-1)",
+                    "display": "flex",
+                    "justify-content": "space-between"
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "work-order",
+                      "if": "has(vars.consignment.workOrder)",
+                      "style": {
+                        "color": "var(--muted)"
+                      },
+                      "content": "Work order {{ vars.consignment.workOrder }}"
+                    },
+                    {
+                      "type": "text",
+                      "id": "deliver-by",
+                      "if": "has(vars.consignment.deliverBy)",
+                      "class": [
+                        "strong"
+                      ],
+                      "content": "Deliver by {{ Format(vars.consignment.deliverBy, 'd MMM y') }}"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "id": "codes",
+              "style": {
+                "margin-top": "auto",
+                "padding-top": "var(--space-2)",
+                "border-top": "1.5pt solid var(--ink)",
+                "display": "flex",
+                "align-items": "flex-end",
+                "gap": "var(--space-3)"
+              },
+              "children": [
+                {
+                  "type": "box",
+                  "id": "consignment",
+                  "style": {
+                    "flex": 1
+                  },
+                  "children": [
+                    {
+                      "type": "barcode",
+                      "id": "consignment-code",
+                      "style": {
+                        "width": "100%",
+                        "height": "22mm"
+                      },
+                      "symbology": "code128",
+                      "value": "vars.consignment.number",
+                      "showText": true
+                    }
+                  ]
+                },
+                {
+                  "type": "barcode",
+                  "id": "tracking-code",
+                  "style": {
+                    "width": "22mm",
+                    "height": "22mm"
+                  },
+                  "symbology": "datamatrix",
+                  "value": "'LWD1|' + vars.consignment.number + '|' + Text(item.number) + '/' + Text(region.count) + '|' + vars.consignment.to.crewCode + '|' + Text(parcel.weightKg)"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "separator": [
+        {
+          "type": "pagebreak",
+          "id": "next-parcel"
+        }
+      ]
+    }
+  ],
+  "tests": [
+    {
+      "name": "sample is three labels, the fragile ones stamped",
+      "data": {
+        "main": "samples/main.json"
+      },
+      "expect": [
+        "pages.size() == 3",
+        "diagnostics.all(d, d.severity != 'error')",
+        "nodes('parcel-label').map(n, n.page) == [1, 2, 3]",
+        "nodes('count-value').map(n, n.text) == ['1 of 3', '2 of 3', '3 of 3']",
+        "nodes('weight-value').map(n, n.text) == ['6.4 kg', '3.1 kg', '11.8 kg']",
+        "nodes('handling-stamp').map(n, n.page) == [1, 2]",
+        "nodes('handling-stamp').map(n, n.text) == ['FRAGILE', 'HANDLE WITH CARE']",
+        "nodes('consignment-code').size() == 3 && nodes('tracking-code').size() == 3"
+      ],
+      "snapshot": true
+    },
+    {
+      "name": "a plain parcel has no stamp",
+      "data": {
+        "main": "tests/single-plain.json"
+      },
+      "expect": [
+        "pages.size() == 1",
+        "diagnostics.all(d, d.severity != 'error' && d.severity != 'warning')",
+        "pages[0].template == 'label'",
+        "!visible('handling-stamp')",
+        "text('count-value') == '1 of 1'",
+        "text('weight-value') == '2.0 kg'",
+        "!visible('to-site') && !visible('to-contact') && !visible('work-order') && !visible('deliver-by')",
+        "text('from-address') == '7 Sluice Road, Reedvale QLD 4997'"
+      ]
+    },
+    {
+      "name": "a fragile parcel after a plain one is stamped on its own page",
+      "data": {
+        "main": "tests/fragile-last.json"
+      },
+      "expect": [
+        "pages.size() == 2",
+        "diagnostics.all(d, d.severity != 'error' && d.severity != 'warning')",
+        "pages.map(p, p.template) == ['label', 'label']",
+        "nodes('handling-stamp').map(n, n.page) == [2]",
+        "text('handling-stamp') == 'FRAGILE'",
+        "nodes('tracking-code').map(n, n.page) == [1, 2]"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "test": "sample is three labels, the fragile ones stamped",
+  "pages": [
+    {
+      "page": 1,
+      "sha256": "366933eb33c5a4a38250f7d01c3a0be0918149c6300380347a6f325fbd853f6a"
+    },
+    {
+      "page": 2,
+      "sha256": "56e06bd57800833c5453b03d2d4a5505961c5b433aa54f6b38a94e8e2d99eee7"
+    },
+    {
+      "page": 3,
+      "sha256": "dfd1cbb95346c5145985882b30f77473f6e1d5ac462ef3e6bfc49f5b267cb4ab"
+    }
+  ]
+}

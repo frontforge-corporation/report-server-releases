@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Works invoice",
+  "description": "One tax invoice to a builder for connection and meter works at one site.",
+  "type": "object",
+  "required": ["invoice", "customer", "works", "lines"],
+  "additionalProperties": false,
+  "properties": {
+    "invoice": {
+      "type": "object",
+      "required": ["number", "issueDate", "dueDate", "paymentReference", "termsDays"],
+      "additionalProperties": false,
+      "properties": {
+        "number": { "type": "string", "title": "Invoice number" },
+        "issueDate": { "type": "string", "format": "date", "title": "Invoice date" },
+        "dueDate": { "type": "string", "format": "date", "title": "Due date" },
+        "purchaseOrder": { "type": "string", "title": "Purchase order" },
+        "paymentReference": { "type": "string", "title": "Payment reference", "description": "Digits only; quoted with every payment and carried in the QR code." },
+        "termsDays": { "type": "integer", "title": "Payment terms", "description": "Days from the invoice date." }
+      }
+    },
+    "customer": {
+      "type": "object",
+      "required": ["name", "account", "addressLines"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string", "title": "Customer" },
+        "abn": { "type": "string", "title": "Customer ABN" },
+        "account": { "type": "string", "title": "Customer account" },
+        "attention": { "type": "string", "title": "Attention" },
+        "addressLines": { "type": "array", "title": "Postal address", "items": { "type": "string" } }
+      }
+    },
+    "works": {
+      "type": "object",
+      "required": ["site", "description", "application", "completed"],
+      "additionalProperties": false,
+      "properties": {
+        "site": { "type": "string", "title": "Works site" },
+        "description": { "type": "string", "title": "Works" },
+        "application": { "type": "string", "title": "Connection application" },
+        "meter": { "type": "string", "title": "Meter number" },
+        "completed": { "type": "string", "format": "date", "title": "Works completed" }
+      }
+    },
+    "lines": {
+      "type": "array",
+      "title": "Invoice lines",
+      "description": "Each charge, in the order it was quoted. A discount is a line with a negative unit price.",
+      "items": {
+        "type": "object",
+        "required": ["code", "description", "quantity", "unit", "unitPrice", "taxable"],
+        "additionalProperties": false,
+        "properties": {
+          "code": { "type": "string", "title": "Item code" },
+          "description": { "type": "string", "title": "Description" },
+          "quantity": { "type": "number", "title": "Quantity" },
+          "unit": { "type": "string", "title": "Unit" },
+          "unitPrice": { "type": "number", "title": "Unit price", "description": "Excluding GST." },
+          "taxable": { "type": "boolean", "title": "GST applies", "description": "False for a GST-free supply." }
+        }
+      }
+    }
+  }
+}

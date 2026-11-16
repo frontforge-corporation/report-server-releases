@@ -1,0 +1,191 @@
+[
+  {
+    "main": {
+      "letter": {
+        "date": "2026-10-27",
+        "reference": "NW-2026-117",
+        "salutation": "Mr and Mrs Castellano"
+      },
+      "recipient": {
+        "name": "Mr D and Mrs L Castellano",
+        "addressLines": [
+          "14 Kestrel Street",
+          "WEIRTON HEIGHTS QLD 4997"
+        ]
+      },
+      "works": {
+        "street": "Kestrel Street",
+        "suburb": "Weirton Heights",
+        "start": "2026-11-16",
+        "end": "2026-12-11",
+        "days": "Monday to Friday",
+        "hours": "7am to 5pm",
+        "length": 420,
+        "outageHours": 4
+      },
+      "schedule": [
+        {
+          "stage": "Site set-up and survey",
+          "from": "2026-11-16",
+          "to": "2026-11-18",
+          "detail": "Marking services, fencing and signs. No effect on your supply."
+        },
+        {
+          "stage": "Laying the new main",
+          "from": "2026-11-19",
+          "to": "2026-12-02",
+          "detail": "Trenching along the road edge. Short waits at driveways."
+        },
+        {
+          "stage": "Connecting properties",
+          "from": "2026-12-03",
+          "to": "2026-12-08",
+          "detail": "Water off for up to 4 hours; we card your letterbox first."
+        },
+        {
+          "stage": "Reinstatement",
+          "from": "2026-12-09",
+          "to": "2026-12-11",
+          "detail": "Restoring footpaths, kerbs and verges."
+        }
+      ],
+      "contact": {
+        "name": "Priya Raman",
+        "title": "Project Officer",
+        "phone": "(07) 5550 0123",
+        "mobile": "0491 570 156",
+        "email": "customercare@larkmere.example"
+      },
+      "signatory": {
+        "name": "Daniel Whitlock",
+        "title": "Manager, Network Delivery"
+      }
+    }
+  },
+  {
+    "main": {
+      "letter": {
+        "date": "2026-10-27",
+        "reference": "NW-2026-118",
+        "salutation": "Ms Okafor"
+      },
+      "recipient": {
+        "name": "Ms R Okafor",
+        "addressLines": [
+          "22 Kestrel Street",
+          "WEIRTON HEIGHTS QLD 4997"
+        ]
+      },
+      "works": {
+        "street": "Kestrel Street",
+        "suburb": "Weirton Heights",
+        "start": "2026-11-16",
+        "end": "2026-12-11",
+        "days": "Monday to Friday",
+        "hours": "7am to 5pm",
+        "length": 420,
+        "outageHours": 4
+      },
+      "schedule": [
+        {
+          "stage": "Site set-up and survey",
+          "from": "2026-11-16",
+          "to": "2026-11-18",
+          "detail": "Marking services, fencing and signs. No effect on your supply."
+        },
+        {
+          "stage": "Laying the new main",
+          "from": "2026-11-19",
+          "to": "2026-12-02",
+          "detail": "Trenching along the road edge. Short waits at driveways."
+        },
+        {
+          "stage": "Connecting properties",
+          "from": "2026-12-03",
+          "to": "2026-12-08",
+          "detail": "Water off for up to 4 hours; we card your letterbox first."
+        },
+        {
+          "stage": "Reinstatement",
+          "from": "2026-12-09",
+          "to": "2026-12-11",
+          "detail": "Restoring footpaths, kerbs and verges."
+        }
+      ],
+      "contact": {
+        "name": "Priya Raman",
+        "title": "Project Officer",
+        "phone": "(07) 5550 0123",
+        "mobile": "0491 570 156",
+        "email": "customercare@larkmere.example"
+      },
+      "signatory": {
+        "name": "Daniel Whitlock",
+        "title": "Manager, Network Delivery"
+      }
+    }
+  },
+  {
+    "main": {
+      "letter": {
+        "date": "2026-10-27",
+        "reference": "NW-2026-119",
+        "salutation": "Resident"
+      },
+      "recipient": {
+        "name": "The Resident",
+        "addressLines": [
+          "Unit 3, 9 Kestrel Street",
+          "WEIRTON HEIGHTS QLD 4997"
+        ]
+      },
+      "works": {
+        "street": "Kestrel Street",
+        "suburb": "Weirton Heights",
+        "start": "2026-11-16",
+        "end": "2026-12-11",
+        "days": "Monday to Friday",
+        "hours": "7am to 5pm",
+        "length": 420,
+        "outageHours": 4
+      },
+      "schedule": [
+        {
+          "stage": "Site set-up and survey",
+          "from": "2026-11-16",
+          "to": "2026-11-18",
+          "detail": "Marking services, fencing and signs. No effect on your supply."
+        },
+        {
+          "stage": "Laying the new main",
+          "from": "2026-11-19",
+          "to": "2026-12-02",
+          "detail": "Trenching along the road edge. Short waits at driveways."
+        },
+        {
+          "stage": "Connecting properties",
+          "from": "2026-12-03",
+          "to": "2026-12-08",
+          "detail": "Water off for up to 4 hours; we card your letterbox first."
+        },
+        {
+          "stage": "Reinstatement",
+          "from": "2026-12-09",
+          "to": "2026-12-11",
+          "detail": "Restoring footpaths, kerbs and verges."
+        }
+      ],
+      "contact": {
+        "name": "Priya Raman",
+        "title": "Project Officer",
+        "phone": "(07) 5550 0123",
+        "mobile": "0491 570 156",
+        "email": "customercare@larkmere.example"
+      },
+      "signatory": {
+        "name": "Daniel Whitlock",
+        "title": "Manager, Network Delivery"
+      }
+    }
+  }
+]

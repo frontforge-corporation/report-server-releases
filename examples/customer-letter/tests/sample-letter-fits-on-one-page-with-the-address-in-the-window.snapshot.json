@@ -1,0 +1,9 @@
+{
+  "test": "sample letter fits on one page with the address in the window",
+  "pages": [
+    {
+      "page": 1,
+      "sha256": "ec7c3ef45ecf7d7c74c9bfcb234081c6f43b2c6841fb882b18f325550649b114"
+    }
+  ]
+}

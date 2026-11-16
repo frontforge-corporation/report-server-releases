@@ -1,0 +1,14 @@
+{
+  "published": "2026-11-16",
+  "releases": [
+    {
+      "version": "4.2.1",
+      "date": "2026-11-16",
+      "summary": "A maintenance release that fixes the known issues in 4.2.0.",
+      "changes": [
+        { "tag": "fixed", "area": "Web app", "title": "The web calendar shows scheduled inspections in the workspace's time zone", "issue": "FB-2331" },
+        { "tag": "fixed", "title": "CSV exports include verbal sign-offs", "issue": "FB-2336" }
+      ]
+    }
+  ]
+}

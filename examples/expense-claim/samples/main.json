@@ -1,0 +1,97 @@
+{
+  "claim": {
+    "number": "EC-26-0381",
+    "submitted": "2026-10-26",
+    "periodStart": "2026-10-12",
+    "periodEnd": "2026-10-23",
+    "purpose": "Site inspections and the design review for the Tannerby Creek footbridge renewal",
+    "project": "P-2291 Tannerby Creek footbridge",
+    "costCentre": "420 Bridges and Structures"
+  },
+  "claimant": {
+    "name": "Nadia Koverly",
+    "staffNumber": "OP-1187",
+    "position": "Senior civil engineer",
+    "email": "nadia.koverly@ostrandpell.example"
+  },
+  "lines": [
+    {
+      "date": "2026-10-12",
+      "category": "Travel",
+      "description": "Taxi, Brindlemoor station to the Tannerby Creek site",
+      "amount": 46.20,
+      "gst": 4.20,
+      "receipt": "taxi"
+    },
+    {
+      "date": "2026-10-12",
+      "category": "Meals",
+      "description": "Lunch on site with the council's bridge inspector",
+      "amount": 38.50,
+      "gst": 3.50,
+      "receipt": "till"
+    },
+    {
+      "date": "2026-10-14",
+      "category": "Accommodation",
+      "description": "Hotel, one night, Kelvenhurst",
+      "amount": 189.00,
+      "gst": 17.18,
+      "receipt": "till"
+    },
+    {
+      "date": "2026-10-14",
+      "category": "Meals",
+      "description": "Dinner, Kelvenhurst",
+      "amount": 32.40,
+      "gst": 2.95,
+      "receipt": "till"
+    },
+    {
+      "date": "2026-10-15",
+      "category": "Fuel",
+      "description": "Fuel for pool vehicle OP-07, 41.2 litres",
+      "amount": 82.36,
+      "gst": 7.49,
+      "receipt": "fuel"
+    },
+    {
+      "date": "2026-10-15",
+      "category": "Parking",
+      "description": "Parking, Kelvenhurst station",
+      "amount": 12.00,
+      "gst": 1.09,
+      "receipt": "till"
+    },
+    {
+      "date": "2026-10-20",
+      "category": "Materials",
+      "description": "Marking paint and flagging tape for the abutment set-out",
+      "amount": 54.85,
+      "gst": 4.99,
+      "receipt": "till"
+    },
+    {
+      "date": "2026-10-22",
+      "category": "Travel",
+      "description": "Kilometre allowance, own car, 64 km at $0.88",
+      "amount": 56.32,
+      "gst": 0
+    },
+    {
+      "date": "2026-10-23",
+      "category": "Travel",
+      "description": "Taxi to the design review at the client's office",
+      "amount": 28.60,
+      "gst": 2.60,
+      "receipt": "taxi"
+    }
+  ],
+  "approval": {
+    "approver": "Owen Strathby",
+    "position": "Principal, Bridges and Structures",
+    "decision": "approved",
+    "date": "2026-10-28",
+    "comment": "Charge the hotel and meals to the project's site visit allowance."
+  }
+}

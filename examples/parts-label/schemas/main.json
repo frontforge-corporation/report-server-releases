@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Depot dispatch",
+  "description": "One consignment of meters and parts from the depot to a field crew, packed as one or more parcels.",
+  "type": "object",
+  "required": ["consignment", "parcels"],
+  "additionalProperties": false,
+  "properties": {
+    "consignment": {
+      "type": "object",
+      "title": "Consignment",
+      "required": ["number", "dispatched", "from", "to"],
+      "additionalProperties": false,
+      "properties": {
+        "number": { "type": "string", "title": "Consignment number" },
+        "dispatched": { "type": "string", "format": "date", "title": "Dispatch date" },
+        "deliverBy": { "type": "string", "format": "date", "title": "Deliver by" },
+        "workOrder": { "type": "string", "title": "Work order" },
+        "from": {
+          "type": "object",
+          "title": "From",
+          "required": ["name", "addressLines"],
+          "additionalProperties": false,
+          "properties": {
+            "name": { "type": "string", "title": "Depot" },
+            "addressLines": { "type": "array", "title": "Address", "items": { "type": "string" } },
+            "phone": { "type": "string", "title": "Phone" }
+          }
+        },
+        "to": {
+          "type": "object",
+          "title": "To",
+          "required": ["crewCode", "crew", "addressLines"],
+          "additionalProperties": false,
+          "properties": {
+            "crewCode": { "type": "string", "title": "Crew code" },
+            "crew": { "type": "string", "title": "Crew" },
+            "site": { "type": "string", "title": "Site" },
+            "addressLines": { "type": "array", "title": "Address", "items": { "type": "string" } },
+            "contact": { "type": "string", "title": "Contact" },
+            "phone": { "type": "string", "title": "Contact phone" }
+          }
+        }
+      }
+    },
+    "parcels": {
+      "type": "array",
+      "title": "Parcels",
+      "items": {
+        "type": "object",
+        "required": ["weightKg", "contents", "handling"],
+        "additionalProperties": false,
+        "properties": {
+          "weightKg": { "type": "number", "title": "Weight (kg)" },
+          "contents": { "type": "string", "title": "Contents" },
+          "handling": {
+            "type": "string",
+            "enum": ["standard", "fragile", "care"],
+            "title": "Handling",
+            "description": "`fragile` stamps the label FRAGILE, `care` stamps it HANDLE WITH CARE."
+          }
+        }
+      }
+    }
+  }
+}

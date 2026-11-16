@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Backflow device tests",
+  "description": "Annual tests of testable backflow prevention devices, one certificate each.",
+  "type": "object",
+  "required": ["issueDate", "complianceOfficer", "tests"],
+  "additionalProperties": false,
+  "properties": {
+    "issueDate": { "type": "string", "format": "date", "title": "Issue date" },
+    "complianceOfficer": {
+      "type": "object",
+      "title": "Compliance officer",
+      "required": ["name", "position"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string", "title": "Name" },
+        "position": { "type": "string", "title": "Position" }
+      }
+    },
+    "tests": {
+      "type": "array",
+      "title": "Tests",
+      "items": {
+        "type": "object",
+        "required": ["certificateNumber", "property", "device", "testDate", "passed", "tester"],
+        "additionalProperties": false,
+        "properties": {
+          "certificateNumber": { "type": "string", "title": "Certificate number" },
+          "property": {
+            "type": "object",
+            "title": "Property",
+            "required": ["owner", "address", "locality"],
+            "additionalProperties": false,
+            "properties": {
+              "owner": { "type": "string", "title": "Owner or occupier" },
+              "address": { "type": "string", "title": "Street address" },
+              "locality": { "type": "string", "title": "Suburb, state and postcode" },
+              "account": { "type": "string", "title": "Water account" }
+            }
+          },
+          "device": {
+            "type": "object",
+            "title": "Device",
+            "required": ["type", "make", "model", "size", "serial"],
+            "additionalProperties": false,
+            "properties": {
+              "type": { "type": "string", "title": "Device type" },
+              "make": { "type": "string", "title": "Make" },
+              "model": { "type": "string", "title": "Model" },
+              "size": { "type": "string", "title": "Size" },
+              "serial": { "type": "string", "title": "Serial number" },
+              "location": { "type": "string", "title": "Location on the property" },
+              "hazard": { "type": "string", "enum": ["Low", "Medium", "High"], "title": "Hazard rating" }
+            }
+          },
+          "testDate": { "type": "string", "format": "date", "title": "Test date" },
+          "passed": { "type": "boolean", "title": "Passed" },
+          "nextTestDue": { "type": "string", "format": "date", "title": "Next test due", "description": "For a device that passed." },
+          "retestBy": { "type": "string", "format": "date", "title": "Re-test by", "description": "For a device that did not pass: when it must be repaired and tested again." },
+          "finding": { "type": "string", "title": "Finding", "description": "What the tester found on a device that did not pass." },
+          "tester": {
+            "type": "object",
+            "title": "Licensed tester",
+            "required": ["name", "licence"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "type": "string", "title": "Name" },
+              "licence": { "type": "string", "title": "Licence number" },
+              "business": { "type": "string", "title": "Business" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

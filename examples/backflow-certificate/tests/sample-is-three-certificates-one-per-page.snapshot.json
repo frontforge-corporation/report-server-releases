@@ -1,0 +1,17 @@
+{
+  "test": "sample is three certificates, one per page",
+  "pages": [
+    {
+      "page": 1,
+      "sha256": "60df4ac6b0f41e9ac33924862ad7888009afd3605a03bacb572b6ee0778192ec"
+    },
+    {
+      "page": 2,
+      "sha256": "8926237247b174f1bd2429d754aa980fdb9d3c00b3c537f5c3814b6c3d561deb"
+    },
+    {
+      "page": 3,
+      "sha256": "9826fdf9989a28a7a676ec45905e646d2c72434ab90d2b4ce8ed0ec29e4ce986"
+    }
+  ]
+}

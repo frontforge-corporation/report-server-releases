@@ -1,0 +1,38 @@
+{
+  "consignment": {
+    "number": "LWD2610270041",
+    "dispatched": "2026-10-27",
+    "deliverBy": "2026-10-28",
+    "workOrder": "WO-58213",
+    "from": {
+      "name": "Larkmere Water Depot",
+      "addressLines": ["7 Sluice Road", "Reedvale QLD 4997"],
+      "phone": "(07) 5550 0123"
+    },
+    "to": {
+      "crewCode": "C14",
+      "crew": "Crew 14, Network Maintenance",
+      "site": "Kingfisher Bend works compound",
+      "addressLines": ["22 Pelican Drive", "Kingfisher Bend QLD 4996"],
+      "contact": "Sam Whitlock",
+      "phone": "0491 570 156"
+    }
+  },
+  "parcels": [
+    {
+      "weightKg": 6.4,
+      "contents": "4 × 20 mm water meters with register covers",
+      "handling": "fragile"
+    },
+    {
+      "weightKg": 3.1,
+      "contents": "6 × 20 mm dual check valves, 12 × meter couplings",
+      "handling": "care"
+    },
+    {
+      "weightKg": 11.8,
+      "contents": "4 × meter box lids, tap fittings kit, PTFE tape",
+      "handling": "standard"
+    }
+  ]
+}

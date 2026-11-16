@@ -1,0 +1,25 @@
+{
+  "test": "sample round has a contents page and a page for each zone",
+  "pages": [
+    {
+      "page": 1,
+      "sha256": "4ba26bf72aea4aa81dba03409b56adbe505ae5f49e56519c58c3053d2b9bf68e"
+    },
+    {
+      "page": 2,
+      "sha256": "cc2086ef81c255f6364a8546db90da536cbbfaf77020b2d040c2303a29911456"
+    },
+    {
+      "page": 3,
+      "sha256": "6991113ef97c29c7e25ecb667fefef74acc7a10d8463a5fd3377d4640e4e7ab3"
+    },
+    {
+      "page": 4,
+      "sha256": "f7edc1be9c075b14743715d9b5226a079109de1e2b852c27ece7c0df45e2a75e"
+    },
+    {
+      "page": 5,
+      "sha256": "01feb3b3072daa64697c3c52b419fe9d1c20c54f5ece692d3e4ebd2a09f86e87"
+    }
+  ]
+}

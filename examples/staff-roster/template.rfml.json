@@ -1,0 +1,799 @@
+{
+  "$schema": "https://docs.frontforge.com/schema/rfml/0.2.json",
+  "rfml": "0.2",
+  "id": "staff-roster",
+  "meta": {
+    "title": "Staff roster and timesheet",
+    "description": "A fortnight's roster and timesheet for one Ostrand & Pell team on a single A4 landscape page: a matrix of staff by day with the hours in each cell, overtime, annual leave, personal leave and weekends coloured by conditional styles, totals for each person and each day, summary tiles and a legend.",
+    "locale": "en-AU",
+    "currency": "AUD",
+    "tags": [
+      "example",
+      "roster",
+      "timesheet",
+      "internal",
+      "matrix"
+    ]
+  },
+  "data": {
+    "main": {
+      "schema": {
+        "$ref": "schemas/main.json"
+      },
+      "sample": "samples/main.json",
+      "description": "One team's roster for a fortnight: the staff, and one entry per person per day with the hours worked or taken as leave."
+    }
+  },
+  "vars": {
+    "ordinary": "data.main.roster.ordinaryHours",
+    "worked": "Sum(data.main.entries.filter(e, e.kind == 'work').map(e, e.hours))",
+    "overtime": "Sum(data.main.entries.filter(e, e.kind == 'work').map(e, If(Weekday(e.date) >= 6, e.hours, If(e.hours > vars.ordinary, e.hours - vars.ordinary, 0.0))))",
+    "leaveHours": "Sum(data.main.entries.filter(e, e.kind == 'leave' || e.kind == 'personal').map(e, e.hours))",
+    "approved": "!IsBlank(data.main.roster.approvedBy)"
+  },
+  "styles": {
+    "tokens": {
+      "brand": "#1F4E5F",
+      "accent": "#C8553D",
+      "ink": "#1E2326",
+      "muted": "#5B6B72",
+      "line": "#D9E1E4",
+      "panel": "#EEF3F4",
+      "overtime-bg": "#FCE3C0",
+      "overtime-edge": "#D98E2B",
+      "overtime-ink": "#7A4300",
+      "leave-bg": "#D8E9F7",
+      "leave-edge": "#5C9BD1",
+      "leave-ink": "#174A75",
+      "personal-bg": "#E8DDF4",
+      "personal-edge": "#9878C2",
+      "personal-ink": "#4E2F7A",
+      "weekend-bg": "#E9ECEE",
+      "weekend-edge": "#B4BDC2",
+      "space-1": "3pt",
+      "space-2": "6pt",
+      "space-3": "12pt"
+    },
+    "defaults": {
+      "document": {
+        "color": "var(--ink)",
+        "font-family": "Arimo",
+        "font-size": "8.5pt",
+        "line-height": 1.3
+      }
+    },
+    "classes": {
+      "wordmark": {
+        "color": "var(--brand)",
+        "font-size": "16pt",
+        "font-weight": 700,
+        "line-height": 1.1
+      },
+      "muted": {
+        "color": "var(--muted)"
+      },
+      "small": {
+        "font-size": "7.5pt"
+      },
+      "strong": {
+        "font-weight": 700
+      },
+      "kicker": {
+        "margin": "0 0 2pt",
+        "color": "var(--brand)",
+        "font-size": "7pt",
+        "font-weight": 700,
+        "letter-spacing": "0.3pt",
+        "text-transform": "uppercase"
+      },
+      "tile": {
+        "padding": "var(--space-2) var(--space-3)",
+        "border-left": "3pt solid var(--brand)",
+        "background-color": "var(--panel)"
+      },
+      "tile-value": {
+        "color": "var(--brand)",
+        "font-size": "16pt",
+        "font-weight": 700,
+        "font-variant-numeric": "tabular-nums",
+        "line-height": 1.1
+      },
+      "key": {
+        "white-space": "nowrap",
+        "display": "flex",
+        "align-items": "center",
+        "gap": "4pt"
+      },
+      "swatch": {
+        "width": "11pt",
+        "height": "11pt",
+        "border": "0.75pt solid",
+        "border-radius": "2pt"
+      }
+    }
+  },
+  "pages": [
+    {
+      "id": "a4-landscape",
+      "size": "A4",
+      "orientation": "landscape",
+      "margin": "12mm 14mm 14mm",
+      "footer": [
+        {
+          "type": "box",
+          "id": "page-footer",
+          "style": {
+            "padding-top": "var(--space-1)",
+            "border-top": "0.5pt solid var(--line)",
+            "display": "flex",
+            "justify-content": "space-between"
+          },
+          "children": [
+            {
+              "type": "text",
+              "id": "footer-company",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "Ostrand & Pell Pty Ltd  ·  Level 4, 210 Quarrell Street, Brindlemoor VIC 3999  ·  payroll@ostrandpell.example  ·  (03) 5550 0211"
+            },
+            {
+              "type": "text",
+              "id": "footer-page",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "Page {{ page.number }} of {{ page.count }}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "body": [
+    {
+      "type": "box",
+      "id": "masthead",
+      "style": {
+        "padding-bottom": "var(--space-2)",
+        "border-bottom": "2pt solid var(--brand)",
+        "display": "flex",
+        "justify-content": "space-between",
+        "align-items": "flex-end"
+      },
+      "children": [
+        {
+          "type": "box",
+          "id": "brand",
+          "children": [
+            {
+              "type": "text",
+              "id": "wordmark",
+              "class": [
+                "wordmark"
+              ],
+              "content": "Ostrand & Pell"
+            },
+            {
+              "type": "text",
+              "id": "tagline",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "Engineering consultants"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "title-block",
+          "style": {
+            "text-align": "right"
+          },
+          "children": [
+            {
+              "type": "heading",
+              "id": "title",
+              "style": {
+                "margin": 0,
+                "color": "var(--brand)",
+                "font-size": "16pt",
+                "line-height": 1.1
+              },
+              "level": 1,
+              "content": "Staff roster and timesheet"
+            },
+            {
+              "type": "text",
+              "id": "team",
+              "content": [
+                {
+                  "type": "span",
+                  "content": "{{ data.main.roster.team }}",
+                  "class": [
+                    "strong"
+                  ]
+                },
+                "  ·  {{ Format(data.main.roster.periodStart, 'd MMMM') }} to {{ Format(data.main.roster.periodEnd, 'd MMMM y') }}"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "box",
+      "id": "tiles",
+      "style": {
+        "margin": "var(--space-3) 0",
+        "column-gap": "var(--space-3)",
+        "display": "grid",
+        "grid-template-columns": "1fr 1fr 1fr 1fr"
+      },
+      "children": [
+        {
+          "type": "box",
+          "id": "tile-staff",
+          "class": [
+            "tile"
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "staff-label",
+              "class": [
+                "kicker"
+              ],
+              "content": "Staff"
+            },
+            {
+              "type": "text",
+              "id": "staff-value",
+              "class": [
+                "tile-value"
+              ],
+              "content": "{{ data.main.staff.size() }}"
+            },
+            {
+              "type": "text",
+              "id": "staff-note",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "{{ data.main.staff.filter(s, s.employment == 'Part time').size() }} part time"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "tile-worked",
+          "class": [
+            "tile"
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "worked-label",
+              "class": [
+                "kicker"
+              ],
+              "content": "Hours worked"
+            },
+            {
+              "type": "text",
+              "id": "worked-value",
+              "class": [
+                "tile-value"
+              ],
+              "content": "{{ Format(vars.worked, 'number:1') }}"
+            },
+            {
+              "type": "text",
+              "id": "worked-note",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "Ordinary day {{ Format(vars.ordinary, 'number:1') }} hours"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "tile-overtime",
+          "class": [
+            "tile"
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "overtime-label",
+              "class": [
+                "kicker"
+              ],
+              "content": "Overtime hours"
+            },
+            {
+              "type": "text",
+              "id": "overtime-value",
+              "class": [
+                "tile-value"
+              ],
+              "content": "{{ Format(vars.overtime, 'number:1') }}"
+            },
+            {
+              "type": "text",
+              "id": "overtime-note",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "Beyond the ordinary day, and all weekend work"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "tile-leave",
+          "class": [
+            "tile"
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "leave-label",
+              "class": [
+                "kicker"
+              ],
+              "content": "Leave hours"
+            },
+            {
+              "type": "text",
+              "id": "leave-value",
+              "class": [
+                "tile-value"
+              ],
+              "content": "{{ Format(vars.leaveHours, 'number:1') }}"
+            },
+            {
+              "type": "text",
+              "id": "leave-note",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "Annual and personal leave"
+            }
+          ]
+        }
+      ],
+      "meta": {
+        "label": "Fortnight summary"
+      }
+    },
+    {
+      "type": "matrix",
+      "id": "matrix-roster",
+      "style": {
+        "width": "100%",
+        "parts": {
+          "corner": {
+            "padding": "3pt 6pt",
+            "border-bottom": "1pt solid var(--brand)",
+            "color": "var(--muted)",
+            "font-size": "7pt",
+            "font-weight": 700,
+            "letter-spacing": "0.3pt",
+            "text-align": "left",
+            "text-transform": "uppercase",
+            "vertical-align": "bottom"
+          },
+          "row-header": {
+            "padding": "3pt 8pt 3pt 6pt",
+            "border-bottom": "0.5pt solid var(--line)"
+          },
+          "column-header": {
+            "padding": 0,
+            "border-bottom": "1pt solid var(--brand)",
+            "color": "var(--muted)",
+            "font-size": "7pt",
+            "font-weight": 700,
+            "text-align": "center",
+            "vertical-align": "middle"
+          },
+          "cell": {
+            "padding": "3pt 4pt",
+            "border-bottom": "0.5pt solid var(--line)",
+            "border-left": "0.5pt solid #FFFFFF",
+            "font-variant-numeric": "tabular-nums",
+            "text-align": "center",
+            "vertical-align": "middle"
+          },
+          "total-row": {
+            "border-top": "1pt solid var(--brand)",
+            "background-color": "var(--panel)"
+          },
+          "total-column": {
+            "padding-right": "12pt",
+            "padding-left": "12pt",
+            "background-color": "var(--panel)"
+          },
+          "total-cell": {
+            "color": "var(--brand)",
+            "font-weight": 700
+          }
+        }
+      },
+      "source": "data.main.entries",
+      "as": "e",
+      "rows": [
+        {
+          "id": "by-person",
+          "by": "e.staff",
+          "vars": {
+            "person": "Lookup(data.main.staff, 'id', group.key)"
+          },
+          "header": [
+            {
+              "type": "text",
+              "id": "person-name",
+              "class": [
+                "strong"
+              ],
+              "content": "{{ vars.person.name }}"
+            },
+            {
+              "type": "text",
+              "id": "person-role",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "{{ vars.person.role }}{{ If(vars.person.employment == 'Part time', ', part time', '') }}"
+            }
+          ]
+        }
+      ],
+      "columns": [
+        {
+          "id": "by-day",
+          "by": "e.date",
+          "header": [
+            {
+              "type": "text",
+              "id": "day-head",
+              "style": {
+                "width": "15.5mm",
+                "padding": "3pt 0"
+              },
+              "rules": [
+                {
+                  "if": "Weekday(group.key) >= 6",
+                  "style": {
+                    "background-color": "var(--weekend-bg)"
+                  }
+                }
+              ],
+              "content": [
+                "{{ Format(group.key, 'EEE') }}",
+                {
+                  "type": "br"
+                },
+                {
+                  "type": "span",
+                  "content": "{{ Format(group.key, 'd') }}",
+                  "style": {
+                    "color": "var(--ink)",
+                    "font-size": "9pt"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "cells": [
+        {
+          "id": "hours",
+          "value": "Sum(cell.rows.map(r, r.hours))",
+          "format": "0.0;-0.0;",
+          "rules": [
+            {
+              "if": "cell.rows.size() > 0 && cell.rows.all(r, Weekday(r.date) >= 6)",
+              "style": {
+                "background-color": "var(--weekend-bg)",
+                "color": "var(--muted)"
+              }
+            },
+            {
+              "if": "cell.rows.size() == 1 && cell.rows[0].kind == 'leave'",
+              "style": {
+                "background-color": "var(--leave-bg)",
+                "color": "var(--leave-ink)"
+              }
+            },
+            {
+              "if": "cell.rows.size() == 1 && cell.rows[0].kind == 'personal'",
+              "style": {
+                "background-color": "var(--personal-bg)",
+                "color": "var(--personal-ink)"
+              }
+            },
+            {
+              "if": "cell.rows.size() == 1 && cell.rows[0].kind == 'work' && (Weekday(cell.rows[0].date) >= 6 || cell.rows[0].hours > vars.ordinary)",
+              "style": {
+                "background-color": "var(--overtime-bg)",
+                "color": "var(--overtime-ink)",
+                "font-weight": 700
+              }
+            }
+          ]
+        }
+      ],
+      "totals": {
+        "rows": true,
+        "columns": true,
+        "label": "Total"
+      },
+      "corner": [
+        "Staff member",
+        {
+          "type": "br"
+        },
+        {
+          "type": "span",
+          "content": "{{ Format(data.main.roster.periodStart, 'MMM y') }}",
+          "style": {
+            "font-weight": 400,
+            "letter-spacing": 0,
+            "text-transform": "none"
+          }
+        }
+      ],
+      "meta": {
+        "description": "Hours each person worked or took as leave on each day of the fortnight, with each person's total down the right and each day's total along the bottom. Days off are blank."
+      }
+    },
+    {
+      "type": "box",
+      "id": "legend",
+      "style": {
+        "margin-top": "var(--space-3)",
+        "column-gap": "16pt",
+        "display": "flex",
+        "align-items": "center",
+        "break-before": "avoid"
+      },
+      "children": [
+        {
+          "type": "text",
+          "id": "legend-title",
+          "class": [
+            "kicker"
+          ],
+          "style": {
+            "margin": 0
+          },
+          "content": "Key"
+        },
+        {
+          "type": "box",
+          "id": "key-overtime",
+          "class": [
+            "key"
+          ],
+          "children": [
+            {
+              "type": "box",
+              "id": "key-overtime-swatch",
+              "class": [
+                "swatch"
+              ],
+              "style": {
+                "border-color": "var(--overtime-edge)",
+                "background-color": "var(--overtime-bg)"
+              },
+              "children": []
+            },
+            {
+              "type": "text",
+              "id": "key-overtime-label",
+              "content": "Overtime: over {{ Format(vars.ordinary, 'number:1') }} hours on a weekday, or weekend work"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "key-leave",
+          "class": [
+            "key"
+          ],
+          "children": [
+            {
+              "type": "box",
+              "id": "key-leave-swatch",
+              "class": [
+                "swatch"
+              ],
+              "style": {
+                "border-color": "var(--leave-edge)",
+                "background-color": "var(--leave-bg)"
+              },
+              "children": []
+            },
+            {
+              "type": "text",
+              "id": "key-leave-label",
+              "content": "Annual leave"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "key-personal",
+          "class": [
+            "key"
+          ],
+          "children": [
+            {
+              "type": "box",
+              "id": "key-personal-swatch",
+              "class": [
+                "swatch"
+              ],
+              "style": {
+                "border-color": "var(--personal-edge)",
+                "background-color": "var(--personal-bg)"
+              },
+              "children": []
+            },
+            {
+              "type": "text",
+              "id": "key-personal-label",
+              "content": "Personal leave"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "key-weekend",
+          "class": [
+            "key"
+          ],
+          "children": [
+            {
+              "type": "box",
+              "id": "key-weekend-swatch",
+              "class": [
+                "swatch"
+              ],
+              "style": {
+                "border-color": "var(--weekend-edge)",
+                "background-color": "var(--weekend-bg)"
+              },
+              "children": []
+            },
+            {
+              "type": "text",
+              "id": "key-weekend-label",
+              "content": "Weekend"
+            }
+          ]
+        }
+      ],
+      "meta": {
+        "label": "Legend"
+      }
+    },
+    {
+      "type": "box",
+      "id": "below",
+      "style": {
+        "margin-top": "var(--space-2)",
+        "padding-top": "var(--space-2)",
+        "border-top": "0.5pt solid var(--line)",
+        "display": "flex",
+        "justify-content": "space-between",
+        "align-items": "baseline",
+        "gap": "18pt"
+      },
+      "children": [
+        {
+          "type": "text",
+          "id": "hours-note",
+          "class": [
+            "muted",
+            "small"
+          ],
+          "style": {
+            "flex": 1
+          },
+          "content": "Hours as recorded in the timesheet app by {{ Format(data.main.roster.issued, 'd MMMM y') }}. Leave is shown in hours taken; days off are blank. Overtime is paid, or taken as time in lieu, as each person's agreement provides."
+        },
+        {
+          "type": "text",
+          "id": "approval-note",
+          "if": "vars.approved",
+          "class": [
+            "small"
+          ],
+          "content": [
+            "Approved for payroll by ",
+            {
+              "type": "span",
+              "content": "{{ data.main.roster.approvedBy }}",
+              "class": [
+                "strong"
+              ]
+            },
+            " on {{ Format(data.main.roster.approvedOn, 'd MMMM y') }}"
+          ]
+        },
+        {
+          "type": "text",
+          "id": "approval-pending",
+          "if": "!vars.approved",
+          "class": [
+            "small",
+            "strong"
+          ],
+          "style": {
+            "color": "var(--accent)"
+          },
+          "content": "Draft: not yet approved for payroll"
+        }
+      ]
+    }
+  ],
+  "outputs": {
+    "pdf": {
+      "standard": "PDF/UA-1"
+    },
+    "xlsx": {
+      "sheets": [
+        {
+          "name": "Roster",
+          "from": "matrix-roster"
+        }
+      ]
+    }
+  },
+  "tests": [
+    {
+      "name": "sample fortnight fits on one landscape page",
+      "data": {
+        "main": "samples/main.json"
+      },
+      "expect": [
+        "pages.size() == 1",
+        "diagnostics.all(d, d.severity != 'error')",
+        "text('worked-value') == '654.8'",
+        "text('overtime-value') == '46.8'",
+        "text('leave-value') == '45.6'",
+        "text('staff-value') == '9' && text('staff-note') == '1 part time'",
+        "nodes('person-name').size() == 9 && nodes('day-head').size() == 14",
+        "text('day-head') == 'MON\\n19' || text('day-head') == 'Mon\\n19'",
+        "visible('approval-note') && !visible('approval-pending')"
+      ],
+      "snapshot": true
+    },
+    {
+      "name": "a quiet fortnight has no overtime or leave and is still a draft",
+      "data": {
+        "main": "tests/quiet-fortnight.json"
+      },
+      "expect": [
+        "pages.size() == 1",
+        "diagnostics.all(d, d.severity != 'error')",
+        "nodes('person-name').size() == 2",
+        "text('worked-value') == '152.0'",
+        "text('overtime-value') == '0.0' && text('leave-value') == '0.0'",
+        "visible('approval-pending') && !visible('approval-note')"
+      ]
+    }
+  ]
+}

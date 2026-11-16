@@ -1,0 +1,159 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Monthly operations dashboard",
+  "type": "object",
+  "required": [
+    "month",
+    "issued",
+    "targets",
+    "surveyResponses",
+    "highlights",
+    "history",
+    "complaints",
+    "leaks"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "month": {
+      "type": "string",
+      "format": "date",
+      "title": "Month",
+      "description": "First day of the month the dashboard reports on"
+    },
+    "issued": {
+      "type": "string",
+      "format": "date",
+      "title": "Issued",
+      "description": "Date the dashboard was issued to the board"
+    },
+    "targets": {
+      "type": "object",
+      "title": "Targets",
+      "required": [
+        "supplyPlanMl",
+        "leaksRepaired",
+        "satisfactionPct"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "supplyPlanMl": {
+          "type": "number",
+          "title": "Supply plan (ML)",
+          "description": "Megalitres the month's supply plan allows"
+        },
+        "leaksRepaired": {
+          "type": "integer",
+          "title": "Leaks repaired target"
+        },
+        "satisfactionPct": {
+          "type": "integer",
+          "title": "Satisfaction target (%)"
+        }
+      }
+    },
+    "surveyResponses": {
+      "type": "integer",
+      "title": "Survey responses",
+      "description": "Customer survey responses received in the month"
+    },
+    "highlights": {
+      "type": "array",
+      "title": "Highlights",
+      "description": "Short notes from the operations team for the board",
+      "items": {
+        "type": "string"
+      }
+    },
+    "history": {
+      "type": "array",
+      "title": "Monthly history",
+      "description": "The last 12 months, oldest first; the last is the reported month",
+      "items": {
+        "type": "object",
+        "required": [
+          "month",
+          "supplyMl",
+          "responseHours",
+          "responseTargetHours",
+          "satisfactionPct"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "month": {
+            "type": "string",
+            "format": "date",
+            "title": "Month"
+          },
+          "supplyMl": {
+            "type": "number",
+            "title": "Water supplied (ML)"
+          },
+          "responseHours": {
+            "type": "number",
+            "title": "Average response time (hours)"
+          },
+          "responseTargetHours": {
+            "type": "number",
+            "title": "Response time target (hours)"
+          },
+          "satisfactionPct": {
+            "type": "integer",
+            "title": "Customer satisfaction (%)"
+          }
+        }
+      }
+    },
+    "complaints": {
+      "type": "array",
+      "title": "Complaints",
+      "description": "Complaints received in the month, by category",
+      "items": {
+        "type": "object",
+        "required": [
+          "category",
+          "count"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "category": {
+            "type": "string",
+            "title": "Category"
+          },
+          "count": {
+            "type": "integer",
+            "title": "Complaints"
+          }
+        }
+      }
+    },
+    "leaks": {
+      "type": "array",
+      "title": "Leaks repaired",
+      "description": "Leaks repaired, one row per zone and month",
+      "items": {
+        "type": "object",
+        "required": [
+          "zone",
+          "month",
+          "count"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "zone": {
+            "type": "string",
+            "title": "Zone"
+          },
+          "month": {
+            "type": "string",
+            "format": "date",
+            "title": "Month"
+          },
+          "count": {
+            "type": "integer",
+            "title": "Leaks repaired"
+          }
+        }
+      }
+    }
+  }
+}

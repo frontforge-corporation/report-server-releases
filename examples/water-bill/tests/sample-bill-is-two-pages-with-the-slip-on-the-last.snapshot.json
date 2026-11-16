@@ -1,0 +1,13 @@
+{
+  "test": "sample bill is two pages with the slip on the last",
+  "pages": [
+    {
+      "page": 1,
+      "sha256": "43f100a5b5dbcc2fed813a136a681d40279336fd8346199cceaff984cd7dffa8"
+    },
+    {
+      "page": 2,
+      "sha256": "39a95e8f64a133b6c771ca5908b40c16c0879621f0cf361c7a360d904bc27fb9"
+    }
+  ]
+}

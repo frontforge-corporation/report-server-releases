@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 84" width="60" height="84">
+  <!-- Made by Frontforge Pty Ltd for the Report Server example gallery, 2026. Licence: CC0 1.0 (public domain dedication), so anyone who copies the example may use it. -->
+  <title>Taxi receipt</title>
+  <path d="M2 2h56v76l-4 4-4-4-4 4-4-4-4 4-4-4-4 4-4-4-4 4-4-4-4 4-4-4-4 4-4-4z" fill="#FBFAF6" stroke="#B9C3C7" stroke-width="1"/>
+  <g fill="#E0A526">
+    <path d="M17 19l3-7h20l3 7z"/>
+    <rect x="13" y="18" width="34" height="9" rx="2"/>
+  </g>
+  <rect x="26" y="8" width="8" height="4" rx="1" fill="#1F4E5F"/>
+  <g fill="#1F4E5F">
+    <circle cx="21" cy="28" r="3"/>
+    <circle cx="39" cy="28" r="3"/>
+  </g>
+  <g fill="#9AA6AB">
+    <rect x="10" y="38" width="40" height="2.4" rx="1"/>
+    <rect x="10" y="44" width="28" height="2.4" rx="1"/>
+    <rect x="10" y="50" width="34" height="2.4" rx="1"/>
+    <rect x="10" y="56" width="22" height="2.4" rx="1"/>
+  </g>
+  <rect x="10" y="64" width="40" height="5" rx="1" fill="#1F4E5F"/>
+</svg>

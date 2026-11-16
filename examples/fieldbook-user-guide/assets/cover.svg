@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Made by Frontforge Pty Ltd for the Report Server example gallery, 2026. Licence: CC0 1.0 (public domain dedication), so anyone who copies the example may use it. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="320" viewBox="0 0 480 320">
+  <!-- Backdrop -->
+  <circle cx="240" cy="168" r="138" fill="#EEF5F4"/>
+  <circle cx="392" cy="70" r="26" fill="#FBE7C6"/>
+  <circle cx="86" cy="250" r="16" fill="#D9E2E1"/>
+  <!-- Clipboard behind the phone -->
+  <g transform="rotate(-8 150 175)">
+    <rect x="78" y="62" width="150" height="200" rx="10" fill="#FFFFFF" stroke="#1D6F6A" stroke-width="4"/>
+    <rect x="120" y="50" width="66" height="26" rx="6" fill="#1D6F6A"/>
+    <rect x="100" y="102" width="106" height="8" rx="4" fill="#D9E2E1"/>
+    <rect x="100" y="126" width="84" height="8" rx="4" fill="#D9E2E1"/>
+    <rect x="100" y="150" width="96" height="8" rx="4" fill="#D9E2E1"/>
+    <rect x="100" y="174" width="70" height="8" rx="4" fill="#D9E2E1"/>
+    <path d="M104 222 q14 -22 26 -4 t26 -6 t24 2" fill="none" stroke="#1D6F6A" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  <!-- Phone -->
+  <rect x="226" y="44" width="150" height="256" rx="20" fill="#1E2328"/>
+  <rect x="236" y="62" width="130" height="218" rx="8" fill="#FFFFFF"/>
+  <rect x="236" y="62" width="130" height="30" rx="8" fill="#1D6F6A"/>
+  <rect x="236" y="80" width="130" height="12" fill="#1D6F6A"/>
+  <rect x="248" y="73" width="54" height="8" rx="4" fill="#FFFFFF" opacity="0.85"/>
+  <circle cx="301" cy="53" r="3" fill="#5B6770"/>
+  <!-- Checklist: two items passed, one to look at -->
+  <circle cx="256" cy="114" r="9" fill="#2E7D32"/>
+  <path d="M251.5 114 l3 3 l6 -6.5" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="273" y="110" width="76" height="8" rx="4" fill="#D9E2E1"/>
+  <circle cx="256" cy="140" r="9" fill="#2E7D32"/>
+  <path d="M251.5 140 l3 3 l6 -6.5" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="273" y="136" width="60" height="8" rx="4" fill="#D9E2E1"/>
+  <circle cx="256" cy="166" r="9" fill="#E8A33D"/>
+  <rect x="254.5" y="160" width="3" height="7" rx="1.5" fill="#FFFFFF"/>
+  <circle cx="256" cy="170.5" r="1.6" fill="#FFFFFF"/>
+  <rect x="273" y="162" width="70" height="8" rx="4" fill="#D9E2E1"/>
+  <!-- Photo thumbnail -->
+  <rect x="248" y="186" width="106" height="56" rx="6" fill="#EEF5F4" stroke="#D9E2E1" stroke-width="2"/>
+  <path d="M254 236 l22 -26 l16 18 l10 -10 l20 18 z" fill="#1D6F6A" opacity="0.75"/>
+  <circle cx="334" cy="202" r="7" fill="#E8A33D"/>
+  <!-- Sign-off button -->
+  <rect x="248" y="252" width="106" height="18" rx="9" fill="#1D6F6A"/>
+  <rect x="276" y="259" width="50" height="4" rx="2" fill="#FFFFFF"/>
+  <!-- Location pin -->
+  <path d="M410 150 c-16 0 -28 12 -28 27 c0 21 28 49 28 49 s28 -28 28 -49 c0 -15 -12 -27 -28 -27 z" fill="#E8A33D"/>
+  <circle cx="410" cy="177" r="10" fill="#FFFFFF"/>
+  <!-- Sync arrows -->
+  <g fill="none" stroke="#1D6F6A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M392 262 a24 24 0 0 1 40 -10"/>
+    <path d="M428 240 l5 12 l-12 3"/>
+    <path d="M436 276 a24 24 0 0 1 -40 10"/>
+    <path d="M400 298 l-5 -12 l12 -3"/>
+  </g>
+</svg>

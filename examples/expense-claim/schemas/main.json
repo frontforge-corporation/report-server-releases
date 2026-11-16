@@ -1,0 +1,187 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "One staff expense claim",
+  "type": "object",
+  "required": [
+    "claim",
+    "claimant",
+    "lines"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "claim": {
+      "type": "object",
+      "title": "Claim",
+      "required": [
+        "number",
+        "submitted",
+        "periodStart",
+        "periodEnd",
+        "purpose",
+        "project",
+        "costCentre"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "number": {
+          "type": "string",
+          "title": "Claim number"
+        },
+        "submitted": {
+          "type": "string",
+          "format": "date",
+          "title": "Date submitted"
+        },
+        "periodStart": {
+          "type": "string",
+          "format": "date",
+          "title": "First day of the period claimed"
+        },
+        "periodEnd": {
+          "type": "string",
+          "format": "date",
+          "title": "Last day of the period claimed"
+        },
+        "purpose": {
+          "type": "string",
+          "title": "Business purpose"
+        },
+        "project": {
+          "type": "string",
+          "title": "Project",
+          "description": "Project number and name the costs are charged to"
+        },
+        "costCentre": {
+          "type": "string",
+          "title": "Cost centre"
+        }
+      }
+    },
+    "claimant": {
+      "type": "object",
+      "title": "Claimant",
+      "required": [
+        "name",
+        "staffNumber",
+        "position",
+        "email"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Name"
+        },
+        "staffNumber": {
+          "type": "string",
+          "title": "Staff number"
+        },
+        "position": {
+          "type": "string",
+          "title": "Position"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "title": "Email"
+        }
+      }
+    },
+    "lines": {
+      "type": "array",
+      "title": "Expense lines",
+      "items": {
+        "type": "object",
+        "required": [
+          "date",
+          "category",
+          "description",
+          "amount",
+          "gst"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "title": "Date spent"
+          },
+          "category": {
+            "type": "string",
+            "title": "Category",
+            "enum": [
+              "Travel",
+              "Meals",
+              "Accommodation",
+              "Fuel",
+              "Parking",
+              "Materials"
+            ]
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "amount": {
+            "type": "number",
+            "title": "Amount (incl. GST)"
+          },
+          "gst": {
+            "type": "number",
+            "title": "GST included",
+            "description": "The GST shown on the receipt; 0 for a GST-free cost such as a kilometre allowance"
+          },
+          "receipt": {
+            "type": "string",
+            "title": "Receipt kind",
+            "description": "Which receipt thumbnail to show; leave it out when there is no receipt",
+            "enum": [
+              "taxi",
+              "fuel",
+              "till"
+            ]
+          }
+        }
+      }
+    },
+    "approval": {
+      "type": "object",
+      "title": "Manager's approval",
+      "description": "Left out until the claimant's manager has decided",
+      "required": [
+        "approver",
+        "position",
+        "decision",
+        "date"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "approver": {
+          "type": "string",
+          "title": "Approver"
+        },
+        "position": {
+          "type": "string",
+          "title": "Approver's position"
+        },
+        "decision": {
+          "type": "string",
+          "title": "Decision",
+          "enum": [
+            "approved",
+            "rejected"
+          ]
+        },
+        "date": {
+          "type": "string",
+          "format": "date",
+          "title": "Date decided"
+        },
+        "comment": {
+          "type": "string",
+          "title": "Comment"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,892 @@
+{
+  "$schema": "https://docs.frontforge.com/schema/rfml/0.2.json",
+  "rfml": "0.2",
+  "id": "expense-claim",
+  "meta": {
+    "title": "Expense claim",
+    "description": "A one-page A4 staff expense claim for Ostrand & Pell, an engineering consultancy. It lists each expense with its date, category, GST and amount and a thumbnail of its receipt, totals the claim, and ends with the claimant's declaration and the manager's approval.",
+    "locale": "en-AU",
+    "currency": "AUD",
+    "tags": [
+      "example",
+      "expenses",
+      "internal",
+      "images"
+    ]
+  },
+  "data": {
+    "main": {
+      "schema": {
+        "$ref": "schemas/main.json"
+      },
+      "sample": "samples/main.json",
+      "description": "One staff member's expense claim for a period, its lines and, once decided, the manager's approval."
+    }
+  },
+  "vars": {
+    "total": "Sum(data.main.lines.map(l, l.amount))",
+    "gst": "Sum(data.main.lines.map(l, l.gst))",
+    "net": "vars.total - vars.gst",
+    "decided": "!IsBlank(data.main.approval)",
+    "approved": "vars.decided && data.main.approval.decision == 'approved'",
+    "missingReceipts": "data.main.lines.filter(l, IsBlank(l.receipt)).size()"
+  },
+  "styles": {
+    "tokens": {
+      "brand": "#1F4E5F",
+      "accent": "#C8553D",
+      "ink": "#1E2326",
+      "muted": "#5B6B72",
+      "line": "#D9E1E4",
+      "panel": "#EEF3F4",
+      "positive": "#1F7A4D",
+      "positive-bg": "#E3F2EA",
+      "negative": "#B42318",
+      "negative-bg": "#FBE7E5",
+      "space-1": "3pt",
+      "space-2": "6pt",
+      "space-3": "12pt"
+    },
+    "defaults": {
+      "document": {
+        "color": "var(--ink)",
+        "font-family": "Arimo",
+        "font-size": "9pt",
+        "line-height": 1.35
+      },
+      "heading": {
+        "margin": "var(--space-3) 0 var(--space-2)",
+        "color": "var(--brand)",
+        "font-size": "11pt",
+        "font-weight": 700
+      },
+      "table": {
+        "width": "100%",
+        "border-collapse": "collapse",
+        "parts": {
+          "cell": {
+            "padding": "4pt",
+            "border-bottom": "0.5pt solid var(--line)",
+            "vertical-align": "middle"
+          },
+          "header-cell": {
+            "padding-top": "5pt",
+            "padding-bottom": "5pt",
+            "border-bottom": "1pt solid var(--brand)",
+            "color": "var(--muted)",
+            "font-size": "7.5pt",
+            "font-weight": 700,
+            "letter-spacing": "0.3pt",
+            "text-transform": "uppercase"
+          }
+        }
+      }
+    },
+    "classes": {
+      "wordmark": {
+        "color": "var(--brand)",
+        "font-size": "18pt",
+        "font-weight": 700,
+        "line-height": 1.1
+      },
+      "muted": {
+        "color": "var(--muted)"
+      },
+      "small": {
+        "font-size": "7.5pt"
+      },
+      "strong": {
+        "font-weight": 700
+      },
+      "num": {
+        "font-variant-numeric": "tabular-nums",
+        "text-align": "right"
+      },
+      "kicker": {
+        "margin": "0 0 var(--space-1)",
+        "color": "var(--brand)",
+        "font-size": "7.5pt",
+        "font-weight": 700,
+        "letter-spacing": "0.3pt",
+        "text-transform": "uppercase"
+      },
+      "facts": {
+        "column-gap": "var(--space-3)",
+        "display": "grid",
+        "row-gap": "2pt",
+        "grid-template-columns": "auto 1fr"
+      },
+      "panel": {
+        "padding": "var(--space-2) var(--space-3)",
+        "border-radius": "3pt",
+        "background-color": "var(--panel)"
+      },
+      "line-item": {
+        "display": "flex",
+        "justify-content": "space-between",
+        "gap": "var(--space-2)"
+      },
+      "sign-line": {
+        "margin-top": "20pt",
+        "padding-top": "2pt",
+        "border-top": "0.75pt solid var(--ink)",
+        "color": "var(--muted)",
+        "font-size": "7.5pt"
+      },
+      "badge": {
+        "padding": "1pt 5pt",
+        "border-radius": "2pt",
+        "font-size": "7.5pt",
+        "font-weight": 700,
+        "letter-spacing": "0.4pt",
+        "text-transform": "uppercase"
+      }
+    }
+  },
+  "assets": {
+    "receipt-taxi": {
+      "kind": "image",
+      "src": "assets/receipt-taxi.svg"
+    },
+    "receipt-fuel": {
+      "kind": "image",
+      "src": "assets/receipt-fuel.svg"
+    },
+    "receipt-till": {
+      "kind": "image",
+      "src": "assets/receipt-till.svg"
+    }
+  },
+  "pages": [
+    {
+      "id": "a4",
+      "size": "A4",
+      "margin": "16mm 16mm 18mm",
+      "footer": [
+        {
+          "type": "box",
+          "id": "page-footer",
+          "style": {
+            "padding-top": "var(--space-1)",
+            "border-top": "0.5pt solid var(--line)",
+            "display": "flex",
+            "justify-content": "space-between"
+          },
+          "children": [
+            {
+              "type": "text",
+              "id": "footer-company",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "Ostrand & Pell Pty Ltd  ·  ABN 64 357 902 118  ·  Level 4, 210 Quarrell Street, Brindlemoor VIC 3999"
+            },
+            {
+              "type": "text",
+              "id": "footer-page",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "Page {{ page.number }} of {{ page.count }}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "body": [
+    {
+      "type": "box",
+      "id": "masthead",
+      "style": {
+        "padding-bottom": "var(--space-2)",
+        "border-bottom": "2pt solid var(--brand)",
+        "display": "flex",
+        "justify-content": "space-between",
+        "align-items": "flex-end"
+      },
+      "children": [
+        {
+          "type": "box",
+          "id": "brand",
+          "children": [
+            {
+              "type": "text",
+              "id": "wordmark",
+              "class": [
+                "wordmark"
+              ],
+              "content": "Ostrand & Pell"
+            },
+            {
+              "type": "text",
+              "id": "tagline",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "Engineering consultants  ·  Finance team, accounts@ostrandpell.example  ·  (03) 5550 0210"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "title-block",
+          "style": {
+            "text-align": "right"
+          },
+          "children": [
+            {
+              "type": "heading",
+              "id": "title",
+              "style": {
+                "margin": 0,
+                "font-size": "20pt",
+                "line-height": 1.1
+              },
+              "level": 1,
+              "content": "Expense claim"
+            },
+            {
+              "type": "text",
+              "id": "claim-number",
+              "class": [
+                "strong"
+              ],
+              "content": "{{ data.main.claim.number }}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "box",
+      "id": "details",
+      "style": {
+        "margin-top": "var(--space-3)",
+        "column-gap": "var(--space-3)",
+        "display": "grid",
+        "grid-template-columns": "1fr 1fr"
+      },
+      "children": [
+        {
+          "type": "box",
+          "id": "claimant",
+          "children": [
+            {
+              "type": "heading",
+              "id": "claimant-title",
+              "class": [
+                "kicker"
+              ],
+              "level": 2,
+              "content": "Claimant"
+            },
+            {
+              "type": "text",
+              "id": "claimant-name",
+              "class": [
+                "strong"
+              ],
+              "style": {
+                "font-size": "11pt"
+              },
+              "content": "{{ data.main.claimant.name }}"
+            },
+            {
+              "type": "text",
+              "id": "claimant-position",
+              "content": "{{ data.main.claimant.position }}, staff number {{ data.main.claimant.staffNumber }}"
+            },
+            {
+              "type": "text",
+              "id": "claimant-email",
+              "class": [
+                "muted"
+              ],
+              "content": "{{ data.main.claimant.email }}"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "claim-facts",
+          "class": [
+            "facts"
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "period-label",
+              "class": [
+                "muted"
+              ],
+              "content": "Period"
+            },
+            {
+              "type": "text",
+              "id": "period-value",
+              "content": "{{ Format(data.main.claim.periodStart, 'd MMM') }} to {{ Format(data.main.claim.periodEnd, 'd MMM y') }}"
+            },
+            {
+              "type": "text",
+              "id": "submitted-label",
+              "class": [
+                "muted"
+              ],
+              "content": "Submitted"
+            },
+            {
+              "type": "text",
+              "id": "submitted-value",
+              "content": "{{ Format(data.main.claim.submitted, 'd MMMM y') }}"
+            },
+            {
+              "type": "text",
+              "id": "project-label",
+              "class": [
+                "muted"
+              ],
+              "content": "Project"
+            },
+            {
+              "type": "text",
+              "id": "project-value",
+              "content": "{{ data.main.claim.project }}"
+            },
+            {
+              "type": "text",
+              "id": "cost-centre-label",
+              "class": [
+                "muted"
+              ],
+              "content": "Cost centre"
+            },
+            {
+              "type": "text",
+              "id": "cost-centre-value",
+              "content": "{{ data.main.claim.costCentre }}"
+            }
+          ],
+          "meta": {
+            "label": "Claim details"
+          }
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "purpose",
+      "class": [
+        "panel"
+      ],
+      "style": {
+        "margin-top": "var(--space-3)"
+      },
+      "content": [
+        {
+          "type": "span",
+          "content": "Purpose  ",
+          "class": [
+            "strong"
+          ]
+        },
+        "{{ data.main.claim.purpose }}"
+      ]
+    },
+    {
+      "type": "heading",
+      "id": "lines-heading",
+      "level": 2,
+      "content": "Expenses"
+    },
+    {
+      "type": "table",
+      "id": "table-lines",
+      "source": "data.main.lines",
+      "as": "l",
+      "sort": [
+        {
+          "by": "l.date"
+        }
+      ],
+      "columns": [
+        {
+          "id": "col-date",
+          "width": "13fr",
+          "header": "Date",
+          "cell": "{{ Format(l.date, 'd MMM') }}"
+        },
+        {
+          "id": "col-category",
+          "width": "16fr",
+          "header": "Category",
+          "class": [
+            "muted"
+          ],
+          "cell": "{{ l.category }}"
+        },
+        {
+          "id": "col-description",
+          "width": "45fr",
+          "header": "Description",
+          "cell": "{{ l.description }}"
+        },
+        {
+          "id": "col-receipt",
+          "width": "11fr",
+          "header": "Receipt",
+          "style": {
+            "padding-top": "2pt",
+            "padding-bottom": "2pt",
+            "text-align": "center"
+          },
+          "cellChildren": [
+            {
+              "type": "image",
+              "id": "receipt-thumb",
+              "if": "!IsBlank(l.receipt)",
+              "style": {
+                "width": "7.5mm",
+                "height": "10.5mm",
+                "margin": "0 auto"
+              },
+              "src": "'receipt-' + l.receipt",
+              "alt": "Receipt for {{ l.description }}"
+            },
+            {
+              "type": "text",
+              "id": "no-receipt",
+              "if": "IsBlank(l.receipt)",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "None"
+            }
+          ]
+        },
+        {
+          "id": "col-gst",
+          "width": "12fr",
+          "header": "GST",
+          "class": [
+            "num"
+          ],
+          "cell": "{{ Format(l.gst, '$#,##0.00;-$#,##0.00;\"GST-free\"') }}"
+        },
+        {
+          "id": "col-amount",
+          "width": "14fr",
+          "header": "Amount",
+          "class": [
+            "num",
+            "strong"
+          ],
+          "cell": "{{ Format(l.amount, 'currency') }}"
+        }
+      ],
+      "empty": [
+        {
+          "type": "text",
+          "id": "no-lines",
+          "class": [
+            "muted"
+          ],
+          "content": "No expenses on this claim."
+        }
+      ],
+      "meta": {
+        "description": "Amounts include GST. The GST column is the GST shown on each receipt."
+      }
+    },
+    {
+      "type": "box",
+      "id": "summary",
+      "style": {
+        "margin-top": "var(--space-3)",
+        "column-gap": "18pt",
+        "display": "grid",
+        "grid-template-columns": "1fr 70mm",
+        "break-before": "avoid",
+        "break-inside": "avoid"
+      },
+      "children": [
+        {
+          "type": "box",
+          "id": "notes",
+          "children": [
+            {
+              "type": "text",
+              "id": "receipts-note",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "content": "Original receipts are attached to this claim in the expenses app. {{ If(vars.missingReceipts == 0, 'Every line has a receipt.', If(vars.missingReceipts == 1, 'One line has no receipt: an allowance, or a cost under $10.', Text(vars.missingReceipts) + ' lines have no receipt: allowances, or costs under $10.')) }}"
+            },
+            {
+              "type": "text",
+              "id": "payment-note",
+              "class": [
+                "muted",
+                "small"
+              ],
+              "style": {
+                "margin-top": "var(--space-1)"
+              },
+              "content": "Approved claims are paid with the next fortnightly pay run. Amounts include GST; GST-free lines carry no GST credit."
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "totals",
+          "children": [
+            {
+              "type": "box",
+              "id": "totals-net",
+              "class": [
+                "line-item"
+              ],
+              "style": {
+                "padding": "2pt 0"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "id": "net-label",
+                  "content": "Amount excl. GST"
+                },
+                {
+                  "type": "text",
+                  "id": "net-value",
+                  "class": [
+                    "num"
+                  ],
+                  "content": "{{ Format(vars.net, 'currency') }}"
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "id": "totals-gst",
+              "class": [
+                "line-item"
+              ],
+              "style": {
+                "padding": "2pt 0"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "id": "gst-label",
+                  "content": "GST included"
+                },
+                {
+                  "type": "text",
+                  "id": "gst-value",
+                  "class": [
+                    "num"
+                  ],
+                  "content": "{{ Format(vars.gst, 'currency') }}"
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "id": "totals-total",
+              "class": [
+                "line-item"
+              ],
+              "style": {
+                "margin-top": "var(--space-1)",
+                "padding-top": "var(--space-1)",
+                "border-top": "1pt solid var(--brand)",
+                "color": "var(--brand)",
+                "font-size": "12pt",
+                "font-weight": 700,
+                "align-items": "baseline"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "id": "total-label",
+                  "content": "Total claimed"
+                },
+                {
+                  "type": "text",
+                  "id": "total-value",
+                  "class": [
+                    "num"
+                  ],
+                  "content": "{{ Format(vars.total, 'currency') }}"
+                }
+              ]
+            }
+          ],
+          "meta": {
+            "label": "Totals"
+          }
+        }
+      ]
+    },
+    {
+      "type": "box",
+      "id": "sign-off",
+      "style": {
+        "margin-top": "18pt",
+        "column-gap": "var(--space-3)",
+        "display": "grid",
+        "grid-template-columns": "1fr 1fr",
+        "break-inside": "avoid"
+      },
+      "children": [
+        {
+          "type": "box",
+          "id": "declaration",
+          "class": [
+            "panel"
+          ],
+          "children": [
+            {
+              "type": "heading",
+              "id": "declaration-title",
+              "class": [
+                "kicker"
+              ],
+              "level": 2,
+              "content": "Claimant's declaration"
+            },
+            {
+              "type": "text",
+              "id": "declaration-body",
+              "content": "I spent these amounts on Ostrand & Pell business, I have not claimed them before, and the receipts are genuine."
+            },
+            {
+              "type": "box",
+              "id": "claimant-sign",
+              "class": [
+                "line-item"
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "claimant-signature",
+                  "class": [
+                    "sign-line"
+                  ],
+                  "style": {
+                    "flex": 2
+                  },
+                  "content": "Signed by {{ data.main.claimant.name }}"
+                },
+                {
+                  "type": "text",
+                  "id": "claimant-date",
+                  "class": [
+                    "sign-line"
+                  ],
+                  "style": {
+                    "flex": 1
+                  },
+                  "content": "{{ Format(data.main.claim.submitted, 'd/MM/y') }}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "id": "approval",
+          "class": [
+            "panel"
+          ],
+          "rules": [
+            {
+              "if": "vars.approved",
+              "style": {
+                "background-color": "var(--positive-bg)"
+              }
+            },
+            {
+              "if": "vars.decided && !vars.approved",
+              "style": {
+                "background-color": "var(--negative-bg)"
+              }
+            }
+          ],
+          "children": [
+            {
+              "type": "box",
+              "id": "approval-head",
+              "class": [
+                "line-item"
+              ],
+              "style": {
+                "align-items": "flex-start"
+              },
+              "children": [
+                {
+                  "type": "heading",
+                  "id": "approval-title",
+                  "class": [
+                    "kicker"
+                  ],
+                  "level": 2,
+                  "content": "Manager's approval"
+                },
+                {
+                  "type": "text",
+                  "id": "approval-badge",
+                  "class": [
+                    "badge"
+                  ],
+                  "style": {
+                    "background-color": "var(--muted)",
+                    "color": "#FFFFFF"
+                  },
+                  "rules": [
+                    {
+                      "if": "vars.approved",
+                      "style": {
+                        "background-color": "var(--positive)"
+                      }
+                    },
+                    {
+                      "if": "vars.decided && !vars.approved",
+                      "style": {
+                        "background-color": "var(--negative)"
+                      }
+                    }
+                  ],
+                  "content": "{{ If(vars.approved, 'Approved', If(vars.decided, 'Rejected', 'Awaiting approval')) }}"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "approver",
+              "if": "vars.decided",
+              "content": [
+                {
+                  "type": "span",
+                  "content": "{{ data.main.approval.approver }}",
+                  "class": [
+                    "strong"
+                  ]
+                },
+                ", {{ data.main.approval.position }}"
+              ]
+            },
+            {
+              "type": "text",
+              "id": "approval-comment",
+              "if": "vars.decided && !IsBlank(data.main.approval.comment)",
+              "class": [
+                "muted"
+              ],
+              "style": {
+                "font-style": "italic"
+              },
+              "content": "“{{ data.main.approval.comment }}”"
+            },
+            {
+              "type": "text",
+              "id": "approval-pending",
+              "if": "!vars.decided",
+              "class": [
+                "muted"
+              ],
+              "content": "To approve, sign below, or approve the claim in the expenses app."
+            },
+            {
+              "type": "box",
+              "id": "approver-sign",
+              "class": [
+                "line-item"
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "approver-signature",
+                  "class": [
+                    "sign-line"
+                  ],
+                  "style": {
+                    "flex": 2
+                  },
+                  "content": "{{ If(vars.decided, 'Signed by ' + data.main.approval.approver, 'Name and signature') }}"
+                },
+                {
+                  "type": "text",
+                  "id": "approver-date",
+                  "class": [
+                    "sign-line"
+                  ],
+                  "style": {
+                    "flex": 1
+                  },
+                  "content": "{{ If(vars.decided, Format(data.main.approval.date, 'd/MM/y'), 'Date') }}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "outputs": {
+    "pdf": {
+      "standard": "PDF/UA-1"
+    },
+    "xlsx": {
+      "sheets": [
+        {
+          "name": "Expenses",
+          "from": "table-lines",
+          "freeze": "A2"
+        }
+      ]
+    }
+  },
+  "tests": [
+    {
+      "name": "sample claim fits on one page with every receipt",
+      "data": {
+        "main": "samples/main.json"
+      },
+      "expect": [
+        "pages.size() == 1",
+        "diagnostics.all(d, d.severity != 'error')",
+        "text('total-value') == '$540.23'",
+        "text('gst-value') == '$44.00'",
+        "text('net-value') == '$496.23'",
+        "nodes('receipt-thumb').size() == 8",
+        "nodes('no-receipt').size() == 1",
+        "text('approval-badge') == 'APPROVED'",
+        "visible('approval-comment') && !visible('approval-pending')",
+        "node('sign-off').page == 1"
+      ],
+      "snapshot": true
+    },
+    {
+      "name": "a claim awaiting approval leaves the approval to sign",
+      "data": {
+        "main": "tests/awaiting-approval.json"
+      },
+      "expect": [
+        "pages.size() == 1",
+        "diagnostics.all(d, d.severity != 'error')",
+        "text('approval-badge') == 'AWAITING APPROVAL'",
+        "visible('approval-pending') && !visible('approver') && !visible('approval-comment')",
+        "text('approver-signature') == 'Name and signature'",
+        "text('total-value') == '$214.70'",
+        "text('gst-value') == '$19.52'",
+        "nodes('receipt-thumb').size() == 3"
+      ]
+    }
+  ]
+}

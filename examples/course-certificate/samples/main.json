@@ -1,0 +1,24 @@
+{
+  "course": {
+    "code": "FB-ADM-201",
+    "title": "Fieldbook Administrator",
+    "hours": 14,
+    "modules": 6,
+    "distinctionScore": 0.9
+  },
+  "cohort": {
+    "name": "October 2026",
+    "delivery": "online, instructor-led"
+  },
+  "signatories": [
+    { "name": "Callum Westerby", "role": "Course lead" },
+    { "name": "Dr Imogen Rathbourne", "role": "Head of Quillmont Academy" }
+  ],
+  "participants": [
+    { "name": "Orla Vantreight", "organisation": "Veldmark Facility Services", "status": "completed", "score": 0.94, "completed": "2026-10-30", "certificate": "QA-26-1187" },
+    { "name": "Priyanka Hollowell", "organisation": "Corrowin Estates", "status": "withdrawn" },
+    { "name": "Benedikt Saarlund", "organisation": "Veldmark Facility Services", "status": "completed", "score": 0.81, "completed": "2026-10-30", "certificate": "QA-26-1188" },
+    { "name": "Yusra Calloway-Finch", "organisation": "Ostlewaite Housing", "status": "in-progress" },
+    { "name": "Mateus Brenneck", "status": "completed", "score": 0.77, "completed": "2026-10-31", "certificate": "QA-26-1189" }
+  ]
+}

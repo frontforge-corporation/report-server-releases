@@ -1,0 +1,136 @@
+{
+  "release": {
+    "version": "4.2",
+    "build": "4.2.0 (1187)",
+    "released": "2026-10-20",
+    "edition": 3
+  },
+  "support": {
+    "phone": "1800 975 707",
+    "email": "support@quillmont.example",
+    "web": "help.quillmont.example",
+    "hours": "8 am to 6 pm AEST, Monday to Friday"
+  },
+  "limits": {
+    "photosPerFinding": 12,
+    "photoMegapixels": 8,
+    "offlineDays": 14,
+    "reopenHours": 24
+  },
+  "requirements": [
+    {
+      "platform": "Phone or tablet",
+      "needs": "The Fieldbook app, on a device released in the last six years, with a camera and location turned on."
+    },
+    {
+      "platform": "Web",
+      "needs": "A current desktop browser, at least 1280 pixels wide. Web inspections can attach photos but not take them."
+    },
+    {
+      "platform": "Account",
+      "needs": "An invitation from your workspace administrator. Fieldbook has no self sign-up."
+    },
+    {
+      "platform": "Storage",
+      "needs": "About 1 GB free on the device for two weeks of offline work with photos."
+    }
+  ],
+  "troubleshooting": [
+    {
+      "problem": "Sign-in says the invitation has expired",
+      "cause": "Invitations last seven days.",
+      "fix": "Ask your administrator to send a new one from Workspace › People."
+    },
+    {
+      "problem": "An assignment is missing from Today",
+      "cause": "It belongs to another workspace, or its start date is in the future.",
+      "fix": "Switch workspace from the menu, or look under Upcoming."
+    },
+    {
+      "problem": "Sign off is greyed out",
+      "cause": "A required question has no answer, or a finding has no photo.",
+      "fix": "Tap the red count beside Sign off to jump to what is missing."
+    },
+    {
+      "problem": "Photos stay at “Waiting to upload”",
+      "cause": "The device is on mobile data and Photos on Wi-Fi only is on.",
+      "fix": "Join Wi-Fi, or turn the setting off under Settings › Sync."
+    },
+    {
+      "problem": "The sync badge shows a conflict",
+      "cause": "Someone changed the same inspection on the web while you were offline.",
+      "fix": "Open it and choose Keep mine or Keep theirs for each answer."
+    },
+    {
+      "problem": "The map pin is in the wrong place",
+      "cause": "The device had no location fix when the photo was taken.",
+      "fix": "Drag the pin on the finding, or turn on precise location for Fieldbook."
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Assignment",
+      "definition": "An inspection someone has been asked to do, with a site, a checklist and a due date."
+    },
+    {
+      "term": "Checklist",
+      "definition": "The questions an inspection asks, in sections. Administrators build them from templates."
+    },
+    {
+      "term": "Conflict",
+      "definition": "Two changes to the same answer made on different devices before either synced."
+    },
+    {
+      "term": "Due date",
+      "definition": "The day an assignment should be signed off by. Overdue assignments turn red in Today."
+    },
+    {
+      "term": "Finding",
+      "definition": "Something the inspector noticed that needs action, with a rating, photos and a note."
+    },
+    {
+      "term": "Hold point",
+      "definition": "A question that stops the inspection until a supervisor approves it on their own device."
+    },
+    {
+      "term": "Inspection",
+      "definition": "One visit to one site, from the first answer to the sign-off."
+    },
+    {
+      "term": "Mark-up",
+      "definition": "Arrows, circles and short labels drawn on a photo. The original photo is kept."
+    },
+    {
+      "term": "Offline queue",
+      "definition": "Changes and photos saved on the device and waiting to sync."
+    },
+    {
+      "term": "Rating",
+      "definition": "How serious a finding is: low, medium, high or critical."
+    },
+    {
+      "term": "Reopen",
+      "definition": "Unlocking a signed-off inspection to correct it. Only a supervisor can, and the history keeps both versions."
+    },
+    {
+      "term": "Sign-off",
+      "definition": "The inspector's signature, name and time, which locks the inspection and sends the report."
+    },
+    {
+      "term": "Site",
+      "definition": "A place that is inspected, such as a building, a plant room or a stretch of road, with its address and map pin."
+    },
+    {
+      "term": "Sync",
+      "definition": "Sending the offline queue to Fieldbook's servers and fetching new assignments."
+    },
+    {
+      "term": "Template",
+      "definition": "A reusable checklist, versioned so that past inspections keep the questions they were asked."
+    },
+    {
+      "term": "Workspace",
+      "definition": "An organisation's own space in Fieldbook: its people, sites, templates and reports."
+    }
+  ]
+}

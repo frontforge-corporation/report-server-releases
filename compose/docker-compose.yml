@@ -14,7 +14,7 @@ name: report-forge
 
 services:
   reportd:
-    image: ${REPORTD_IMAGE:-ghcr.io/frontforge-corporation/report-server:0.10.0-rc.2}
+    image: ${REPORTD_IMAGE:-ghcr.io/frontforge-corporation/report-server:0.10.0}
     restart: unless-stopped
     ports:
       - "${REPORTD_PORT:-43123}:43123"

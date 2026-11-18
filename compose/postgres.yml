@@ -5,7 +5,7 @@
 #   docker compose -f docker-compose.yml -f postgres.yml up -d
 services:
   secrets:
-    image: ${REPORTD_IMAGE:-ghcr.io/frontforge-corporation/report-server:0.10.0-rc.2}
+    image: ${REPORTD_IMAGE:-ghcr.io/frontforge-corporation/report-server:0.10.0}
     # Root, to write to ./secrets whoever owns it, and on a Linux host to
     # give the files to 65532, 0600 in a 0700 folder.
     user: "0:0"

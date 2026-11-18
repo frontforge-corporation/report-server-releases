@@ -5,7 +5,7 @@
 #   docker compose -f docker-compose.yml -f split.yml up -d --scale renderd=3
 services:
   secrets:
-    image: ${REPORTD_IMAGE:-ghcr.io/frontforge-corporation/report-server:0.10.0-rc.2}
+    image: ${REPORTD_IMAGE:-ghcr.io/frontforge-corporation/report-server:0.10.0}
     user: "0:0"
     command: ["reportd", "compose-secrets", "--dir", "/secrets"]
     volumes:
@@ -20,7 +20,7 @@ services:
     security_opt: [no-new-privileges:true]
 
   renderd:
-    image: ${REPORTD_IMAGE:-ghcr.io/frontforge-corporation/report-server:0.10.0-rc.2}
+    image: ${REPORTD_IMAGE:-ghcr.io/frontforge-corporation/report-server:0.10.0}
     restart: unless-stopped
     command: ["renderd", "--token-file", "/run/secrets/renderd-token"]
     environment:

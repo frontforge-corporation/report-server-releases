@@ -46,7 +46,7 @@ The image is `ghcr.io/frontforge-corporation/report-server`, for amd64 and arm64
 
 - **`main` is the newest release.** Clone it to run the latest version.
 - **`release/<x.y>`**, such as `release/0.10`, is the newest release of that line, pre-releases included. Follow it to get that line's fixes and nothing newer.
-- **`v<version>`**, such as `v0.10.0`, is one release, and never moves. (`v0.9.0` and `v0.10.0-rc.1` moved once, in November 2026, onto commits that hold their source: in a clone made before, `git fetch --tags --force` updates them.) Its [GitHub release](https://github.com/frontforge-corporation/report-server-releases/releases) has the notes, the image's SBOM, the secret plugins for installs outside the image, and `SHA256SUMS`.
+- **`v<version>`**, such as `v0.10.0`, is one release, and never moves. (`v0.9.0` and `v0.10.0-rc.1` moved once, in November 2026, onto commits that hold their source: in a clone made before, `git fetch --tags --force` updates them.) Its [GitHub release](https://github.com/frontforge-corporation/report-server-releases/releases) has the notes, the image's SBOM, the source of the image's Debian packages (`report-server-<version>-debian-sources.tar`, from 0.10.0), the secret plugins for installs outside the image, and `SHA256SUMS`.
 
 Pre-releases (a version with a `-`, such as `0.10.0-rc.1`) are for trying out: they are on their tag and their line's branch, never on `main`.
 

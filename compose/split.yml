@@ -5,7 +5,7 @@
 #   docker compose -f docker-compose.yml -f split.yml up -d --scale renderd=3
 services:
   secrets:
-    image: ${REPORTD_IMAGE:-ghcr.io/frontforge-corporation/report-server:0.9.0}
+    image: ${REPORTD_IMAGE:-ghcr.io/frontforge-corporation/report-server:0.10.0}
     user: "0:0"
     command: ["reportd", "compose-secrets", "--dir", "/secrets"]
     volumes:
@@ -13,9 +13,14 @@ services:
     restart: "no"
     healthcheck:
       disable: true
+    read_only: true
+    # Only what writing, and giving away, files in ./secrets needs.
+    cap_drop: [ALL]
+    cap_add: [CHOWN, DAC_OVERRIDE, FOWNER]
+    security_opt: [no-new-privileges:true]
 
   renderd:
-    image: ${REPORTD_IMAGE:-ghcr.io/frontforge-corporation/report-server:0.9.0}
+    image: ${REPORTD_IMAGE:-ghcr.io/frontforge-corporation/report-server:0.10.0}
     restart: unless-stopped
     command: ["renderd", "--token-file", "/run/secrets/renderd-token"]
     environment:
@@ -27,6 +32,11 @@ services:
       interval: 10s
       timeout: 5s
       start_period: 20s
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
     depends_on:
       secrets:
         condition: service_completed_successfully
